@@ -1,3 +1,4 @@
+
 namespace EcosiaPrime.Gui
 {
     internal static class Program
