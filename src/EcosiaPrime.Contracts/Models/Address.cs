@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EcosiaPrime.Contracts.Models
+﻿namespace EcosiaPrime.Contracts.Models
 {
     public class Address
     {
@@ -19,6 +13,7 @@ namespace EcosiaPrime.Contracts.Models
         {
             return this._country;
         }
+
         public void SetCountry(string country)
         {
             this._country = country;

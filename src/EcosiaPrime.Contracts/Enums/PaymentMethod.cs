@@ -1,5 +1,4 @@
-﻿
-namespace EcosiaPrime.Contracts.Enums
+﻿namespace EcosiaPrime.Contracts.Enums
 {
     public enum PaymentMethod
     {
