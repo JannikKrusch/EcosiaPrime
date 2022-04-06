@@ -1,4 +1,6 @@
 
+using Newtonsoft.Json;
+
 namespace EcosiaPrime.Gui
 {
     internal static class Program
@@ -13,6 +15,9 @@ namespace EcosiaPrime.Gui
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
+
+            var json = JsonConvert.DeserializeObject(File.ReadAllText("..\\..\\..\\appsettings.json"));
+            Console.WriteLine(json);
         }
     }
 }
