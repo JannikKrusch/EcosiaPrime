@@ -1,5 +1,5 @@
 ﻿using EcosiaPrime.Contracts.Enums;
-
+//
 namespace EcosiaPrime.Contracts.Models
 {
     public class Subscription
