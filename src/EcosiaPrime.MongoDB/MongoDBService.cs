@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace EcosiaPrime.MongoDB
 {
-    public class MongoDBService
+    public class MongoDBService : IMongoDBService
     {
-        public MongoDBService()
+        private readonly IMongoDBRepository _mongoDBRepository;
+        public MongoDBService(IMongoDBRepository mongoDBRepository)
         {
-
+            _mongoDBRepository = mongoDBRepository;
         }
+
+
     }
 }
