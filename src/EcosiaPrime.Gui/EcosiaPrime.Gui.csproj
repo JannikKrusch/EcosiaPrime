@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EcosiaPrime.Contracts\EcosiaPrime.Contracts.csproj" />
+    <ProjectReference Include="..\EcosiaPrime.MongoDB\EcosiaPrime.MongoDB.csproj" />
   </ItemGroup>
 
 </Project>
