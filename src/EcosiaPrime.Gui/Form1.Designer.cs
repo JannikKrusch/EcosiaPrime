@@ -28,20 +28,332 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.idTextfield = new System.Windows.Forms.TextBox();
+            this.firstNameTextfield = new System.Windows.Forms.TextBox();
+            this.lastNameTextfield = new System.Windows.Forms.TextBox();
+            this.emailTextfield = new System.Windows.Forms.TextBox();
+            this.passwordTextfield = new System.Windows.Forms.TextBox();
+            this.countryTextfield = new System.Windows.Forms.TextBox();
+            this.stateTextfield = new System.Windows.Forms.TextBox();
+            this.postcodeTextfield = new System.Windows.Forms.TextBox();
+            this.cityTextfield = new System.Windows.Forms.TextBox();
+            this.streetNameTextfield = new System.Windows.Forms.TextBox();
+            this.streetNumberTextfield = new System.Windows.Forms.TextBox();
+            this.startDateTextfield = new System.Windows.Forms.TextBox();
+            this.endDateTextfield = new System.Windows.Forms.TextBox();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.paymentMethodPanel = new System.Windows.Forms.Label();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.radioButton4 = new System.Windows.Forms.RadioButton();
+            this.radioButton5 = new System.Windows.Forms.RadioButton();
+            this.radioButton6 = new System.Windows.Forms.RadioButton();
+            this.radioButton7 = new System.Windows.Forms.RadioButton();
+            this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(658, -52);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(97, 41);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "label1";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label3.Location = new System.Drawing.Point(1436, 25);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(698, 159);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "EcosiaPrime";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
+            // 
+            // idTextfield
+            // 
+            this.idTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.idTextfield.Location = new System.Drawing.Point(77, 316);
+            this.idTextfield.Name = "idTextfield";
+            this.idTextfield.PlaceholderText = "ID";
+            this.idTextfield.Size = new System.Drawing.Size(650, 114);
+            this.idTextfield.TabIndex = 3;
+            // 
+            // firstNameTextfield
+            // 
+            this.firstNameTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.firstNameTextfield.Location = new System.Drawing.Point(77, 436);
+            this.firstNameTextfield.Name = "firstNameTextfield";
+            this.firstNameTextfield.PlaceholderText = "Vorname";
+            this.firstNameTextfield.Size = new System.Drawing.Size(650, 114);
+            this.firstNameTextfield.TabIndex = 4;
+            // 
+            // lastNameTextfield
+            // 
+            this.lastNameTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lastNameTextfield.Location = new System.Drawing.Point(77, 556);
+            this.lastNameTextfield.Name = "lastNameTextfield";
+            this.lastNameTextfield.PlaceholderText = "Nachname";
+            this.lastNameTextfield.Size = new System.Drawing.Size(650, 114);
+            this.lastNameTextfield.TabIndex = 5;
+            // 
+            // emailTextfield
+            // 
+            this.emailTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.emailTextfield.Location = new System.Drawing.Point(77, 676);
+            this.emailTextfield.Name = "emailTextfield";
+            this.emailTextfield.PlaceholderText = "Email";
+            this.emailTextfield.Size = new System.Drawing.Size(650, 114);
+            this.emailTextfield.TabIndex = 6;
+            // 
+            // passwordTextfield
+            // 
+            this.passwordTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.passwordTextfield.Location = new System.Drawing.Point(77, 796);
+            this.passwordTextfield.Name = "passwordTextfield";
+            this.passwordTextfield.PlaceholderText = "Passwort";
+            this.passwordTextfield.Size = new System.Drawing.Size(650, 114);
+            this.passwordTextfield.TabIndex = 7;
+            // 
+            // countryTextfield
+            // 
+            this.countryTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.countryTextfield.Location = new System.Drawing.Point(1463, 316);
+            this.countryTextfield.Name = "countryTextfield";
+            this.countryTextfield.PlaceholderText = "Staat";
+            this.countryTextfield.Size = new System.Drawing.Size(650, 114);
+            this.countryTextfield.TabIndex = 8;
+            // 
+            // stateTextfield
+            // 
+            this.stateTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.stateTextfield.Location = new System.Drawing.Point(1463, 436);
+            this.stateTextfield.Name = "stateTextfield";
+            this.stateTextfield.PlaceholderText = "Bundesland";
+            this.stateTextfield.Size = new System.Drawing.Size(650, 114);
+            this.stateTextfield.TabIndex = 9;
+            // 
+            // postcodeTextfield
+            // 
+            this.postcodeTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.postcodeTextfield.Location = new System.Drawing.Point(1463, 556);
+            this.postcodeTextfield.Name = "postcodeTextfield";
+            this.postcodeTextfield.PlaceholderText = "Postleitzahl";
+            this.postcodeTextfield.Size = new System.Drawing.Size(650, 114);
+            this.postcodeTextfield.TabIndex = 10;
+            // 
+            // cityTextfield
+            // 
+            this.cityTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.cityTextfield.Location = new System.Drawing.Point(1463, 676);
+            this.cityTextfield.Name = "cityTextfield";
+            this.cityTextfield.PlaceholderText = "Stadt";
+            this.cityTextfield.Size = new System.Drawing.Size(650, 114);
+            this.cityTextfield.TabIndex = 11;
+            // 
+            // streetNameTextfield
+            // 
+            this.streetNameTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.streetNameTextfield.Location = new System.Drawing.Point(1463, 796);
+            this.streetNameTextfield.Name = "streetNameTextfield";
+            this.streetNameTextfield.PlaceholderText = "Straße";
+            this.streetNameTextfield.Size = new System.Drawing.Size(650, 114);
+            this.streetNameTextfield.TabIndex = 12;
+            // 
+            // streetNumberTextfield
+            // 
+            this.streetNumberTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.streetNumberTextfield.Location = new System.Drawing.Point(1463, 916);
+            this.streetNumberTextfield.Name = "streetNumberTextfield";
+            this.streetNumberTextfield.PlaceholderText = "Straßennummer";
+            this.streetNumberTextfield.Size = new System.Drawing.Size(650, 114);
+            this.streetNumberTextfield.TabIndex = 13;
+            // 
+            // startDateTextfield
+            // 
+            this.startDateTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.startDateTextfield.Location = new System.Drawing.Point(2909, 316);
+            this.startDateTextfield.Name = "startDateTextfield";
+            this.startDateTextfield.PlaceholderText = "Anfangsdatum";
+            this.startDateTextfield.Size = new System.Drawing.Size(650, 114);
+            this.startDateTextfield.TabIndex = 14;
+            // 
+            // endDateTextfield
+            // 
+            this.endDateTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.endDateTextfield.Location = new System.Drawing.Point(2909, 436);
+            this.endDateTextfield.Name = "endDateTextfield";
+            this.endDateTextfield.PlaceholderText = "Enddatum";
+            this.endDateTextfield.Size = new System.Drawing.Size(650, 114);
+            this.endDateTextfield.TabIndex = 15;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.paymentMethodPanel);
+            this.flowLayoutPanel1.Controls.Add(this.radioButton1);
+            this.flowLayoutPanel1.Controls.Add(this.radioButton2);
+            this.flowLayoutPanel1.Controls.Add(this.radioButton3);
+            this.flowLayoutPanel1.Controls.Add(this.radioButton7);
+            this.flowLayoutPanel1.Controls.Add(this.radioButton6);
+            this.flowLayoutPanel1.Controls.Add(this.radioButton4);
+            this.flowLayoutPanel1.Controls.Add(this.radioButton5);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(2909, 556);
+            this.flowLayoutPanel1.MaximumSize = new System.Drawing.Size(593, 106);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(593, 0);
+            this.flowLayoutPanel1.TabIndex = 16;
+            // 
+            // paymentMethodPanel
+            // 
+            this.paymentMethodPanel.AutoSize = true;
+            this.paymentMethodPanel.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.paymentMethodPanel.Location = new System.Drawing.Point(3, 0);
+            this.paymentMethodPanel.Name = "paymentMethodPanel";
+            this.paymentMethodPanel.Size = new System.Drawing.Size(593, 106);
+            this.paymentMethodPanel.TabIndex = 17;
+            this.paymentMethodPanel.Text = "Bezahlmethode";
+            this.paymentMethodPanel.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(3, 109);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(228, 45);
+            this.radioButton1.TabIndex = 18;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "radioButton1";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(237, 109);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(228, 45);
+            this.radioButton2.TabIndex = 19;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "radioButton2";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Location = new System.Drawing.Point(211, 263);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(228, 45);
+            this.radioButton3.TabIndex = 20;
+            this.radioButton3.TabStop = true;
+            this.radioButton3.Text = "radioButton3";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            // 
+            // radioButton4
+            // 
+            this.radioButton4.AutoSize = true;
+            this.radioButton4.Location = new System.Drawing.Point(2, 160);
+            this.radioButton4.Name = "radioButton4";
+            this.radioButton4.Size = new System.Drawing.Size(228, 45);
+            this.radioButton4.TabIndex = 19;
+            this.radioButton4.TabStop = true;
+            this.radioButton4.Text = "radioButton4";
+            this.radioButton4.UseVisualStyleBackColor = true;
+            // 
+            // radioButton5
+            // 
+            this.radioButton5.AutoSize = true;
+            this.radioButton5.Location = new System.Drawing.Point(6, 211);
+            this.radioButton5.Name = "radioButton5";
+            this.radioButton5.Size = new System.Drawing.Size(228, 45);
+            this.radioButton5.TabIndex = 19;
+            this.radioButton5.TabStop = true;
+            this.radioButton5.Text = "radioButton5";
+            this.radioButton5.UseVisualStyleBackColor = true;
+            // 
+            // radioButton6
+            // 
+            this.radioButton6.AutoSize = true;
+            this.radioButton6.Location = new System.Drawing.Point(6, 261);
+            this.radioButton6.Name = "radioButton6";
+            this.radioButton6.Size = new System.Drawing.Size(228, 45);
+            this.radioButton6.TabIndex = 19;
+            this.radioButton6.TabStop = true;
+            this.radioButton6.Text = "radioButton6";
+            this.radioButton6.UseVisualStyleBackColor = true;
+            // 
+            // radioButton7
+            // 
+            this.radioButton7.AutoSize = true;
+            this.radioButton7.Location = new System.Drawing.Point(6, 313);
+            this.radioButton7.Name = "radioButton7";
+            this.radioButton7.Size = new System.Drawing.Size(228, 45);
+            this.radioButton7.TabIndex = 19;
+            this.radioButton7.TabStop = true;
+            this.radioButton7.Text = "radioButton7";
+            this.radioButton7.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(17F, 41F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(783, 450);
+            this.ClientSize = new System.Drawing.Size(3642, 1671);
+            this.Controls.Add(this.flowLayoutPanel1);
+            this.Controls.Add(this.endDateTextfield);
+            this.Controls.Add(this.startDateTextfield);
+            this.Controls.Add(this.streetNumberTextfield);
+            this.Controls.Add(this.streetNameTextfield);
+            this.Controls.Add(this.cityTextfield);
+            this.Controls.Add(this.postcodeTextfield);
+            this.Controls.Add(this.stateTextfield);
+            this.Controls.Add(this.countryTextfield);
+            this.Controls.Add(this.passwordTextfield);
+            this.Controls.Add(this.emailTextfield);
+            this.Controls.Add(this.lastNameTextfield);
+            this.Controls.Add(this.firstNameTextfield);
+            this.Controls.Add(this.idTextfield);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label1);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
+
+        private Label label1;
+        private Label label3;
+        private TextBox idTextfield;
+        private TextBox firstNameTextfield;
+        private TextBox lastNameTextfield;
+        private TextBox emailTextfield;
+        private TextBox passwordTextfield;
+        private TextBox countryTextfield;
+        private TextBox stateTextfield;
+        private TextBox postcodeTextfield;
+        private TextBox cityTextfield;
+        private TextBox streetNameTextfield;
+        private TextBox streetNumberTextfield;
+        private TextBox startDateTextfield;
+        private TextBox endDateTextfield;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private Label paymentMethodPanel;
+        private RadioButton radioButton1;
+        private RadioButton radioButton2;
+        private RadioButton radioButton3;
+        private RadioButton radioButton7;
+        private RadioButton radioButton6;
+        private RadioButton radioButton4;
+        private RadioButton radioButton5;
     }
 }
