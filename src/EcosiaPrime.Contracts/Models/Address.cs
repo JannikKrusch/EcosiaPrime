@@ -9,64 +9,11 @@
         private string _streetNumber;
         private string _street;
 
-        public string GetCountry()
-        {
-            return this._country;
-        }
-
-        public void SetCountry(string country)
-        {
-            this._country = country;
-        }
-
-        public string GetState()
-        {
-            return this._state;
-        }
-
-        public void SetState(string state)
-        {
-            this._state = state;
-        }
-
-        public string GetPostCode()
-        {
-            return this._postCode;
-        }
-
-        public void SetPostCode(string postCode)
-        {
-            this._postCode = postCode;
-        }
-
-        public string GetCity()
-        {
-            return this._city;
-        }
-
-        public void SetCity(string city)
-        {
-            this._city = city;
-        }
-
-        public string GetStreetNumber()
-        {
-            return this._streetNumber;
-        }
-
-        public void SetStreetNumber(string streetNumber)
-        {
-            this._streetNumber = streetNumber;
-        }
-
-        public string GetStreet()
-        {
-            return this._street;
-        }
-
-        public void SetStreet(string street)
-        {
-            this._street = street;
-        }
+        public string Country { get => _country; set => _country = value; }
+        public string State { get => _state; set => _state = value; }
+        public string PostCode { get => _postCode; set => _postCode = value; }
+        public string City { get => _city; set => _city = value; }
+        public string StreetNumber { get => _streetNumber; set => _streetNumber = value; }
+        public string Street { get => _street; set => _street = value; }
     }
 }
