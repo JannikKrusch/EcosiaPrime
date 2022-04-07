@@ -24,15 +24,15 @@ namespace EcosiaPrime.Gui
             IMongoDBService mongoDBService = new MongoDBService(mongoDBRepository);
 
             Client client = new Client();
-            client.SetFirstName("pskfa");
-            client.SetLastName("cnoi");
-            client.SetEmail("ijeiw");
-            client.SetId("812");
-            client.SetSubscription(new Subscription());
-            client.SetAddress(new Address());
-            client.SetPassword("fwoemfw");
+            client.FirstName = "Among";
+            client.LastName = "Us";
+            client.Email = "Sussy Baka@gmail.com";
+            client.Id = "1";
+            client.Subscription = new Subscription();
+            client.Address = new Address();
+            client.Password = "fwoemfw";
 
-            await mongoDBRepository.InsertRecord<Client>(mongoDBConfiguration.CollectionName, client).ConfigureAwait(false);
+            await mongoDBRepository.InsertRecordAsync<Client>(mongoDBConfiguration.CollectionName, client).ConfigureAwait(false);
 
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.

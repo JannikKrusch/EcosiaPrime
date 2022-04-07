@@ -9,44 +9,9 @@ namespace EcosiaPrime.Contracts.Models
         private PaymentMethod _paymentMethod;
         private SubscriptionType _subscriptionType;
 
-        public string GetStartDate()
-        {
-            return this._startDate;
-        }
-
-        public void SetStartDate(string startDate)
-        {
-            this._startDate = startDate;
-        }
-
-        public string GetEndDate()
-        {
-            return this._endDate;
-        }
-
-        public void SetEndDate(string endDate)
-        {
-            this._endDate = endDate;
-        }
-
-        public PaymentMethod GetPaymentMethod()
-        {
-            return this._paymentMethod;
-        }
-
-        public void SetPaymentMethod(PaymentMethod paymentMethod)
-        {
-            this._paymentMethod = paymentMethod;
-        }
-
-        public SubscriptionType GetSubscriptionType()
-        {
-            return this._subscriptionType;
-        }
-
-        public void SetSubscriptionType(SubscriptionType subscriptionType)
-        {
-            this._subscriptionType = subscriptionType;
-        }
+        public string StartDate { get => _startDate; set => _startDate = value; }
+        public string EndDate { get => _endDate; set => _endDate = value; }
+        public PaymentMethod PaymentMethod { get => _paymentMethod; set => _paymentMethod = value; }
+        public SubscriptionType SubscriptionType { get => _subscriptionType; set => _subscriptionType = value; }
     }
 }
