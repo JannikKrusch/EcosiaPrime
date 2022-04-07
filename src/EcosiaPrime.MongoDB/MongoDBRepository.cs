@@ -19,10 +19,19 @@ namespace EcosiaPrime.MongoDB
             _mongoDatabase = client.GetDatabase(_mongoDBConfiguration.DateBaseName);
         }
 
-        public async Task InsertRecordAsync<T>(string collectionName, T record)
+        public async Task<bool> InsertRecordAsync<T>(string collectionName, T record)
         {
-            var collection = _mongoDatabase.GetCollection<T>(collectionName);
-            await collection.InsertOneAsync(record).ConfigureAwait(false);
+            try
+            {
+                var collection = _mongoDatabase.GetCollection<T>(collectionName);
+                await collection.InsertOneAsync(record).ConfigureAwait(false);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            
         }
 
         public async Task<T> LoadRecordByIdAsync<T>(string collectionName, string id)

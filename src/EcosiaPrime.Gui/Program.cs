@@ -32,7 +32,7 @@ namespace EcosiaPrime.Gui
             client.Address = new Address();
             client.Password = "fwoemfw";
 
-            await mongoDBRepository.InsertRecordAsync<Client>(mongoDBConfiguration.CollectionName, client).ConfigureAwait(false);
+            var x = await mongoDBRepository.InsertRecordAsync<Client>(mongoDBConfiguration.CollectionName, client).ConfigureAwait(false);
 
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
