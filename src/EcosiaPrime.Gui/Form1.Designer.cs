@@ -48,10 +48,14 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.radioButton7 = new System.Windows.Forms.RadioButton();
+            this.radioButton6 = new System.Windows.Forms.RadioButton();
             this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.radioButton5 = new System.Windows.Forms.RadioButton();
-            this.radioButton6 = new System.Windows.Forms.RadioButton();
-            this.radioButton7 = new System.Windows.Forms.RadioButton();
+            this.dropdownMenuPayment = new System.Windows.Forms.ComboBox();
+            this.dropdownMenuSubscription = new System.Windows.Forms.ComboBox();
+            this.Enter = new System.Windows.Forms.Button();
+            this.optionComboBox = new System.Windows.Forms.ComboBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -92,6 +96,7 @@
             this.firstNameTextfield.PlaceholderText = "Vorname";
             this.firstNameTextfield.Size = new System.Drawing.Size(650, 114);
             this.firstNameTextfield.TabIndex = 4;
+            this.firstNameTextfield.TextChanged += new System.EventHandler(this.firstNameTextfield_TextChanged);
             // 
             // lastNameTextfield
             // 
@@ -214,7 +219,7 @@
             this.paymentMethodPanel.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.paymentMethodPanel.Location = new System.Drawing.Point(3, 0);
             this.paymentMethodPanel.Name = "paymentMethodPanel";
-            this.paymentMethodPanel.Size = new System.Drawing.Size(593, 106);
+            this.paymentMethodPanel.Size = new System.Drawing.Size(551, 212);
             this.paymentMethodPanel.TabIndex = 17;
             this.paymentMethodPanel.Text = "Bezahlmethode";
             this.paymentMethodPanel.Click += new System.EventHandler(this.label2_Click);
@@ -222,7 +227,7 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(3, 109);
+            this.radioButton1.Location = new System.Drawing.Point(3, 215);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(228, 45);
             this.radioButton1.TabIndex = 18;
@@ -233,7 +238,7 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(237, 109);
+            this.radioButton2.Location = new System.Drawing.Point(237, 215);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(228, 45);
             this.radioButton2.TabIndex = 19;
@@ -244,7 +249,7 @@
             // radioButton3
             // 
             this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(211, 263);
+            this.radioButton3.Location = new System.Drawing.Point(3, 266);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(228, 45);
             this.radioButton3.TabIndex = 20;
@@ -252,10 +257,32 @@
             this.radioButton3.Text = "radioButton3";
             this.radioButton3.UseVisualStyleBackColor = true;
             // 
+            // radioButton7
+            // 
+            this.radioButton7.AutoSize = true;
+            this.radioButton7.Location = new System.Drawing.Point(237, 266);
+            this.radioButton7.Name = "radioButton7";
+            this.radioButton7.Size = new System.Drawing.Size(228, 45);
+            this.radioButton7.TabIndex = 19;
+            this.radioButton7.TabStop = true;
+            this.radioButton7.Text = "radioButton7";
+            this.radioButton7.UseVisualStyleBackColor = true;
+            // 
+            // radioButton6
+            // 
+            this.radioButton6.AutoSize = true;
+            this.radioButton6.Location = new System.Drawing.Point(3, 317);
+            this.radioButton6.Name = "radioButton6";
+            this.radioButton6.Size = new System.Drawing.Size(228, 45);
+            this.radioButton6.TabIndex = 19;
+            this.radioButton6.TabStop = true;
+            this.radioButton6.Text = "radioButton6";
+            this.radioButton6.UseVisualStyleBackColor = true;
+            // 
             // radioButton4
             // 
             this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(2, 160);
+            this.radioButton4.Location = new System.Drawing.Point(237, 317);
             this.radioButton4.Name = "radioButton4";
             this.radioButton4.Size = new System.Drawing.Size(228, 45);
             this.radioButton4.TabIndex = 19;
@@ -266,7 +293,7 @@
             // radioButton5
             // 
             this.radioButton5.AutoSize = true;
-            this.radioButton5.Location = new System.Drawing.Point(6, 211);
+            this.radioButton5.Location = new System.Drawing.Point(3, 368);
             this.radioButton5.Name = "radioButton5";
             this.radioButton5.Size = new System.Drawing.Size(228, 45);
             this.radioButton5.TabIndex = 19;
@@ -274,33 +301,70 @@
             this.radioButton5.Text = "radioButton5";
             this.radioButton5.UseVisualStyleBackColor = true;
             // 
-            // radioButton6
+            // dropdownMenuPayment
             // 
-            this.radioButton6.AutoSize = true;
-            this.radioButton6.Location = new System.Drawing.Point(6, 261);
-            this.radioButton6.Name = "radioButton6";
-            this.radioButton6.Size = new System.Drawing.Size(228, 45);
-            this.radioButton6.TabIndex = 19;
-            this.radioButton6.TabStop = true;
-            this.radioButton6.Text = "radioButton6";
-            this.radioButton6.UseVisualStyleBackColor = true;
+            this.dropdownMenuPayment.DisplayMember = "PayPal";
+            this.dropdownMenuPayment.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.dropdownMenuPayment.FormattingEnabled = true;
+            this.dropdownMenuPayment.Items.AddRange(new object[] {
+            "PayPal",
+            "Creditcard",
+            "EC",
+            "Giftcode",
+            "Directdebit"});
+            this.dropdownMenuPayment.Location = new System.Drawing.Point(2909, 553);
+            this.dropdownMenuPayment.Name = "dropdownMenuPayment";
+            this.dropdownMenuPayment.Size = new System.Drawing.Size(650, 114);
+            this.dropdownMenuPayment.TabIndex = 17;
+            this.dropdownMenuPayment.SelectedIndexChanged += new System.EventHandler(this.dropdownMenuPayment_SelectedIndexChanged);
             // 
-            // radioButton7
+            // dropdownMenuSubscription
             // 
-            this.radioButton7.AutoSize = true;
-            this.radioButton7.Location = new System.Drawing.Point(6, 313);
-            this.radioButton7.Name = "radioButton7";
-            this.radioButton7.Size = new System.Drawing.Size(228, 45);
-            this.radioButton7.TabIndex = 19;
-            this.radioButton7.TabStop = true;
-            this.radioButton7.Text = "radioButton7";
-            this.radioButton7.UseVisualStyleBackColor = true;
+            this.dropdownMenuSubscription.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.dropdownMenuSubscription.FormattingEnabled = true;
+            this.dropdownMenuSubscription.Items.AddRange(new object[] {
+            "Basic",
+            "Standard",
+            "Premium"});
+            this.dropdownMenuSubscription.Location = new System.Drawing.Point(2909, 673);
+            this.dropdownMenuSubscription.Name = "dropdownMenuSubscription";
+            this.dropdownMenuSubscription.Size = new System.Drawing.Size(650, 114);
+            this.dropdownMenuSubscription.TabIndex = 18;
+            // 
+            // Enter
+            // 
+            this.Enter.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Enter.Location = new System.Drawing.Point(3041, 1129);
+            this.Enter.Name = "Enter";
+            this.Enter.Size = new System.Drawing.Size(360, 127);
+            this.Enter.TabIndex = 19;
+            this.Enter.Text = "Enter";
+            this.Enter.UseVisualStyleBackColor = true;
+            this.Enter.Click += new System.EventHandler(this.Enter_Click);
+            // 
+            // optionComboBox
+            // 
+            this.optionComboBox.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.optionComboBox.FormattingEnabled = true;
+            this.optionComboBox.Items.AddRange(new object[] {
+            "Erstellen",
+            "Löschen",
+            "Bearbeiten"});
+            this.optionComboBox.Location = new System.Drawing.Point(77, 1118);
+            this.optionComboBox.Name = "optionComboBox";
+            this.optionComboBox.Size = new System.Drawing.Size(650, 114);
+            this.optionComboBox.TabIndex = 20;
+            this.optionComboBox.SelectedIndexChanged += new System.EventHandler(this.optionComboBox_SelectedIndexChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(17F, 41F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(3642, 1671);
+            this.Controls.Add(this.optionComboBox);
+            this.Controls.Add(this.Enter);
+            this.Controls.Add(this.dropdownMenuSubscription);
+            this.Controls.Add(this.dropdownMenuPayment);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.endDateTextfield);
             this.Controls.Add(this.startDateTextfield);
@@ -319,7 +383,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = " ";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.flowLayoutPanel1.ResumeLayout(false);
@@ -355,5 +419,9 @@
         private RadioButton radioButton6;
         private RadioButton radioButton4;
         private RadioButton radioButton5;
+        private ComboBox dropdownMenuPayment;
+        private ComboBox dropdownMenuSubscription;
+        private Button Enter;
+        private ComboBox optionComboBox;
     }
 }
