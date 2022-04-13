@@ -16,7 +16,12 @@ namespace EcosiaPrime.MongoDB
         {
             _mongoDBConfiguration = mongoDBConfiguration;
             var client = new MongoClient();
-            _mongoDatabase = client.GetDatabase(_mongoDBConfiguration.DateBaseName);
+            _mongoDatabase = client.GetDatabase(_mongoDBConfiguration.DataBaseName);
+        }
+
+        public MongoDBConfiguration GetMongoDBConfiguration()
+        {
+            return _mongoDBConfiguration;
         }
 
         public async Task<bool> InsertRecordAsync<T>(string collectionName, T record)

@@ -15,6 +15,11 @@ namespace EcosiaPrime.MongoDB
          * Basic Methods
         */
 
+        public MongoDBConfiguration GetMongoDBConfiguration()
+        {
+            return _mongoDBRepository.GetMongoDBConfiguration();
+        }
+
         public async Task<bool> InsertRecordAsync<T>(string collectionName, T record)
         {
             var successful = await _mongoDBRepository.InsertRecordAsync<T>(collectionName, record);

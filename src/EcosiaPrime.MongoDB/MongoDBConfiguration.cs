@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace EcosiaPrime.MongoDB
 {
-    public class MongoDBConfiguration
+    public class MongoDBConfiguration : IMongoDBConfiguration
     {
-        public string DateBaseName { get; set; }
+        public string DataBaseName { get; set; }
         public string CollectionName { get; set; }
     }
 }

@@ -4,6 +4,7 @@ namespace EcosiaPrime.MongoDB
 {
     public interface IMongoDBService
     {
+        MongoDBConfiguration GetMongoDBConfiguration();
         Task<bool> DeleteRecordAsync<T>(string collectionName, string id);
         Task<bool> InsertRecordAsync<T>(string collectionName, T record);
         Task<T> LoadRecordByIdAsync<T>(string collectionName, string id);
