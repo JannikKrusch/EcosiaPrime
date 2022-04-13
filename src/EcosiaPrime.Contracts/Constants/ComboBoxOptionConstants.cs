@@ -5,5 +5,6 @@
         public const string Bearbeiten = "Bearbeiten";
         public const string Erstellen = "Erstellen";
         public const string Löschen = "Löschen";
+        public const string Clear = "Clear";
     }
 }

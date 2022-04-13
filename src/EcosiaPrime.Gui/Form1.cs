@@ -7,26 +7,26 @@ namespace EcosiaPrime.Gui
     {
         private readonly IMongoDBService _mongoDBService;
         private IEnumerable<Control> _controlsList;
+
         public Form1(IMongoDBService mongoDBService)
         {
             _controlsList = Controls.OfType<Control>().Where(x => x is TextBox || x is ComboBox && x.Name != "optionComboBox");
             _mongoDBService = mongoDBService;
             InitializeComponent();
+            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
         }
 
         private void label3_Click(object sender, EventArgs e)
         {
-
         }
 
         private void label2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void dropdownMenuPayment_SelectedIndexChanged(object sender, EventArgs e)
@@ -36,13 +36,14 @@ namespace EcosiaPrime.Gui
 
         private void Enter_Click(object sender, EventArgs e)
         {
-           
-            
+            if(optionComboBox.Text == ComboBoxOptionConstants.Bearbeiten)
+            {
+                optionComboBox.SelectedIndex = -1;
+            }
         }
 
         private void firstNameTextfield_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void optionComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -52,11 +53,16 @@ namespace EcosiaPrime.Gui
                 case ComboBoxOptionConstants.Erstellen:
                     ChangeVisibilityOfFields(ComboBoxOptionConstants.Erstellen);
                     break;
+
                 case ComboBoxOptionConstants.Bearbeiten:
                     ChangeVisibilityOfFields(ComboBoxOptionConstants.Bearbeiten);
                     break;
+
                 case ComboBoxOptionConstants.Löschen:
                     ChangeVisibilityOfFields(ComboBoxOptionConstants.Löschen);
+                    break;
+                default:
+                    ChangeVisibilityOfFields(ComboBoxOptionConstants.Clear);
                     break;
             }
         }
@@ -82,18 +88,26 @@ namespace EcosiaPrime.Gui
 
         public List<string> GetVisibleFieldsList(string option)
         {
-           
-
             switch (option)
             {
                 case ComboBoxOptionConstants.Erstellen:
                     return VisibleTextFieldListConstants.Erstellen;
+
                 case ComboBoxOptionConstants.Bearbeiten:
                     return VisibleTextFieldListConstants.Bearbeiten;
+
                 case ComboBoxOptionConstants.Löschen:
                     return VisibleTextFieldListConstants.Löschen;
+                default:
+                    return VisibleTextFieldListConstants.Erstellen;
             }
             return null;
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
     }
 }

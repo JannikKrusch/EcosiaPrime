@@ -56,6 +56,22 @@
             this.dropdownMenuSubscription = new System.Windows.Forms.ComboBox();
             this.Enter = new System.Windows.Forms.Button();
             this.optionComboBox = new System.Windows.Forms.ComboBox();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.columnID = new System.Windows.Forms.ColumnHeader();
+            this.columnFirstName = new System.Windows.Forms.ColumnHeader();
+            this.columnLastName = new System.Windows.Forms.ColumnHeader();
+            this.columnEmail = new System.Windows.Forms.ColumnHeader();
+            this.columnPassword = new System.Windows.Forms.ColumnHeader();
+            this.columnCountry = new System.Windows.Forms.ColumnHeader();
+            this.columnState = new System.Windows.Forms.ColumnHeader();
+            this.columnPostcode = new System.Windows.Forms.ColumnHeader();
+            this.columnCity = new System.Windows.Forms.ColumnHeader();
+            this.columnStreetName = new System.Windows.Forms.ColumnHeader();
+            this.columnStreetNumber = new System.Windows.Forms.ColumnHeader();
+            this.columnStartDate = new System.Windows.Forms.ColumnHeader();
+            this.columnEndDate = new System.Windows.Forms.ColumnHeader();
+            this.columnPayment = new System.Windows.Forms.ColumnHeader();
+            this.columnSubscription = new System.Windows.Forms.ColumnHeader();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -334,7 +350,7 @@
             // Enter
             // 
             this.Enter.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Enter.Location = new System.Drawing.Point(3041, 1129);
+            this.Enter.Location = new System.Drawing.Point(3115, 1118);
             this.Enter.Name = "Enter";
             this.Enter.Size = new System.Drawing.Size(360, 127);
             this.Enter.TabIndex = 19;
@@ -356,11 +372,116 @@
             this.optionComboBox.TabIndex = 20;
             this.optionComboBox.SelectedIndexChanged += new System.EventHandler(this.optionComboBox_SelectedIndexChanged);
             // 
+            // listView1
+            // 
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnID,
+            this.columnFirstName,
+            this.columnLastName,
+            this.columnEmail,
+            this.columnPassword,
+            this.columnCountry,
+            this.columnState,
+            this.columnPostcode,
+            this.columnCity,
+            this.columnStreetName,
+            this.columnStreetNumber,
+            this.columnStartDate,
+            this.columnEndDate,
+            this.columnPayment,
+            this.columnSubscription});
+            this.listView1.FullRowSelect = true;
+            this.listView1.GridLines = true;
+            this.listView1.Location = new System.Drawing.Point(77, 1316);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(3482, 323);
+            this.listView1.TabIndex = 21;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            // 
+            // columnID
+            // 
+            this.columnID.Tag = "1";
+            this.columnID.Text = "ID";
+            this.columnID.Width = 200;
+            // 
+            // columnFirstName
+            // 
+            this.columnFirstName.Text = "Vorname";
+            this.columnFirstName.Width = 150;
+            // 
+            // columnLastName
+            // 
+            this.columnLastName.Text = "Nachname";
+            this.columnLastName.Width = 150;
+            // 
+            // columnEmail
+            // 
+            this.columnEmail.Text = "Email";
+            this.columnEmail.Width = 150;
+            // 
+            // columnPassword
+            // 
+            this.columnPassword.Text = "Passwort";
+            this.columnPassword.Width = 150;
+            // 
+            // columnCountry
+            // 
+            this.columnCountry.Text = "Land";
+            this.columnCountry.Width = 150;
+            // 
+            // columnState
+            // 
+            this.columnState.Text = "Bundesland";
+            this.columnState.Width = 150;
+            // 
+            // columnPostcode
+            // 
+            this.columnPostcode.Text = "PLZ";
+            this.columnPostcode.Width = 150;
+            // 
+            // columnCity
+            // 
+            this.columnCity.Text = "Stadt";
+            this.columnCity.Width = 150;
+            // 
+            // columnStreetName
+            // 
+            this.columnStreetName.Text = "Straße";
+            this.columnStreetName.Width = 150;
+            // 
+            // columnStreetNumber
+            // 
+            this.columnStreetNumber.Text = "Straßennummer";
+            this.columnStreetNumber.Width = 150;
+            // 
+            // columnStartDate
+            // 
+            this.columnStartDate.Text = "Anfangsdatum";
+            this.columnStartDate.Width = 150;
+            // 
+            // columnEndDate
+            // 
+            this.columnEndDate.Text = "Enddatum";
+            this.columnEndDate.Width = 150;
+            // 
+            // columnPayment
+            // 
+            this.columnPayment.Text = "Bezahlmethode";
+            this.columnPayment.Width = 150;
+            // 
+            // columnSubscription
+            // 
+            this.columnSubscription.Text = "Abonnement";
+            this.columnSubscription.Width = 150;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(17F, 41F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(3642, 1671);
+            this.Controls.Add(this.listView1);
             this.Controls.Add(this.optionComboBox);
             this.Controls.Add(this.Enter);
             this.Controls.Add(this.dropdownMenuSubscription);
@@ -423,5 +544,21 @@
         private ComboBox dropdownMenuSubscription;
         private Button Enter;
         private ComboBox optionComboBox;
+        private ListView listView1;
+        private ColumnHeader columnID;
+        private ColumnHeader columnFirstName;
+        private ColumnHeader columnLastName;
+        private ColumnHeader columnEmail;
+        private ColumnHeader columnPassword;
+        private ColumnHeader columnCountry;
+        private ColumnHeader columnState;
+        private ColumnHeader columnPostcode;
+        private ColumnHeader columnCity;
+        private ColumnHeader columnStreetName;
+        private ColumnHeader columnStreetNumber;
+        private ColumnHeader columnStartDate;
+        private ColumnHeader columnEndDate;
+        private ColumnHeader columnPayment;
+        private ColumnHeader columnSubscription;
     }
 }
