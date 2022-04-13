@@ -30,5 +30,10 @@
         {
             "idTextfield"
         };
+
+        public static readonly List<string> Anzeigen = new List<string>
+        {
+            "filterComboBox"
+        };
     }
 }

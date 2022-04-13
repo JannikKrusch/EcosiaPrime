@@ -72,6 +72,7 @@
             this.columnEndDate = new System.Windows.Forms.ColumnHeader();
             this.columnPayment = new System.Windows.Forms.ColumnHeader();
             this.columnSubscription = new System.Windows.Forms.ColumnHeader();
+            this.filterComboBox = new System.Windows.Forms.ComboBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -365,7 +366,8 @@
             this.optionComboBox.Items.AddRange(new object[] {
             "Erstellen",
             "Löschen",
-            "Bearbeiten"});
+            "Bearbeiten",
+            "Anzeigen"});
             this.optionComboBox.Location = new System.Drawing.Point(77, 1118);
             this.optionComboBox.Name = "optionComboBox";
             this.optionComboBox.Size = new System.Drawing.Size(650, 114);
@@ -476,11 +478,27 @@
             this.columnSubscription.Text = "Abonnement";
             this.columnSubscription.Width = 150;
             // 
+            // filterComboBox
+            // 
+            this.filterComboBox.AutoCompleteCustomSource.AddRange(new string[] {
+            "Alle",
+            "Eine Person"});
+            this.filterComboBox.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.filterComboBox.FormattingEnabled = true;
+            this.filterComboBox.Items.AddRange(new object[] {
+            "Alle",
+            "Eine Person"});
+            this.filterComboBox.Location = new System.Drawing.Point(1463, 1118);
+            this.filterComboBox.Name = "filterComboBox";
+            this.filterComboBox.Size = new System.Drawing.Size(650, 114);
+            this.filterComboBox.TabIndex = 22;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(17F, 41F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(3642, 1671);
+            this.Controls.Add(this.filterComboBox);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.optionComboBox);
             this.Controls.Add(this.Enter);
@@ -560,5 +578,6 @@
         private ColumnHeader columnEndDate;
         private ColumnHeader columnPayment;
         private ColumnHeader columnSubscription;
+        private ComboBox filterComboBox;
     }
 }

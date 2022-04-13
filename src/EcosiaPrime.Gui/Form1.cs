@@ -15,6 +15,7 @@ namespace EcosiaPrime.Gui
             InitializeComponent();
             listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            filterComboBox.Visible = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -36,7 +37,7 @@ namespace EcosiaPrime.Gui
 
         private void Enter_Click(object sender, EventArgs e)
         {
-            if(optionComboBox.Text == ComboBoxOptionConstants.Bearbeiten)
+            if (optionComboBox.Text == ComboBoxOptionConstants.Bearbeiten)
             {
                 optionComboBox.SelectedIndex = -1;
             }
@@ -61,6 +62,11 @@ namespace EcosiaPrime.Gui
                 case ComboBoxOptionConstants.Löschen:
                     ChangeVisibilityOfFields(ComboBoxOptionConstants.Löschen);
                     break;
+
+                case ComboBoxOptionConstants.Anzeigen:
+                    ChangeVisibilityOfFields(ComboBoxOptionConstants.Anzeigen);
+                    break;
+
                 default:
                     ChangeVisibilityOfFields(ComboBoxOptionConstants.Clear);
                     break;
@@ -98,6 +104,10 @@ namespace EcosiaPrime.Gui
 
                 case ComboBoxOptionConstants.Löschen:
                     return VisibleTextFieldListConstants.Löschen;
+
+                case ComboBoxOptionConstants.Anzeigen:
+                    return VisibleTextFieldListConstants.Anzeigen;
+
                 default:
                     return VisibleTextFieldListConstants.Erstellen;
             }
