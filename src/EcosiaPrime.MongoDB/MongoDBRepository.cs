@@ -7,7 +7,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace EcosiaPrime.MongoDB
-{//
+{
     public class MongoDBRepository : IMongoDBRepository
     {
         private readonly IMongoDatabase _mongoDatabase;

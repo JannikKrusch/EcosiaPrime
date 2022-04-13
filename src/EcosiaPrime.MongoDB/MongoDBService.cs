@@ -81,9 +81,5 @@ namespace EcosiaPrime.MongoDB
             var sortedRecords = records.OrderBy(x => x.Email);
             return sortedRecords;
         }
-
-
-
-
     }
 }

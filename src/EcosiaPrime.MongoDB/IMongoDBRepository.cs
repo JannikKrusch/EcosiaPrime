@@ -1,6 +1,6 @@
 ﻿
 namespace EcosiaPrime.MongoDB
-{//
+{
     public interface IMongoDBRepository
     {
         MongoDBConfiguration GetMongoDBConfiguration();
