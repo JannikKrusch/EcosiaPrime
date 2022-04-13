@@ -87,7 +87,6 @@
             this.label3.Size = new System.Drawing.Size(698, 159);
             this.label3.TabIndex = 2;
             this.label3.Text = "EcosiaPrime";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // idTextfield
             // 
@@ -225,7 +224,6 @@
             this.paymentMethodPanel.Size = new System.Drawing.Size(551, 212);
             this.paymentMethodPanel.TabIndex = 17;
             this.paymentMethodPanel.Text = "Bezahlmethode";
-            this.paymentMethodPanel.Click += new System.EventHandler(this.label2_Click);
             // 
             // dropdownMenuPayment
             // 
