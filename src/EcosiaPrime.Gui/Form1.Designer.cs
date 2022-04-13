@@ -45,13 +45,6 @@
             this.endDateTextfield = new System.Windows.Forms.TextBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.paymentMethodPanel = new System.Windows.Forms.Label();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton7 = new System.Windows.Forms.RadioButton();
-            this.radioButton6 = new System.Windows.Forms.RadioButton();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.radioButton5 = new System.Windows.Forms.RadioButton();
             this.dropdownMenuPayment = new System.Windows.Forms.ComboBox();
             this.dropdownMenuSubscription = new System.Windows.Forms.ComboBox();
             this.Enter = new System.Windows.Forms.Button();
@@ -217,13 +210,6 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.paymentMethodPanel);
-            this.flowLayoutPanel1.Controls.Add(this.radioButton1);
-            this.flowLayoutPanel1.Controls.Add(this.radioButton2);
-            this.flowLayoutPanel1.Controls.Add(this.radioButton3);
-            this.flowLayoutPanel1.Controls.Add(this.radioButton7);
-            this.flowLayoutPanel1.Controls.Add(this.radioButton6);
-            this.flowLayoutPanel1.Controls.Add(this.radioButton4);
-            this.flowLayoutPanel1.Controls.Add(this.radioButton5);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(2909, 556);
             this.flowLayoutPanel1.MaximumSize = new System.Drawing.Size(593, 106);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -240,83 +226,6 @@
             this.paymentMethodPanel.TabIndex = 17;
             this.paymentMethodPanel.Text = "Bezahlmethode";
             this.paymentMethodPanel.Click += new System.EventHandler(this.label2_Click);
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(3, 215);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(228, 45);
-            this.radioButton1.TabIndex = 18;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "radioButton1";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(237, 215);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(228, 45);
-            this.radioButton2.TabIndex = 19;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "radioButton2";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            // 
-            // radioButton3
-            // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(3, 266);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(228, 45);
-            this.radioButton3.TabIndex = 20;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "radioButton3";
-            this.radioButton3.UseVisualStyleBackColor = true;
-            // 
-            // radioButton7
-            // 
-            this.radioButton7.AutoSize = true;
-            this.radioButton7.Location = new System.Drawing.Point(237, 266);
-            this.radioButton7.Name = "radioButton7";
-            this.radioButton7.Size = new System.Drawing.Size(228, 45);
-            this.radioButton7.TabIndex = 19;
-            this.radioButton7.TabStop = true;
-            this.radioButton7.Text = "radioButton7";
-            this.radioButton7.UseVisualStyleBackColor = true;
-            // 
-            // radioButton6
-            // 
-            this.radioButton6.AutoSize = true;
-            this.radioButton6.Location = new System.Drawing.Point(3, 317);
-            this.radioButton6.Name = "radioButton6";
-            this.radioButton6.Size = new System.Drawing.Size(228, 45);
-            this.radioButton6.TabIndex = 19;
-            this.radioButton6.TabStop = true;
-            this.radioButton6.Text = "radioButton6";
-            this.radioButton6.UseVisualStyleBackColor = true;
-            // 
-            // radioButton4
-            // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(237, 317);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(228, 45);
-            this.radioButton4.TabIndex = 19;
-            this.radioButton4.TabStop = true;
-            this.radioButton4.Text = "radioButton4";
-            this.radioButton4.UseVisualStyleBackColor = true;
-            // 
-            // radioButton5
-            // 
-            this.radioButton5.AutoSize = true;
-            this.radioButton5.Location = new System.Drawing.Point(3, 368);
-            this.radioButton5.Name = "radioButton5";
-            this.radioButton5.Size = new System.Drawing.Size(228, 45);
-            this.radioButton5.TabIndex = 19;
-            this.radioButton5.TabStop = true;
-            this.radioButton5.Text = "radioButton5";
-            this.radioButton5.UseVisualStyleBackColor = true;
             // 
             // dropdownMenuPayment
             // 
@@ -551,13 +460,6 @@
         private TextBox endDateTextfield;
         private FlowLayoutPanel flowLayoutPanel1;
         private Label paymentMethodPanel;
-        private RadioButton radioButton1;
-        private RadioButton radioButton2;
-        private RadioButton radioButton3;
-        private RadioButton radioButton7;
-        private RadioButton radioButton6;
-        private RadioButton radioButton4;
-        private RadioButton radioButton5;
         private ComboBox dropdownMenuPayment;
         private ComboBox dropdownMenuSubscription;
         private Button Enter;

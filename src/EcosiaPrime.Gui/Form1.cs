@@ -123,9 +123,9 @@ namespace EcosiaPrime.Gui
 
         private void ClearAllControls()
         {
-            foreach(Control control in _controlsList)
+            foreach (Control control in _controlsList)
             {
-                if(control is TextBox)
+                if (control is TextBox)
                 {
                     control.Text = string.Empty;
                 }
