@@ -41,6 +41,7 @@ namespace EcosiaPrime.Gui
             {
                 optionComboBox.SelectedIndex = -1;
             }
+            ClearAllControls();
         }
 
         private void firstNameTextfield_TextChanged(object sender, EventArgs e)
@@ -118,6 +119,17 @@ namespace EcosiaPrime.Gui
         {
             listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+        }
+
+        private void ClearAllControls()
+        {
+            foreach(Control control in _controlsList)
+            {
+                if(control is TextBox)
+                {
+                    control.Text = string.Empty;
+                }
+            }
         }
     }
 }
