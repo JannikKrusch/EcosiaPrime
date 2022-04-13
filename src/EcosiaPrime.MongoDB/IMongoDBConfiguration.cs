@@ -5,4 +5,4 @@
         public string CollectionName { get; set; }
         public string DataBaseName { get; set; }
     }
-}
+}//

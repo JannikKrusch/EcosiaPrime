@@ -11,4 +11,4 @@ namespace EcosiaPrime.MongoDB
         public string DataBaseName { get; set; }
         public string CollectionName { get; set; }
     }
-}
+}//
