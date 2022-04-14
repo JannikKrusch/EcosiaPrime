@@ -41,6 +41,8 @@ namespace EcosiaPrime.Gui
         {
         }
 
+        
+
         private void optionComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (optionComboBox.Text)
@@ -102,6 +104,9 @@ namespace EcosiaPrime.Gui
                 case ComboBoxOptionConstants.Anzeigen:
                     return VisibleTextFieldListConstants.Anzeigen;
 
+                case ComboBoxOptionConstants.GetByID:
+                    return VisibleTextFieldListConstants.GetByID;
+
                 default:
                     return VisibleTextFieldListConstants.Erstellen;
             }
@@ -127,6 +132,14 @@ namespace EcosiaPrime.Gui
 
         private void filterComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if(filterComboBox.Text == ComboBoxOptionConstants.GetByID)
+            {
+                ChangeVisibilityOfFields(ComboBoxOptionConstants.GetByID);
+            }
+            else if(filterComboBox.Text != String.Empty)
+            {
+                ChangeVisibilityOfFields(ComboBoxOptionConstants.Anzeigen);
+            }
         }
 
         private void emailTextfield_TextChanged(object sender, EventArgs e)

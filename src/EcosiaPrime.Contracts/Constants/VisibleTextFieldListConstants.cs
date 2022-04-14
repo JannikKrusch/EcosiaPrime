@@ -35,5 +35,11 @@
         {
             "filterComboBox"
         };
+
+        public static readonly List<string> GetByID = new List<string>
+        {
+            "filterComboBox",
+            "idTextfield"
+        };
     }
 }
