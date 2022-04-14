@@ -41,8 +41,6 @@ namespace EcosiaPrime.Gui
         {
         }
 
-        
-
         private void optionComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (optionComboBox.Text)
@@ -66,6 +64,11 @@ namespace EcosiaPrime.Gui
                 default:
                     ChangeVisibilityOfFields(ComboBoxOptionConstants.Clear);
                     break;
+            }
+
+            if (optionComboBox.Text != ComboBoxOptionConstants.Anzeigen)
+            {
+                filterComboBox.SelectedIndex = -1;
             }
         }
 
@@ -132,11 +135,11 @@ namespace EcosiaPrime.Gui
 
         private void filterComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(filterComboBox.Text == ComboBoxOptionConstants.GetByID)
+            if (filterComboBox.Text == ComboBoxOptionConstants.GetByID)
             {
                 ChangeVisibilityOfFields(ComboBoxOptionConstants.GetByID);
             }
-            else if(filterComboBox.Text != String.Empty)
+            else if (filterComboBox.Text != String.Empty)
             {
                 ChangeVisibilityOfFields(ComboBoxOptionConstants.Anzeigen);
             }
@@ -144,22 +147,18 @@ namespace EcosiaPrime.Gui
 
         private void emailTextfield_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void cityTextfield_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void countryTextfield_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void passwordTextfield_TextChanged(object sender, EventArgs e)
         {
-
         }
     }
 }
