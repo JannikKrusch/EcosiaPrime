@@ -13,8 +13,8 @@ namespace EcosiaPrime.Gui
             _controlsList = Controls.OfType<Control>().Where(x => x is TextBox || x is ComboBox && x.Name != "optionComboBox");
             _mongoDBService = mongoDBService;
             InitializeComponent();
-            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             filterComboBox.Visible = false;
         }
 
@@ -110,8 +110,8 @@ namespace EcosiaPrime.Gui
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
         private void ClearAllControls()
@@ -127,6 +127,26 @@ namespace EcosiaPrime.Gui
 
         private void filterComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+        }
+
+        private void emailTextfield_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cityTextfield_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void countryTextfield_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void passwordTextfield_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
