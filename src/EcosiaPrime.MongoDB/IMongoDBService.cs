@@ -4,15 +4,17 @@ namespace EcosiaPrime.MongoDB
 {
     public interface IMongoDBService
     {
-        MongoDBConfiguration GetMongoDBConfiguration();
         Task<bool> DeleteRecordAsync<T>(string collectionName, string id);
+        MongoDBConfiguration GetMongoDBConfiguration();
         Task<bool> InsertRecordAsync<T>(string collectionName, T record);
         Task<T> LoadRecordByIdAsync<T>(string collectionName, string id);
         Task<IEnumerable<T>> LoadRecordsAsync<T>(string collectionName);
+        Task<IEnumerable<Client>> SortRecordByCounty(string collectionName);
         Task<IEnumerable<Client>> SortRecordByEmail(string collectionName);
         Task<IEnumerable<Client>> SortRecordByFirstName(string collectionName);
         Task<IEnumerable<Client>> SortRecordById(string collectionName);
         Task<IEnumerable<Client>> SortRecordByLastName(string collectionName);
+        Task<IEnumerable<Client>> SortRecordBySubscriptionType(string collectionName);
         Task<bool> UpsertRecordAsync<T>(string collectionName, string id, T record);
     }
-}//
+}

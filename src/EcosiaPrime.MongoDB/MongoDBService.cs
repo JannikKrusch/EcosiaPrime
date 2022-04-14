@@ -81,5 +81,19 @@ namespace EcosiaPrime.MongoDB
             var sortedRecords = records.OrderBy(x => x.Email);
             return sortedRecords;
         }
+
+        public async Task<IEnumerable<Client>> SortRecordByCounty(string collectionName)
+        {
+            var records = await LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
+            var sortedRecords = records.OrderBy(x => x.Address.Country);
+            return sortedRecords;
+        }
+
+        public async Task<IEnumerable<Client>> SortRecordBySubscriptionType(string collectionName)
+        {
+            var records = await LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
+            var sortedRecords = records.OrderBy(x => x.Subscription.SubscriptionType);
+            return sortedRecords;
+        }
     }
 }
