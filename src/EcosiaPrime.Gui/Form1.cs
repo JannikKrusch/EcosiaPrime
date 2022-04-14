@@ -10,7 +10,7 @@ namespace EcosiaPrime.Gui
 
         public Form1(IMongoDBService mongoDBService)
         {
-            _controlsList = Controls.OfType<Control>().Where(x => x is TextBox || x is ComboBox && x.Name != "optionComboBox");
+            _controlsList = Controls.OfType<Control>().Where(x => x is TextBox || x is ComboBox && x.Name != optionComboBox.Name);
             _mongoDBService = mongoDBService;
             InitializeComponent();
             dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
@@ -129,6 +129,11 @@ namespace EcosiaPrime.Gui
                 if (control is TextBox)
                 {
                     control.Text = string.Empty;
+                }
+                else if(control is ComboBox && control.Name != filterComboBox.Name)
+                {
+                    var comboBox = (ComboBox)control;
+                    comboBox.SelectedIndex = -1;
                 }
             }
         }
