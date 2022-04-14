@@ -301,7 +301,7 @@
             this.columnSubscription});
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
-            this.listView1.Location = new System.Drawing.Point(77, 1316);
+            this.listView1.Location = new System.Drawing.Point(60, 1305);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(3482, 323);
             this.listView1.TabIndex = 21;
@@ -393,12 +393,18 @@
             this.filterComboBox.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.filterComboBox.FormattingEnabled = true;
             this.filterComboBox.Items.AddRange(new object[] {
-            "Alle",
-            "Eine Person"});
-            this.filterComboBox.Location = new System.Drawing.Point(1463, 1118);
+            "Alle (Sortiert nach ID)",
+            "Alle (Sortiert nach Vorname)",
+            "Alle (sortiert nach Nachname)",
+            "Alle (sortiert nach Email)",
+            "Alle (sortiert nach Land)",
+            "Alle (sortiert nach Abonnement)",
+            "Eine Person (durch ID)"});
+            this.filterComboBox.Location = new System.Drawing.Point(1165, 1118);
             this.filterComboBox.Name = "filterComboBox";
-            this.filterComboBox.Size = new System.Drawing.Size(650, 114);
+            this.filterComboBox.Size = new System.Drawing.Size(1200, 114);
             this.filterComboBox.TabIndex = 22;
+            this.filterComboBox.SelectedIndexChanged += new System.EventHandler(this.filterComboBox_SelectedIndexChanged);
             // 
             // Form1
             // 

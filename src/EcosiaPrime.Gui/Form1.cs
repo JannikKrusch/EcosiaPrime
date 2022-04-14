@@ -33,6 +33,7 @@ namespace EcosiaPrime.Gui
             {
                 optionComboBox.SelectedIndex = -1;
             }
+
             ClearAllControls();
         }
 
@@ -122,6 +123,10 @@ namespace EcosiaPrime.Gui
                     control.Text = string.Empty;
                 }
             }
+        }
+
+        private void filterComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
         }
     }
 }
