@@ -17,7 +17,7 @@ namespace EcosiaPrime.Gui
             Console.WriteLine(json);
             var mongoDBConfiguration = new MongoDBConfiguration();
             var mongoDBConfirgurationJson = json["MongoDBConfiguration"];
-            mongoDBConfiguration.DateBaseName = mongoDBConfirgurationJson["DataBaseName"];
+            mongoDBConfiguration.DataBaseName = mongoDBConfirgurationJson["DataBaseName"];
             mongoDBConfiguration.CollectionName = mongoDBConfirgurationJson["CollectionName"];
 
             IMongoDBRepository mongoDBRepository = new MongoDBRepository(mongoDBConfiguration);

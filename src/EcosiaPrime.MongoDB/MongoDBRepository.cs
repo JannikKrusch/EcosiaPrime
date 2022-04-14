@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace EcosiaPrime.MongoDB
@@ -12,11 +7,17 @@ namespace EcosiaPrime.MongoDB
     {
         private readonly IMongoDatabase _mongoDatabase;
         private readonly MongoDBConfiguration _mongoDBConfiguration;
+
         public MongoDBRepository(MongoDBConfiguration mongoDBConfiguration)
         {
             _mongoDBConfiguration = mongoDBConfiguration;
             var client = new MongoClient();
-            _mongoDatabase = client.GetDatabase(_mongoDBConfiguration.DateBaseName);
+            _mongoDatabase = client.GetDatabase(_mongoDBConfiguration.DataBaseName);
+        }
+
+        public MongoDBConfiguration GetMongoDBConfiguration()
+        {
+            return _mongoDBConfiguration;
         }
 
         public async Task<bool> InsertRecordAsync<T>(string collectionName, T record)
@@ -31,7 +32,6 @@ namespace EcosiaPrime.MongoDB
             {
                 return false;
             }
-            
         }
 
         public async Task<T> LoadRecordByIdAsync<T>(string collectionName, string id)
