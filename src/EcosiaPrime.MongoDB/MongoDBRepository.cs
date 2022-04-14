@@ -14,7 +14,7 @@ namespace EcosiaPrime.MongoDB
             var client = new MongoClient();
             _mongoDatabase = client.GetDatabase(_mongoDBConfiguration.DataBaseName);
         }
-
+        //test
         public MongoDBConfiguration GetMongoDBConfiguration()
         {
             return _mongoDBConfiguration;
