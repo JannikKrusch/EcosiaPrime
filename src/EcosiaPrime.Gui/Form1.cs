@@ -1,17 +1,16 @@
 using EcosiaPrime.Contracts.Constants;
-using EcosiaPrime.MongoDB;
 
 namespace EcosiaPrime.Gui
 {
     public partial class Form1 : Form
     {
-        private readonly IMongoDBService _mongoDBService;
+        private readonly IGuiService _guiService;
         private IEnumerable<Control> _controlsList;
 
-        public Form1(IMongoDBService mongoDBService)
+        public Form1(IGuiService guiService)
         {
             _controlsList = Controls.OfType<Control>().Where(x => x is TextBox || x is ComboBox && x.Name != "optionComboBox");
-            _mongoDBService = mongoDBService;
+            _guiService = guiService;
             InitializeComponent();
             dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
@@ -27,13 +26,38 @@ namespace EcosiaPrime.Gui
             var text = dropdownMenuPayment.Text;
         }
 
-        private void Enter_Click(object sender, EventArgs e)
+        private async void Enter_Click(object sender, EventArgs e)
         {
-            if (optionComboBox.Text == ComboBoxOptionConstants.Bearbeiten)
+            if (optionComboBox.Text == ComboBoxOptionConstants.Erstellen)
             {
-                optionComboBox.SelectedIndex = -1;
+                await _guiService.CreateClientAsync(responseLabel, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
+                    passwordTextfield, countryTextfield, startDateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
+                    streetNumberTextfield, startDateTextfield, endDateTextfield, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
             }
+            else if (optionComboBox.Text == ComboBoxOptionConstants.Bearbeiten)
+            {
+                await _guiService.UpdateClientAsync(
+                    responseLabel, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
+                    passwordTextfield, countryTextfield, startDateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
+                    streetNumberTextfield, startDateTextfield, endDateTextfield, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
 
+                optionComboBox.Invoke(new Action(() =>
+                {
+                     optionComboBox.SelectedIndex = -1;
+                }));
+            }
+            else if(optionComboBox.Text == ComboBoxOptionConstants.Löschen)
+            {
+                await _guiService.DeleteClientAsync(
+                    responseLabel, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
+                    passwordTextfield, countryTextfield, startDateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
+                    streetNumberTextfield, startDateTextfield, endDateTextfield, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
+            }
+            else if(optionComboBox.Text == ComboBoxOptionConstants.Anzeigen)
+            {
+
+                // TODO: Anzeige Methode einfügen
+            }
             ClearAllControls();
         }
 
@@ -75,17 +99,23 @@ namespace EcosiaPrime.Gui
                 {
                     if (control.Name == opt)
                     {
-                        control.Visible = true;
+                        control.Invoke(new Action(() =>
+                        {
+                            control.Visible = true;
+                        }));
                         break;
                     }
                     else
                     {
-                        control.Visible = false;
+                        control.Invoke(new Action(() =>
+                        {
+                            control.Visible = false;
+                        }));
                     }
                 }
             }
         }
-        
+
         public List<string> GetVisibleFieldsList(string option)
         {
             switch (option)
@@ -120,7 +150,10 @@ namespace EcosiaPrime.Gui
             {
                 if (control is TextBox)
                 {
-                    control.Text = string.Empty;
+                    control.Invoke(new Action(() =>
+                    {
+                        control.Text = string.Empty;
+                    }));
                 }
             }
         }
@@ -131,22 +164,18 @@ namespace EcosiaPrime.Gui
 
         private void emailTextfield_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void cityTextfield_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void countryTextfield_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void passwordTextfield_TextChanged(object sender, EventArgs e)
         {
-
         }
     }
 }

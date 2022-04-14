@@ -438,11 +438,15 @@
             // 
             this.responseLabel.AutoSize = true;
             this.responseLabel.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.responseLabel.Location = new System.Drawing.Point(964, 867);
+            this.responseLabel.Location = new System.Drawing.Point(550, 867); //964, 867
             this.responseLabel.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.responseLabel.Name = "responseLabel";
-            this.responseLabel.Size = new System.Drawing.Size(0, 54);
+            this.responseLabel.Size = new System.Drawing.Size(0, 54); //0, 54
             this.responseLabel.TabIndex = 23;
+            //this.responseLabel.Text = "Hallo Welt, das ist ein Text hfjjfhsjfhsdjfh hfjshf";
+            this.responseLabel.TextAlign = ContentAlignment.MiddleLeft;
+            //this.responseLabel.BackColor = Color.Black;
+            
             // 
             // Form1
             // 

@@ -36,10 +36,12 @@ namespace EcosiaPrime.Gui
             var record = await mongoDBRepository.LoadRecordByIdAsync<Client>(mongoDBConfiguration.CollectionName, "1").ConfigureAwait(false);
             record.Email = "NeueEmail@t-online.de";
             var z = await mongoDBRepository.UpsertRecordAsync<Client>(mongoDBConfiguration.CollectionName, record.Id, record).ConfigureAwait(false);
+
+            IGuiService guiService = new GuiService(mongoDBService);
             // To customize application configuration such as set high DPI settings or default font
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1(mongoDBService));
+            Application.Run(new Form1(guiService));
         }
     }
 }
