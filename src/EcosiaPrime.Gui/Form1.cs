@@ -85,7 +85,7 @@ namespace EcosiaPrime.Gui
                 }
             }
         }
-
+        
         public List<string> GetVisibleFieldsList(string option)
         {
             switch (option)
