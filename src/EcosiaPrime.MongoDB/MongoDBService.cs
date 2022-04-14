@@ -54,42 +54,42 @@ namespace EcosiaPrime.MongoDB
          * Sort Methods 
         */
 
-        public async Task<IEnumerable<Client>> SortRecordById(string collectionName)
+        public async Task<IEnumerable<Client>> SortRecordByIdAsync(string collectionName)
         {
             var records = await LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
             var sortedRecords = records.OrderBy(x => x.Id);
             return sortedRecords;
         }
 
-        public async Task<IEnumerable<Client>> SortRecordByFirstName(string collectionName)
+        public async Task<IEnumerable<Client>> SortRecordByFirstNameAsync(string collectionName)
         {
             var records = await LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
             var sortedRecords = records.OrderBy(x => x.FirstName);
             return sortedRecords;
         }
 
-        public async Task<IEnumerable<Client>> SortRecordByLastName(string collectionName)
+        public async Task<IEnumerable<Client>> SortRecordByLastNameAsync(string collectionName)
         {
             var records = await LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
             var sortedRecords = records.OrderBy(x => x.LastName);
             return sortedRecords;
         }
 
-        public async Task<IEnumerable<Client>> SortRecordByEmail(string collectionName)
+        public async Task<IEnumerable<Client>> SortRecordByEmailAsync(string collectionName)
         {
             var records = await LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
             var sortedRecords = records.OrderBy(x => x.Email);
             return sortedRecords;
         }
 
-        public async Task<IEnumerable<Client>> SortRecordByCounty(string collectionName)
+        public async Task<IEnumerable<Client>> SortRecordByCountyAsync(string collectionName)
         {
             var records = await LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
             var sortedRecords = records.OrderBy(x => x.Address.Country);
             return sortedRecords;
         }
 
-        public async Task<IEnumerable<Client>> SortRecordBySubscriptionType(string collectionName)
+        public async Task<IEnumerable<Client>> SortRecordBySubscriptionTypeAsync(string collectionName)
         {
             var records = await LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
             var sortedRecords = records.OrderBy(x => x.Subscription.SubscriptionType);

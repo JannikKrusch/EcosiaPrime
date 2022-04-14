@@ -9,12 +9,12 @@ namespace EcosiaPrime.MongoDB
         Task<bool> InsertRecordAsync<T>(string collectionName, T record);
         Task<T> LoadRecordByIdAsync<T>(string collectionName, string id);
         Task<IEnumerable<T>> LoadRecordsAsync<T>(string collectionName);
-        Task<IEnumerable<Client>> SortRecordByCounty(string collectionName);
-        Task<IEnumerable<Client>> SortRecordByEmail(string collectionName);
-        Task<IEnumerable<Client>> SortRecordByFirstName(string collectionName);
-        Task<IEnumerable<Client>> SortRecordById(string collectionName);
-        Task<IEnumerable<Client>> SortRecordByLastName(string collectionName);
-        Task<IEnumerable<Client>> SortRecordBySubscriptionType(string collectionName);
+        Task<IEnumerable<Client>> SortRecordByCountyAsync(string collectionName);
+        Task<IEnumerable<Client>> SortRecordByEmailAsync(string collectionName);
+        Task<IEnumerable<Client>> SortRecordByFirstNameAsync(string collectionName);
+        Task<IEnumerable<Client>> SortRecordByIdAsync(string collectionName);
+        Task<IEnumerable<Client>> SortRecordByLastNameAsync(string collectionName);
+        Task<IEnumerable<Client>> SortRecordBySubscriptionTypeAsync(string collectionName);
         Task<bool> UpsertRecordAsync<T>(string collectionName, string id, T record);
     }
 }
