@@ -422,20 +422,13 @@ namespace EcosiaPrime.Gui
             this.filterComboBox.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.filterComboBox.FormattingEnabled = true;
             this.filterComboBox.Items.AddRange(new object[] {
-                FilterOptionsConstants.AllByID,
-                FilterOptionsConstants.AllByFirstname,
-                FilterOptionsConstants.AllByLastName,
-                FilterOptionsConstants.AllByEmail,
-                FilterOptionsConstants.AllByCountry,
-                FilterOptionsConstants.AllBySubscription,
-                FilterOptionsConstants.OneById
-            /*"Alle (Sortiert nach ID)",
+            "Alle(Sortiert nach ID)",
             "Alle (Sortiert nach Vorname)",
             "Alle (sortiert nach Nachname)",
             "Alle (sortiert nach Email)",
             "Alle (sortiert nach Land)",
             "Alle (sortiert nach Abonnement)",
-            "Eine Person (durch ID)"*/});
+            "Eine Person (durch ID)"});
             this.filterComboBox.Location = new System.Drawing.Point(700, 545);
             this.filterComboBox.Margin = new System.Windows.Forms.Padding(1);
             this.filterComboBox.Name = "filterComboBox";
@@ -447,15 +440,12 @@ namespace EcosiaPrime.Gui
             // 
             this.responseLabel.AutoSize = true;
             this.responseLabel.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.responseLabel.Location = new System.Drawing.Point(550, 867); //964, 867
+            this.responseLabel.Location = new System.Drawing.Point(550, 867);
             this.responseLabel.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.responseLabel.Name = "responseLabel";
-            this.responseLabel.Size = new System.Drawing.Size(0, 54); //0, 54
+            this.responseLabel.Size = new System.Drawing.Size(0, 54);
             this.responseLabel.TabIndex = 23;
-            //this.responseLabel.Text = "Hallo Welt, das ist ein Text hfjjfhsjfhsdjfh hfjshf";
-            this.responseLabel.TextAlign = ContentAlignment.MiddleLeft;
-            //this.responseLabel.BackColor = Color.Black;
-            
+            this.responseLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Form1
             // 

@@ -33,6 +33,7 @@
 
         public static readonly List<string> Anzeigen = new List<string>
         {
+            "idTextfield",
             "filterComboBox"
         };
     }

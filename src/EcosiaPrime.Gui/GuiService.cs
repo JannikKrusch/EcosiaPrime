@@ -515,6 +515,10 @@ namespace EcosiaPrime.Gui
                     
                     break;
             }
+            table.Invoke(new Action(() =>
+            {
+                table.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            }));
         }
     }
 }

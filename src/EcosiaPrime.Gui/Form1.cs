@@ -58,10 +58,14 @@ namespace EcosiaPrime.Gui
             }
             else if(optionComboBox.Text == ComboBoxOptionConstants.Anzeigen)
             {
-
+                //dataGrid.HeaderStyle = (ColumnHeaderStyle)ColumnHeaderAutoResizeStyle.ColumnContent;
+                //dataGrid.AutoResizeColumn(1, ColumnHeaderAutoResizeStyle.ColumnContent);
                 await _guiService.ShowClientsAsync(filterComboBox, dataGrid, idTextfield.Text).ConfigureAwait(false);
                 //ClearAllControls();
             }
+            
+            
+            
         }
 
         private void firstNameTextfield_TextChanged(object sender, EventArgs e)
@@ -96,6 +100,16 @@ namespace EcosiaPrime.Gui
 
         public void ChangeVisibilityOfFields(string option)
         {
+            if(_controlsList == null)
+            {
+                return;
+            }
+
+            if(_controlsList.Count() > 0)
+            {
+                filterComboBox.SelectedIndex = 0;
+            }
+
             foreach (Control control in _controlsList)
             {
                 foreach (string opt in GetVisibleFieldsList(option))
