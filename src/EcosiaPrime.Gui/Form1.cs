@@ -31,14 +31,16 @@ namespace EcosiaPrime.Gui
             if (optionComboBox.Text == ComboBoxOptionConstants.Erstellen)
             {
                 await _guiService.CreateClientAsync(responseLabel, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
-                    passwordTextfield, countryTextfield, startDateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
+                    passwordTextfield, countryTextfield, stateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
                     streetNumberTextfield, startDateTextfield, endDateTextfield, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
+                ClearAllControls();
             }
             else if (optionComboBox.Text == ComboBoxOptionConstants.Bearbeiten)
             {
+                //Update Gui Logik ist nicht richtig, wenn man die daten geladen hat, alles ausgefüllt hat und dann auf enter drückt, wird die options auswahl zurückgesetzt
                 await _guiService.UpdateClientAsync(
                     responseLabel, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
-                    passwordTextfield, countryTextfield, startDateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
+                    passwordTextfield, countryTextfield, stateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
                     streetNumberTextfield, startDateTextfield, endDateTextfield, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
 
                 optionComboBox.Invoke(new Action(() =>
@@ -50,15 +52,16 @@ namespace EcosiaPrime.Gui
             {
                 await _guiService.DeleteClientAsync(
                     responseLabel, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
-                    passwordTextfield, countryTextfield, startDateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
+                    passwordTextfield, countryTextfield, stateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
                     streetNumberTextfield, startDateTextfield, endDateTextfield, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
+                ClearAllControls();
             }
             else if(optionComboBox.Text == ComboBoxOptionConstants.Anzeigen)
             {
 
-                // TODO: Anzeige Methode einfügen
+                await _guiService.ShowClientsAsync(filterComboBox, dataGrid, idTextfield.Text).ConfigureAwait(false);
+                //ClearAllControls();
             }
-            ClearAllControls();
         }
 
         private void firstNameTextfield_TextChanged(object sender, EventArgs e)

@@ -20,7 +20,7 @@ namespace EcosiaPrime.Gui
 
         public bool ArePersonInputFieldsEmptyExeptId(TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password)
         {
-            return (id.Text != "" || firstName.Text == "" || lastName.Text == "" || email.Text == "" || password.Text == "");
+            return (id.Text != "" && (firstName.Text == "" || lastName.Text == "" || email.Text == "" || password.Text == ""));
         }
 
         public bool AreAdressInputFieldsEmpty(TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber)
@@ -37,6 +37,54 @@ namespace EcosiaPrime.Gui
         {
             var exists = await _mongoDBService.LoadRecordByIdAsync<Client>(collectionName, id).ConfigureAwait(false);
             return exists != null;
+        }
+
+        public string CheckInputFieldsEmpty(
+            Label responseLabel,
+            TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
+            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber,
+            TextBox startDate, TextBox endDate, ComboBox paymentMethod, ComboBox subscriptionType)
+        {
+            var responseText = "";
+            if (ArePersonInputFieldsEmpty(id, firstName, lastName, email, password))
+            {
+                responseText += ResponseMessagesConstants.PersonDataInputFieldsAreEmpty + "\n";
+            }
+
+            if (AreAdressInputFieldsEmpty(country, state, postCode, city, street, streetNumber))
+            {
+                responseText += ResponseMessagesConstants.AddressDataInputFieldsAreEmpty + "\n";
+            }
+
+            if (ArePaymentSubscriptionInputFieldsEmpty(startDate, endDate, paymentMethod, subscriptionType))
+            {
+                responseText += ResponseMessagesConstants.PaymentSubscriptionInputFieldsAreEmpty;
+            }
+            return responseText;
+        }
+
+        public string CheckInputFieldsEmptyExeptID(
+            Label responseLabel,
+            TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
+            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber,
+            TextBox startDate, TextBox endDate, ComboBox paymentMethod, ComboBox subscriptionType)
+        {
+            var responseText = "";
+            if (!ArePersonInputFieldsEmptyExeptId(id, firstName, lastName, email, password))
+            {
+                responseText += ResponseMessagesConstants.PersonDataInputFieldsAreEmptyExceptID + "\n";
+            }
+
+            if (AreAdressInputFieldsEmpty(country, state, postCode, city, street, streetNumber))
+            {
+                responseText += ResponseMessagesConstants.AddressDataInputFieldsAreEmpty + "\n";
+            }
+
+            if (ArePaymentSubscriptionInputFieldsEmpty(startDate, endDate, paymentMethod, subscriptionType))
+            {
+                responseText += ResponseMessagesConstants.PaymentSubscriptionInputFieldsAreEmpty;
+            }
+            return responseText;
         }
 
         public string GetPaymentMethod(string paymentString)
@@ -75,13 +123,37 @@ namespace EcosiaPrime.Gui
             return text;
         }
 
+        public void InvokeComboBox(ComboBox comboBox, string input)
+        {
+            comboBox.Invoke(new Action(() =>
+            {
+                comboBox.Text = input;
+            }));
+        }
+
         public void InvokeTextBox(TextBox textBox, string input)
         {
             textBox.Invoke(new Action(() =>
             {
                 textBox.Text = input;
             }));
-            
+        }
+
+        public void InvokeLabel(Label label, string input)
+        {
+            label.Invoke(new Action(() =>
+            {
+                label.Text = input;
+            }));
+        }
+
+        public void InvokeListView(ListView listView, string[] input)
+        {
+            var listViewItem = new ListViewItem(input);
+            listView.Invoke(new Action(() =>
+            {
+                listView.Items.Add(listViewItem);
+            }));
         }
 
         public async void StartButtonPressed(
@@ -128,10 +200,6 @@ namespace EcosiaPrime.Gui
                     country, state, postCode, city, street, streetNumber,
                     startDate, endDate, paymentMethod, subscriptionType).ConfigureAwait(false);
             }
-            else if (options == ComboBoxOptionConstants.Anzeigen)
-            {
-                await ShowClientsAsync(filter).ConfigureAwait(false);
-            }
         }
 
         public async Task CreateClientAsync(
@@ -140,39 +208,21 @@ namespace EcosiaPrime.Gui
             TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber,
             TextBox startDate, TextBox endDate, ComboBox paymentMethod, ComboBox subscriptionType)
         {
-            if (ArePersonInputFieldsEmpty(id, firstName, lastName, email, password))
-            {
-                responseLabel.Invoke(new Action(() =>
-                {
-                    responseLabel.Text = ResponseMessagesConstants.PersonDataInputFieldsAreEmpty;
-                }));
-                return;
-            }
+            var text = CheckInputFieldsEmpty(
+                responseLabel,
+                id, firstName, lastName, email,
+                password, country, state, postCode, city, street,
+                streetNumber, startDate, endDate, paymentMethod, subscriptionType);
 
-            if (AreAdressInputFieldsEmpty(country, state, postCode, city, street, streetNumber))
+            if (text != "")
             {
-                responseLabel.Invoke(new Action(() =>
-                {
-                    responseLabel.Text = ResponseMessagesConstants.AddressDataInputFieldsAreEmpty;
-                }));
-                return;
-            }
-
-            if (ArePaymentSubscriptionInputFieldsEmpty(startDate, endDate, paymentMethod, subscriptionType))
-            {
-                responseLabel.Invoke(new Action(() =>
-                {
-                    responseLabel.Text = ResponseMessagesConstants.PaymentSubscriptionInputFieldsAreEmpty;
-                }));
+                InvokeLabel(responseLabel, text);
                 return;
             }
 
             if (await DoesIdExist(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
             {
-                responseLabel.Invoke(new Action(() =>
-                {
-                    responseLabel.Text = ResponseMessagesConstants.IDAlreadyExistsInDB;
-                }));
+                InvokeLabel(responseLabel, ResponseMessagesConstants.IDAlreadyExistsInDB);
                 return;
             }
 
@@ -201,17 +251,11 @@ namespace EcosiaPrime.Gui
             var successful = await _mongoDBService.InsertRecordAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, client).ConfigureAwait(false);
             if (successful)
             {
-                responseLabel.Invoke(new Action(() =>
-                {
-                    responseLabel.Text = ResponseMessagesConstants.AddClientToDBSuccessful;
-                }));
+                InvokeLabel(responseLabel, ResponseMessagesConstants.AddClientToDBSuccessful);
             }
             else
             {
-                responseLabel.Invoke(new Action(() =>
-                {
-                    responseLabel.Text = ResponseMessagesConstants.AddClientToDBFailure;
-                }));
+                InvokeLabel(responseLabel, ResponseMessagesConstants.AddClientToDBFailure);
             }
         }
 
@@ -223,10 +267,7 @@ namespace EcosiaPrime.Gui
         {
             if (!await DoesIdExist(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
             {
-                responseLabel.Invoke(new Action(() =>
-                {
-                    responseLabel.Text = ResponseMessagesConstants.IDDoesntExistInDB;
-                }));
+                InvokeLabel(responseLabel, ResponseMessagesConstants.IDDoesntExistInDB);
                 return;
             }
 
@@ -239,56 +280,32 @@ namespace EcosiaPrime.Gui
                 InvokeTextBox(lastName, clientDB.LastName);
                 InvokeTextBox(email, clientDB.Email);
                 InvokeTextBox(password, clientDB.Password);
+
                 InvokeTextBox(country, clientDB.Address.Country);
                 InvokeTextBox(state, clientDB.Address.State);
                 InvokeTextBox(postCode, clientDB.Address.PostCode);
                 InvokeTextBox(city, clientDB.Address.City);
                 InvokeTextBox(street, clientDB.Address.Street);
                 InvokeTextBox(streetNumber, clientDB.Address.StreetNumber);
+
                 InvokeTextBox(startDate, clientDB.Subscription.StartDate);
                 InvokeTextBox(endDate, clientDB.Subscription.EndDate);
+                InvokeComboBox(paymentMethod, clientDB.Subscription.PaymentMethod);
+                InvokeComboBox(subscriptionType, clientDB.Subscription.SubscriptionType);
 
-                paymentMethod.Invoke(new Action(() =>
-                {
-                    paymentMethod.Text = clientDB.Subscription.PaymentMethod;
-                }));
-
-                subscriptionType.Invoke(new Action(() =>
-                {
-                    subscriptionType.Text = clientDB.Subscription.SubscriptionType;
-                }));
-
-                responseLabel.Invoke(new Action(() =>
-                {
-                    responseLabel.Text = clientDB.Id;
-                }));
+                InvokeLabel(responseLabel, "");
             }
             else
             {
-                if (ArePersonInputFieldsEmpty(id, firstName, lastName, email, password))
-                {
-                    responseLabel.Invoke(new Action(() =>
-                    {
-                        responseLabel.Text = ResponseMessagesConstants.PersonDataInputFieldsAreEmpty;
-                    }));
-                    return;
-                }
+                var text = CheckInputFieldsEmptyExeptID(
+                responseLabel,
+                id, firstName, lastName, email,
+                password, country, state, postCode, city, street,
+                streetNumber, startDate, endDate, paymentMethod, subscriptionType);
 
-                if (AreAdressInputFieldsEmpty(country, state, postCode, city, street, streetNumber))
+                if (text != "")
                 {
-                    responseLabel.Invoke(new Action(() =>
-                    {
-                        responseLabel.Text = ResponseMessagesConstants.AddressDataInputFieldsAreEmpty;
-                    }));
-                    return;
-                }
-
-                if (ArePaymentSubscriptionInputFieldsEmpty(startDate, endDate, paymentMethod, subscriptionType))
-                {
-                    responseLabel.Invoke(new Action(() =>
-                    {
-                        responseLabel.Text = ResponseMessagesConstants.PaymentSubscriptionInputFieldsAreEmpty;
-                    }));
+                    InvokeLabel(responseLabel, text);
                     return;
                 }
 
@@ -317,6 +334,7 @@ namespace EcosiaPrime.Gui
                 var successful = await _mongoDBService.InsertRecordAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, client).ConfigureAwait(false);
                 if (successful)
                 {
+                    InvokeLabel(responseLabel, ResponseMessagesConstants.UpdateClientToDBSuccessful);
                     responseLabel.Invoke(new Action(() =>
                     {
                         responseLabel.Text = ResponseMessagesConstants.UpdateClientToDBSuccessful;
@@ -324,6 +342,7 @@ namespace EcosiaPrime.Gui
                 }
                 else
                 {
+                    InvokeLabel(responseLabel, ResponseMessagesConstants.UpdateClientToDBFailure);
                     responseLabel.Invoke(new Action(() =>
                     {
                         responseLabel.Text = ResponseMessagesConstants.UpdateClientToDBFailure;
@@ -338,8 +357,22 @@ namespace EcosiaPrime.Gui
             TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber,
             TextBox startDate, TextBox endDate, ComboBox paymentMethod, ComboBox subscriptionType)
         {
-            if (ArePersonInputFieldsEmptyExeptId(id, firstName, lastName, email, password))
+            var text = "";
+
+            if (!await DoesIdExist(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
             {
+                text += ResponseMessagesConstants.IDDoesntExistInDB;
+            }
+
+            if (text != "")
+            {
+                InvokeLabel(responseLabel, text);
+                return;
+            }
+
+            /*if (ArePersonInputFieldsEmptyExeptId(id, firstName, lastName, email, password))
+            {
+                InvokeLabel(responseLabel, ResponseMessagesConstants.PersonDataInputFieldsAreEmptyExceptID);
                 responseLabel.Invoke(new Action(() =>
                 {
                     responseLabel.Text = ResponseMessagesConstants.PersonDataInputFieldsAreEmptyExceptID;
@@ -348,51 +381,140 @@ namespace EcosiaPrime.Gui
 
             if (AreAdressInputFieldsEmpty(country, state, postCode, city, street, streetNumber))
             {
-                responseLabel.Invoke(new Action(() =>
-                {
-                    responseLabel.Text = ResponseMessagesConstants.AddressDataInputFieldsAreEmpty;
-                }));
+                InvokeLabel(responseLabel, ResponseMessagesConstants.AddressDataInputFieldsAreEmpty);
+                //responseLabel.Invoke(new Action(() =>
+                //{
+                //    responseLabel.Text = ResponseMessagesConstants.AddressDataInputFieldsAreEmpty;
+                //}));
                 return;
             }
 
             if (ArePaymentSubscriptionInputFieldsEmpty(startDate, endDate, paymentMethod, subscriptionType))
             {
-                responseLabel.Invoke(new Action(() =>
-                {
-                    responseLabel.Text = ResponseMessagesConstants.PaymentSubscriptionInputFieldsAreEmpty;
-                }));
+                InvokeLabel(responseLabel, ResponseMessagesConstants.PaymentSubscriptionInputFieldsAreEmpty);
+                //responseLabel.Invoke(new Action(() =>
+                //{
+                //    responseLabel.Text = ResponseMessagesConstants.PaymentSubscriptionInputFieldsAreEmpty;
+                //}));
                 return;
-            }
+            }*/
 
-            if (!await DoesIdExist(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
+            /*if (!await DoesIdExist(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
             {
-                responseLabel.Invoke(new Action(() =>
-                {
-                    responseLabel.Text = ResponseMessagesConstants.IDDoesntExistInDB;
-                }));
+                InvokeLabel(responseLabel, ResponseMessagesConstants.IDDoesntExistInDB);
+                //responseLabel.Invoke(new Action(() =>
+                //{
+                //    responseLabel.Text = ResponseMessagesConstants.IDDoesntExistInDB;
+                //}));
                 return;
-            }
+            }*/
 
             var successful = await _mongoDBService.DeleteRecordAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false);
             if (successful)
             {
-                responseLabel.Invoke(new Action(() =>
-                {
-                    responseLabel.Text = ResponseMessagesConstants.DeleteClientToDBSuccessful;
-                }));
+                InvokeLabel(responseLabel, ResponseMessagesConstants.DeleteClientToDBSuccessful);
             }
             else
             {
-                responseLabel.Invoke(new Action(() =>
-                {
-                    responseLabel.Text = ResponseMessagesConstants.DeleteClientToDBFailure;
-                }));
+                InvokeLabel(responseLabel, ResponseMessagesConstants.DeleteClientToDBFailure);
             }
         }
 
-        public async Task ShowClientsAsync(ComboBox filter)
+        public async Task ShowClientsAsync(ComboBox filter, ListView table, string id)
         {
+            table.Items.Clear();
+            switch (filter.Text)
+            {
+                case FilterOptionsConstants.AllByID:
+                    var people = await _mongoDBService.SortRecordByIdAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName).ConfigureAwait(false);
+                    foreach (var person in people)
+                    {
+                        string[] row = {
+                            person.Id, person.FirstName, person.LastName, person.Email, person.Password,
+                            person.Address.Country, person.Address.State, person.Address.PostCode, person.Address.City, person.Address.Street, person.Address.StreetNumber,
+                            person.Subscription.StartDate, person.Subscription.EndDate, person.Subscription.PaymentMethod, person.Subscription.SubscriptionType
+                        };
+                        InvokeListView(table, row);
+                    }
+                    break;
 
+                case FilterOptionsConstants.AllByFirstname:
+                    people = await _mongoDBService.SortRecordByFirstNameAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName).ConfigureAwait(false);
+                    foreach (var person in people)
+                    {
+                        string[] row = {
+                            person.Id, person.FirstName, person.LastName, person.Email, person.Password,
+                            person.Address.Country, person.Address.State, person.Address.PostCode, person.Address.City, person.Address.Street, person.Address.StreetNumber,
+                            person.Subscription.StartDate, person.Subscription.EndDate, person.Subscription.PaymentMethod, person.Subscription.SubscriptionType
+                        };
+                        InvokeListView(table, row);
+                    }
+                    break;
+
+                case FilterOptionsConstants.AllByLastName:
+                    people = await _mongoDBService.SortRecordByLastNameAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName).ConfigureAwait(false);
+                    foreach (var person in people)
+                    {
+                        string[] row = {
+                            person.Id, person.FirstName, person.LastName, person.Email, person.Password,
+                            person.Address.Country, person.Address.State, person.Address.PostCode, person.Address.City, person.Address.Street, person.Address.StreetNumber,
+                            person.Subscription.StartDate, person.Subscription.EndDate, person.Subscription.PaymentMethod, person.Subscription.SubscriptionType
+                        };
+                        InvokeListView(table, row);
+                    }
+                    break;
+
+                case FilterOptionsConstants.AllByEmail:
+                    people = await _mongoDBService.SortRecordByEmailAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName).ConfigureAwait(false);
+                    foreach (var person in people)
+                    {
+                        string[] row = {
+                            person.Id, person.FirstName, person.LastName, person.Email, person.Password,
+                            person.Address.Country, person.Address.State, person.Address.PostCode, person.Address.City, person.Address.Street, person.Address.StreetNumber,
+                            person.Subscription.StartDate, person.Subscription.EndDate, person.Subscription.PaymentMethod, person.Subscription.SubscriptionType
+                        };
+                        InvokeListView(table, row);
+                    }
+                    break;
+
+                case FilterOptionsConstants.AllByCountry:
+                    people = await _mongoDBService.SortRecordByCountyAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName).ConfigureAwait(false);
+                    foreach (var person in people)
+                    {
+                        string[] row = {
+                            person.Id, person.FirstName, person.LastName, person.Email, person.Password,
+                            person.Address.Country, person.Address.State, person.Address.PostCode, person.Address.City, person.Address.Street, person.Address.StreetNumber,
+                            person.Subscription.StartDate, person.Subscription.EndDate, person.Subscription.PaymentMethod, person.Subscription.SubscriptionType
+                        };
+                        InvokeListView(table, row);
+                    }
+                    break;
+
+                case FilterOptionsConstants.AllBySubscription:
+                    people = await _mongoDBService.SortRecordBySubscriptionTypeAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName).ConfigureAwait(false);
+                    foreach (var person in people)
+                    {
+                        string[] row = {
+                            person.Id, person.FirstName, person.LastName, person.Email, person.Password,
+                            person.Address.Country, person.Address.State, person.Address.PostCode, person.Address.City, person.Address.Street, person.Address.StreetNumber,
+                            person.Subscription.StartDate, person.Subscription.EndDate, person.Subscription.PaymentMethod, person.Subscription.SubscriptionType
+                        };
+                        InvokeListView(table, row);
+                    }
+                    break;
+
+                case FilterOptionsConstants.OneById:
+                        var singlePerson = await _mongoDBService.LoadRecordByIdAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, id).ConfigureAwait(false);
+                    
+                        string[] singelRow = {
+                            singlePerson.Id, singlePerson.FirstName, singlePerson.LastName, singlePerson.Email, singlePerson.Password,
+                            singlePerson.Address.Country, singlePerson.Address.State, singlePerson.Address.PostCode, singlePerson.Address.City, singlePerson.Address.Street, singlePerson.Address.StreetNumber,
+                            singlePerson.Subscription.StartDate, singlePerson.Subscription.EndDate, singlePerson.Subscription.PaymentMethod, singlePerson.Subscription.SubscriptionType
+                        };
+                        InvokeListView(table, singelRow);
+                    
+                    break;
+            }
         }
     }
 }

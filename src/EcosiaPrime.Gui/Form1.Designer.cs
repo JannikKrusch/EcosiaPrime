@@ -1,4 +1,6 @@
-﻿namespace EcosiaPrime.Gui
+﻿using EcosiaPrime.Contracts.Constants;
+
+namespace EcosiaPrime.Gui
 {
     partial class Form1
     {
@@ -420,13 +422,20 @@
             this.filterComboBox.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.filterComboBox.FormattingEnabled = true;
             this.filterComboBox.Items.AddRange(new object[] {
-            "Alle (Sortiert nach ID)",
+                FilterOptionsConstants.AllByID,
+                FilterOptionsConstants.AllByFirstname,
+                FilterOptionsConstants.AllByLastName,
+                FilterOptionsConstants.AllByEmail,
+                FilterOptionsConstants.AllByCountry,
+                FilterOptionsConstants.AllBySubscription,
+                FilterOptionsConstants.OneById
+            /*"Alle (Sortiert nach ID)",
             "Alle (Sortiert nach Vorname)",
             "Alle (sortiert nach Nachname)",
             "Alle (sortiert nach Email)",
             "Alle (sortiert nach Land)",
             "Alle (sortiert nach Abonnement)",
-            "Eine Person (durch ID)"});
+            "Eine Person (durch ID)"*/});
             this.filterComboBox.Location = new System.Drawing.Point(700, 545);
             this.filterComboBox.Margin = new System.Windows.Forms.Padding(1);
             this.filterComboBox.Name = "filterComboBox";
