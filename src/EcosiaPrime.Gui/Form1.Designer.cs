@@ -252,6 +252,7 @@ namespace EcosiaPrime.Gui
             // dropdownMenuPayment
             // 
             this.dropdownMenuPayment.DisplayMember = "PayPal";
+            this.dropdownMenuPayment.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dropdownMenuPayment.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.dropdownMenuPayment.FormattingEnabled = true;
             this.dropdownMenuPayment.Items.AddRange(new object[] {
@@ -269,6 +270,7 @@ namespace EcosiaPrime.Gui
             // 
             // dropdownMenuSubscription
             // 
+            this.dropdownMenuSubscription.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dropdownMenuSubscription.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.dropdownMenuSubscription.FormattingEnabled = true;
             this.dropdownMenuSubscription.Items.AddRange(new object[] {
@@ -295,6 +297,7 @@ namespace EcosiaPrime.Gui
             // 
             // optionComboBox
             // 
+            this.optionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.optionComboBox.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.optionComboBox.FormattingEnabled = true;
             this.optionComboBox.Items.AddRange(new object[] {
@@ -419,6 +422,7 @@ namespace EcosiaPrime.Gui
             this.filterComboBox.AutoCompleteCustomSource.AddRange(new string[] {
             "Alle",
             "Eine Person"});
+            this.filterComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.filterComboBox.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.filterComboBox.FormattingEnabled = true;
             this.filterComboBox.Items.AddRange(new object[] {
@@ -439,13 +443,14 @@ namespace EcosiaPrime.Gui
             // responseLabel
             // 
             this.responseLabel.AutoSize = true;
-            this.responseLabel.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.responseLabel.Location = new System.Drawing.Point(550, 867);
+            this.responseLabel.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.responseLabel.Location = new System.Drawing.Point(520, 816);
             this.responseLabel.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.responseLabel.Name = "responseLabel";
-            this.responseLabel.Size = new System.Drawing.Size(0, 54);
+            this.responseLabel.Size = new System.Drawing.Size(254, 45);
             this.responseLabel.TabIndex = 23;
-            this.responseLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.responseLabel.Text = "hier ist das label";
+            this.responseLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Form1
             // 

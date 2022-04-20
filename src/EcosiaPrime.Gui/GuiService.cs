@@ -30,7 +30,7 @@ namespace EcosiaPrime.Gui
 
         public bool ArePaymentSubscriptionInputFieldsEmpty(TextBox startDate, TextBox endDate, ComboBox paymentMethod, ComboBox subscriptionType)
         {
-            return (startDate.Text == "" || endDate.Text == "" || paymentMethod.Text == "" || subscriptionType.Text == "");
+            return (startDate.Text == "" || endDate.Text == "" || paymentMethod.SelectedItem == null || subscriptionType.SelectedItem == null);
         }
 
         public async Task<bool> DoesIdExist(string collectionName, string id)
@@ -460,13 +460,15 @@ namespace EcosiaPrime.Gui
                 case FilterOptionsConstants.OneById:
                     var singlePerson = await _mongoDBService.LoadRecordByIdAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, id).ConfigureAwait(false);
 
-                    string[] singelRow = {
+                    if(singlePerson != null)
+                    {
+                        string[] singelRow = {
                             singlePerson.Id, singlePerson.FirstName, singlePerson.LastName, singlePerson.Email, singlePerson.Password,
                             singlePerson.Address.Country, singlePerson.Address.State, singlePerson.Address.PostCode, singlePerson.Address.City, singlePerson.Address.Street, singlePerson.Address.StreetNumber,
                             singlePerson.Subscription.StartDate, singlePerson.Subscription.EndDate, singlePerson.Subscription.PaymentMethod, singlePerson.Subscription.SubscriptionType
                         };
-                    InvokeListView(table, singelRow);
-
+                        InvokeListView(table, singelRow);
+                    }
                     break;
             }
             table.Invoke(new Action(() =>
@@ -477,7 +479,7 @@ namespace EcosiaPrime.Gui
                 {
                     if (columnHeader.Width < 75)
                     {
-                        columnHeader.Width = 150;
+                        columnHeader.Width = 100;
                     }
                 }
             }));
