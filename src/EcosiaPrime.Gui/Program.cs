@@ -1,43 +1,34 @@
-
-using EcosiaPrime.Contracts.Models;
 using EcosiaPrime.MongoDB;
-using Newtonsoft.Json;
+using Microsoft.Extensions.Configuration;
 
 namespace EcosiaPrime.Gui
 {
-    internal static class Program
+    public static class Program
     {
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        static async Task Main()
+        private static async Task Main()
         {
-            dynamic json = JsonConvert.DeserializeObject(File.ReadAllText("..\\..\\..\\appsettings.json"));
-            Console.WriteLine(json);
-            var mongoDBConfiguration = new MongoDBConfiguration();
-            var mongoDBConfirgurationJson = json["MongoDBConfiguration"];
-            mongoDBConfiguration.DataBaseName = mongoDBConfirgurationJson["DataBaseName"];
-            mongoDBConfiguration.CollectionName = mongoDBConfirgurationJson["CollectionName"];
+            var configBuilder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false);
+
+            IConfiguration config = configBuilder.Build();
+            IMongoDBConfiguration configuration = new MongoDBConfiguration();
+            config.Bind(configuration);
+
+            MongoDBConfiguration mongoDBConfiguration = new MongoDBConfiguration()
+            {
+                DataBaseName = configuration.DataBaseName,
+                CollectionName = configuration.CollectionName
+            };
 
             IMongoDBRepository mongoDBRepository = new MongoDBRepository(mongoDBConfiguration);
             IMongoDBService mongoDBService = new MongoDBService(mongoDBRepository);
-
-            Client client = new Client();
-            client.FirstName = "Among";
-            client.LastName = "Us";
-            client.Email = "Sussy Baka@gmail.com";
-            client.Id = "1";
-            client.Subscription = new Subscription();
-            client.Address = new Address();
-            client.Password = "fwoemfw";
-
-            var x = await mongoDBRepository.InsertRecordAsync<Client>(mongoDBConfiguration.CollectionName, client).ConfigureAwait(false);
-            var record = await mongoDBRepository.LoadRecordByIdAsync<Client>(mongoDBConfiguration.CollectionName, "1").ConfigureAwait(false);
-            record.Email = "NeueEmail@t-online.de";
-            var z = await mongoDBRepository.UpsertRecordAsync<Client>(mongoDBConfiguration.CollectionName, record.Id, record).ConfigureAwait(false);
-
             IGuiService guiService = new GuiService(mongoDBService);
+
             // To customize application configuration such as set high DPI settings or default font
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();

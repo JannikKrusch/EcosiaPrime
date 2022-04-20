@@ -1,6 +1,7 @@
 ﻿using EcosiaPrime.Contracts.Constants;
 using EcosiaPrime.Contracts.Models;
 using EcosiaPrime.MongoDB;
+using System.Collections.Generic;
 
 namespace EcosiaPrime.Gui
 {
@@ -518,6 +519,14 @@ namespace EcosiaPrime.Gui
             table.Invoke(new Action(() =>
             {
                 table.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                
+                foreach(ColumnHeader columnHeader in table.Columns)
+                {
+                    if(columnHeader.Width < 100)
+                    {
+                        columnHeader.Width = 200;
+                    }
+                }
             }));
         }
     }
