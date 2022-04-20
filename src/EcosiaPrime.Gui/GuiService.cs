@@ -1,7 +1,6 @@
 ﻿using EcosiaPrime.Contracts.Constants;
 using EcosiaPrime.Contracts.Models;
 using EcosiaPrime.MongoDB;
-using System.Collections.Generic;
 
 namespace EcosiaPrime.Gui
 {
@@ -155,52 +154,6 @@ namespace EcosiaPrime.Gui
             {
                 listView.Items.Add(listViewItem);
             }));
-        }
-
-        public async void StartButtonPressed(
-            string options, Label responseLabel, ComboBox filter,
-            TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
-            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber,
-            TextBox startDate, TextBox endDate, ComboBox paymentMethod, ComboBox subscriptionType)
-        {
-            await Option(
-                options, responseLabel, filter,
-                id, firstName, lastName, email, password,
-                country, state, postCode, city, street, streetNumber,
-                startDate, endDate, paymentMethod, subscriptionType).ConfigureAwait(false);
-        }
-
-        public async Task Option(
-            string options, Label responseLabel, ComboBox filter,
-            TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
-            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber,
-            TextBox startDate, TextBox endDate, ComboBox paymentMethod, ComboBox subscriptionType)
-        {
-            if (options == ComboBoxOptionConstants.Erstellen)
-            {
-                await CreateClientAsync(
-                    responseLabel,
-                    id, firstName, lastName, email, password,
-                    country, state, postCode, city, street, streetNumber,
-                    startDate, endDate, paymentMethod, subscriptionType)
-                    .ConfigureAwait(false);
-            }
-            else if (options == ComboBoxOptionConstants.Bearbeiten)
-            {
-                await UpdateClientAsync(
-                    responseLabel,
-                    id, firstName, lastName, email, password,
-                    country, state, postCode, city, street, streetNumber,
-                    startDate, endDate, paymentMethod, subscriptionType).ConfigureAwait(false);
-            }
-            else if (options == ComboBoxOptionConstants.Löschen)
-            {
-                await DeleteClientAsync(
-                    responseLabel,
-                    id, firstName, lastName, email, password,
-                    country, state, postCode, city, street, streetNumber,
-                    startDate, endDate, paymentMethod, subscriptionType).ConfigureAwait(false);
-            }
         }
 
         public async Task CreateClientAsync(
@@ -505,26 +458,26 @@ namespace EcosiaPrime.Gui
                     break;
 
                 case FilterOptionsConstants.OneById:
-                        var singlePerson = await _mongoDBService.LoadRecordByIdAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, id).ConfigureAwait(false);
-                    
-                        string[] singelRow = {
+                    var singlePerson = await _mongoDBService.LoadRecordByIdAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, id).ConfigureAwait(false);
+
+                    string[] singelRow = {
                             singlePerson.Id, singlePerson.FirstName, singlePerson.LastName, singlePerson.Email, singlePerson.Password,
                             singlePerson.Address.Country, singlePerson.Address.State, singlePerson.Address.PostCode, singlePerson.Address.City, singlePerson.Address.Street, singlePerson.Address.StreetNumber,
                             singlePerson.Subscription.StartDate, singlePerson.Subscription.EndDate, singlePerson.Subscription.PaymentMethod, singlePerson.Subscription.SubscriptionType
                         };
-                        InvokeListView(table, singelRow);
-                    
+                    InvokeListView(table, singelRow);
+
                     break;
             }
             table.Invoke(new Action(() =>
             {
                 table.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-                
-                foreach(ColumnHeader columnHeader in table.Columns)
+
+                foreach (ColumnHeader columnHeader in table.Columns)
                 {
-                    if(columnHeader.Width < 100)
+                    if (columnHeader.Width < 75)
                     {
-                        columnHeader.Width = 200;
+                        columnHeader.Width = 150;
                     }
                 }
             }));
