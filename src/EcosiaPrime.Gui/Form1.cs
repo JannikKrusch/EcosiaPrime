@@ -11,10 +11,25 @@ namespace EcosiaPrime.Gui
         {
             _controlsList = Controls.OfType<Control>().Where(x => x is TextBox || x is ComboBox && x.Name != "optionComboBox");
             _guiService = guiService;
+
             InitializeComponent();
-            dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            FillComboBoxes();
+            /*dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            filterComboBox.Visible = false;
+            filterComboBox.Visible = false;*/
+        }
+
+        public void FillComboBoxes()
+        {
+            PaymentMethodConstants.PaymentMethods.ForEach(x => dropdownMenuPayment.Items.Add(x));
+            dropdownMenuPayment.SelectedIndex = 0;
+
+            SubscriptionTypeConstants.SubscriptionType.ForEach(x => dropdownMenuSubscription.Items.Add(x));
+            dropdownMenuSubscription.SelectedIndex = 0;
+
+            FilterOptionsConstants.FilterOptions.ForEach(x => dropdownMenuFilter.Items.Add(x));
+
+            ComboBoxOptionConstants.OptionConstants.ForEach(x => dropdownMenuOption.Items.Add(x));
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -28,44 +43,39 @@ namespace EcosiaPrime.Gui
 
         private async void Enter_Click(object sender, EventArgs e)
         {
-            if (optionComboBox.Text == ComboBoxOptionConstants.Erstellen)
+            if (dropdownMenuOption.Text == ComboBoxOptionConstants.Erstellen)
             {
-                await _guiService.CreateClientAsync(responseLabel, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
+                await _guiService.CreateClientAsync(responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
                     passwordTextfield, countryTextfield, stateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
-                    streetNumberTextfield, startDateTextfield, endDateTextfield, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
+                    streetNumberTextfield, startDatePicker, endDatePicker, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
                 ClearAllControls();
             }
-            else if (optionComboBox.Text == ComboBoxOptionConstants.Bearbeiten)
+            else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Bearbeiten)
             {
                 //Update Gui Logik ist nicht richtig, wenn man die daten geladen hat, alles ausgefüllt hat und dann auf enter drückt, wird die options auswahl zurückgesetzt
                 await _guiService.UpdateClientAsync(
-                    responseLabel, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
+                    responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
                     passwordTextfield, countryTextfield, stateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
-                    streetNumberTextfield, startDateTextfield, endDateTextfield, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
+                    streetNumberTextfield, startDatePicker, endDatePicker, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
 
-                optionComboBox.Invoke(new Action(() =>
+                /*dropdownMenuOption.Invoke(new Action(() =>
                 {
-                     optionComboBox.SelectedIndex = -1;
-                }));
+                    dropdownMenuOption.SelectedIndex = -1;
+                }));*/
             }
-            else if(optionComboBox.Text == ComboBoxOptionConstants.Löschen)
+            else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Löschen)
             {
                 await _guiService.DeleteClientAsync(
-                    responseLabel, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
+                    responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
                     passwordTextfield, countryTextfield, stateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
-                    streetNumberTextfield, startDateTextfield, endDateTextfield, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
+                    streetNumberTextfield, startDatePicker, endDatePicker, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
                 ClearAllControls();
             }
-            else if(optionComboBox.Text == ComboBoxOptionConstants.Anzeigen)
+            else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Anzeigen)
             {
-                //dataGrid.HeaderStyle = (ColumnHeaderStyle)ColumnHeaderAutoResizeStyle.ColumnContent;
-                //dataGrid.AutoResizeColumn(1, ColumnHeaderAutoResizeStyle.ColumnContent);
-                await _guiService.ShowClientsAsync(filterComboBox, dataGrid, idTextfield.Text).ConfigureAwait(false);
+                await _guiService.ShowClientsAsync(dropdownMenuFilter, dataGrid, idTextfield.Text).ConfigureAwait(false);
                 //ClearAllControls();
             }
-            
-            
-            
         }
 
         private void firstNameTextfield_TextChanged(object sender, EventArgs e)
@@ -74,7 +84,7 @@ namespace EcosiaPrime.Gui
 
         private void optionComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (optionComboBox.Text)
+            switch (dropdownMenuOption.Text)
             {
                 case ComboBoxOptionConstants.Erstellen:
                     ChangeVisibilityOfFields(ComboBoxOptionConstants.Erstellen);
@@ -100,14 +110,14 @@ namespace EcosiaPrime.Gui
 
         public void ChangeVisibilityOfFields(string option)
         {
-            if(_controlsList == null)
+            if (_controlsList == null)
             {
                 return;
             }
 
-            if(_controlsList.Count() > 0)
+            if (_controlsList.Count() > 0)
             {
-                filterComboBox.SelectedIndex = 0;
+                dropdownMenuFilter.SelectedIndex = 0;
             }
 
             foreach (Control control in _controlsList)
@@ -152,7 +162,6 @@ namespace EcosiaPrime.Gui
                 default:
                     return VisibleTextFieldListConstants.Erstellen;
             }
-            return null;
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -165,7 +174,7 @@ namespace EcosiaPrime.Gui
         {
             foreach (Control control in _controlsList)
             {
-                if (control is TextBox)
+                if (control is TextBox && control.Name != "responseTextField")
                 {
                     control.Invoke(new Action(() =>
                     {
@@ -192,6 +201,14 @@ namespace EcosiaPrime.Gui
         }
 
         private void passwordTextfield_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void startDateTextfield_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
         }
     }

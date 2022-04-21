@@ -15,26 +15,46 @@
             "cityTextfield",
             "streetNameTextfield",
             "streetNumberTextfield",
-            "startDateTextfield",
-            "endDateTextfield",
+            "startDatePicker",
+            "endDatePicker",
             "dropdownMenuPayment",
-            "dropdownMenuSubscription"
-        };
-
-        public static readonly List<string> Löschen = new List<string>
-        {
-            "idTextfield"
+            "dropdownMenuSubscription",
+            "dropdownMenuOption",
+            "responseTextField"
         };
 
         public static readonly List<string> Bearbeiten = new List<string>
         {
-            "idTextfield"
+            "idTextfield",
+            "firstNameTextfield",
+            "lastNameTextfield",
+            "emailTextfield",
+            "passwordTextfield",
+            "countryTextfield",
+            "stateTextfield",
+            "postcodeTextfield",
+            "cityTextfield",
+            "streetNameTextfield",
+            "streetNumberTextfield",
+            "startDatePicker",
+            "endDatePicker",
+            "dropdownMenuPayment",
+            "dropdownMenuSubscription",
+            "dropdownMenuOption",
+            "responseTextField"
+        };
+
+        public static readonly List<string> Löschen = new List<string>
+        {
+            "idTextfield",
+            "dropdownMenuOption"
         };
 
         public static readonly List<string> Anzeigen = new List<string>
         {
             "idTextfield",
-            "filterComboBox"
+            "dropdownMenuFilter",
+            "dropdownMenuOption"
         };
     }
 }

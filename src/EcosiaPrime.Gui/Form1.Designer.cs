@@ -1,4 +1,5 @@
 ﻿using EcosiaPrime.Contracts.Constants;
+using System;
 
 namespace EcosiaPrime.Gui
 {
@@ -43,14 +44,12 @@ namespace EcosiaPrime.Gui
             this.cityTextfield = new System.Windows.Forms.TextBox();
             this.streetNameTextfield = new System.Windows.Forms.TextBox();
             this.streetNumberTextfield = new System.Windows.Forms.TextBox();
-            this.startDateTextfield = new System.Windows.Forms.TextBox();
-            this.endDateTextfield = new System.Windows.Forms.TextBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.paymentMethodPanel = new System.Windows.Forms.Label();
             this.dropdownMenuPayment = new System.Windows.Forms.ComboBox();
             this.dropdownMenuSubscription = new System.Windows.Forms.ComboBox();
             this.Enter = new System.Windows.Forms.Button();
-            this.optionComboBox = new System.Windows.Forms.ComboBox();
+            this.dropdownMenuOption = new System.Windows.Forms.ComboBox();
             this.dataGrid = new System.Windows.Forms.ListView();
             this.columnID = new System.Windows.Forms.ColumnHeader();
             this.columnFirstName = new System.Windows.Forms.ColumnHeader();
@@ -67,8 +66,10 @@ namespace EcosiaPrime.Gui
             this.columnEndDate = new System.Windows.Forms.ColumnHeader();
             this.columnPayment = new System.Windows.Forms.ColumnHeader();
             this.columnSubscription = new System.Windows.Forms.ColumnHeader();
-            this.filterComboBox = new System.Windows.Forms.ComboBox();
-            this.responseLabel = new System.Windows.Forms.Label();
+            this.dropdownMenuFilter = new System.Windows.Forms.ComboBox();
+            this.startDatePicker = new System.Windows.Forms.DateTimePicker();
+            this.endDatePicker = new System.Windows.Forms.DateTimePicker();
+            this.responseTextField = new System.Windows.Forms.TextBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -208,26 +209,6 @@ namespace EcosiaPrime.Gui
             this.streetNumberTextfield.Size = new System.Drawing.Size(308, 61);
             this.streetNumberTextfield.TabIndex = 13;
             // 
-            // startDateTextfield
-            // 
-            this.startDateTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.startDateTextfield.Location = new System.Drawing.Point(1510, 154);
-            this.startDateTextfield.Margin = new System.Windows.Forms.Padding(1);
-            this.startDateTextfield.Name = "startDateTextfield";
-            this.startDateTextfield.PlaceholderText = "Anfangsdatum";
-            this.startDateTextfield.Size = new System.Drawing.Size(308, 61);
-            this.startDateTextfield.TabIndex = 14;
-            // 
-            // endDateTextfield
-            // 
-            this.endDateTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.endDateTextfield.Location = new System.Drawing.Point(1510, 217);
-            this.endDateTextfield.Margin = new System.Windows.Forms.Padding(1);
-            this.endDateTextfield.Name = "endDateTextfield";
-            this.endDateTextfield.PlaceholderText = "Enddatum";
-            this.endDateTextfield.Size = new System.Drawing.Size(308, 61);
-            this.endDateTextfield.TabIndex = 15;
-            // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.paymentMethodPanel);
@@ -255,12 +236,6 @@ namespace EcosiaPrime.Gui
             this.dropdownMenuPayment.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dropdownMenuPayment.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.dropdownMenuPayment.FormattingEnabled = true;
-            this.dropdownMenuPayment.Items.AddRange(new object[] {
-            "PayPal",
-            "Creditcard",
-            "EC",
-            "Giftcode",
-            "Directdebit"});
             this.dropdownMenuPayment.Location = new System.Drawing.Point(1510, 280);
             this.dropdownMenuPayment.Margin = new System.Windows.Forms.Padding(1);
             this.dropdownMenuPayment.Name = "dropdownMenuPayment";
@@ -273,10 +248,6 @@ namespace EcosiaPrime.Gui
             this.dropdownMenuSubscription.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dropdownMenuSubscription.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.dropdownMenuSubscription.FormattingEnabled = true;
-            this.dropdownMenuSubscription.Items.AddRange(new object[] {
-            "Basic",
-            "Standard",
-            "Premium"});
             this.dropdownMenuSubscription.Location = new System.Drawing.Point(1510, 344);
             this.dropdownMenuSubscription.Margin = new System.Windows.Forms.Padding(1);
             this.dropdownMenuSubscription.Name = "dropdownMenuSubscription";
@@ -295,22 +266,17 @@ namespace EcosiaPrime.Gui
             this.Enter.UseVisualStyleBackColor = true;
             this.Enter.Click += new System.EventHandler(this.Enter_Click);
             // 
-            // optionComboBox
+            // dropdownMenuOption
             // 
-            this.optionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.optionComboBox.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.optionComboBox.FormattingEnabled = true;
-            this.optionComboBox.Items.AddRange(new object[] {
-            "Erstellen",
-            "Löschen",
-            "Bearbeiten",
-            "Anzeigen"});
-            this.optionComboBox.Location = new System.Drawing.Point(85, 545);
-            this.optionComboBox.Margin = new System.Windows.Forms.Padding(1);
-            this.optionComboBox.Name = "optionComboBox";
-            this.optionComboBox.Size = new System.Drawing.Size(308, 62);
-            this.optionComboBox.TabIndex = 20;
-            this.optionComboBox.SelectedIndexChanged += new System.EventHandler(this.optionComboBox_SelectedIndexChanged);
+            this.dropdownMenuOption.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.dropdownMenuOption.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.dropdownMenuOption.FormattingEnabled = true;
+            this.dropdownMenuOption.Location = new System.Drawing.Point(85, 545);
+            this.dropdownMenuOption.Margin = new System.Windows.Forms.Padding(1);
+            this.dropdownMenuOption.Name = "dropdownMenuOption";
+            this.dropdownMenuOption.Size = new System.Drawing.Size(308, 62);
+            this.dropdownMenuOption.TabIndex = 20;
+            this.dropdownMenuOption.SelectedIndexChanged += new System.EventHandler(this.optionComboBox_SelectedIndexChanged);
             // 
             // dataGrid
             // 
@@ -417,56 +383,66 @@ namespace EcosiaPrime.Gui
             this.columnSubscription.Text = "Abonnement";
             this.columnSubscription.Width = 150;
             // 
-            // filterComboBox
+            // dropdownMenuFilter
             // 
-            this.filterComboBox.AutoCompleteCustomSource.AddRange(new string[] {
+            this.dropdownMenuFilter.AutoCompleteCustomSource.AddRange(new string[] {
             "Alle",
             "Eine Person"});
-            this.filterComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.filterComboBox.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.filterComboBox.FormattingEnabled = true;
-            this.filterComboBox.Items.AddRange(new object[] {
-            "Alle(Sortiert nach ID)",
-            "Alle (Sortiert nach Vorname)",
-            "Alle (sortiert nach Nachname)",
-            "Alle (sortiert nach Email)",
-            "Alle (sortiert nach Land)",
-            "Alle (sortiert nach Abonnement)",
-            "Eine Person (durch ID)"});
-            this.filterComboBox.Location = new System.Drawing.Point(700, 545);
-            this.filterComboBox.Margin = new System.Windows.Forms.Padding(1);
-            this.filterComboBox.Name = "filterComboBox";
-            this.filterComboBox.Size = new System.Drawing.Size(567, 62);
-            this.filterComboBox.TabIndex = 22;
-            this.filterComboBox.SelectedIndexChanged += new System.EventHandler(this.filterComboBox_SelectedIndexChanged);
+            this.dropdownMenuFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.dropdownMenuFilter.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.dropdownMenuFilter.FormattingEnabled = true;
+            this.dropdownMenuFilter.Location = new System.Drawing.Point(700, 545);
+            this.dropdownMenuFilter.Margin = new System.Windows.Forms.Padding(1);
+            this.dropdownMenuFilter.Name = "dropdownMenuFilter";
+            this.dropdownMenuFilter.Size = new System.Drawing.Size(567, 62);
+            this.dropdownMenuFilter.TabIndex = 22;
+            this.dropdownMenuFilter.SelectedIndexChanged += new System.EventHandler(this.filterComboBox_SelectedIndexChanged);
             // 
-            // responseLabel
+            // startDatePicker
             // 
-            this.responseLabel.AutoSize = true;
-            this.responseLabel.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.responseLabel.Location = new System.Drawing.Point(520, 816);
-            this.responseLabel.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.responseLabel.Name = "responseLabel";
-            this.responseLabel.Size = new System.Drawing.Size(254, 45);
-            this.responseLabel.TabIndex = 23;
-            this.responseLabel.Text = "hier ist das label";
-            this.responseLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.startDatePicker.CalendarFont = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.startDatePicker.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.startDatePicker.Location = new System.Drawing.Point(1510, 154);
+            this.startDatePicker.MinimumSize = new System.Drawing.Size(0, 61);
+            this.startDatePicker.Name = "startDatePicker";
+            this.startDatePicker.Size = new System.Drawing.Size(308, 61);
+            this.startDatePicker.TabIndex = 24;
+            this.startDatePicker.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
+            // 
+            // endDatePicker
+            // 
+            this.endDatePicker.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.endDatePicker.Location = new System.Drawing.Point(1510, 221);
+            this.endDatePicker.MinimumSize = new System.Drawing.Size(0, 61);
+            this.endDatePicker.Name = "endDatePicker";
+            this.endDatePicker.Size = new System.Drawing.Size(308, 61);
+            this.endDatePicker.TabIndex = 25;
+            // 
+            // responseTextField
+            // 
+            this.responseTextField.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.responseTextField.Location = new System.Drawing.Point(587, 837);
+            this.responseTextField.Multiline = true;
+            this.responseTextField.Name = "responseTextField";
+            this.responseTextField.PlaceholderText = "Response";
+            this.responseTextField.Size = new System.Drawing.Size(796, 65);
+            this.responseTextField.TabIndex = 26;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1868, 954);
-            this.Controls.Add(this.responseLabel);
-            this.Controls.Add(this.filterComboBox);
+            this.Controls.Add(this.responseTextField);
+            this.Controls.Add(this.endDatePicker);
+            this.Controls.Add(this.startDatePicker);
+            this.Controls.Add(this.dropdownMenuFilter);
             this.Controls.Add(this.dataGrid);
-            this.Controls.Add(this.optionComboBox);
+            this.Controls.Add(this.dropdownMenuOption);
             this.Controls.Add(this.Enter);
             this.Controls.Add(this.dropdownMenuSubscription);
             this.Controls.Add(this.dropdownMenuPayment);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Controls.Add(this.endDateTextfield);
-            this.Controls.Add(this.startDateTextfield);
             this.Controls.Add(this.streetNumberTextfield);
             this.Controls.Add(this.streetNameTextfield);
             this.Controls.Add(this.cityTextfield);
@@ -508,14 +484,12 @@ namespace EcosiaPrime.Gui
         private TextBox cityTextfield;
         private TextBox streetNameTextfield;
         private TextBox streetNumberTextfield;
-        private TextBox startDateTextfield;
-        private TextBox endDateTextfield;
         private FlowLayoutPanel flowLayoutPanel1;
         private Label paymentMethodPanel;
         private ComboBox dropdownMenuPayment;
         private ComboBox dropdownMenuSubscription;
         private Button Enter;
-        private ComboBox optionComboBox;
+        private ComboBox dropdownMenuOption;
         private ListView dataGrid;
         private ColumnHeader columnID;
         private ColumnHeader columnFirstName;
@@ -532,7 +506,9 @@ namespace EcosiaPrime.Gui
         private ColumnHeader columnEndDate;
         private ColumnHeader columnPayment;
         private ColumnHeader columnSubscription;
-        private ComboBox filterComboBox;
-        private Label responseLabel;
+        private ComboBox dropdownMenuFilter;
+        private DateTimePicker startDatePicker;
+        private DateTimePicker endDatePicker;
+        private TextBox responseTextField;
     }
 }

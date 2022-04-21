@@ -5,7 +5,7 @@
         public const string PersonDataInputFieldsAreEmpty = "Eingabefelder für Personendaten (links) sind leer!";
         public const string PersonDataInputFieldsAreEmptyExceptID = "Alle Eingabefelder für Personendaten (links) bis auf ID müssen leer sein!";
         public const string AddressDataInputFieldsAreEmpty = "Eingabefelder für Adressdaten (mitte) sind leer!";
-        public const string PaymentSubscriptionInputFieldsAreEmpty = "Eingabefelder für Bezahlung und Abonnement(rechts) sind leer!";
+        public const string PaymentSubscriptionInputFieldsAreEmpty = "Eingabefelder für Bezahlung und Abonnement(rechts) sind leer oder Start- ist nach Enddatum!";
         public const string IDAlreadyExistsInDB = "Die eingegebene ID existiert bereits in der Datenbank!";
         public const string IDDoesntExistInDB = "Die eingegebene ID existiert nicht in der Datenbank";
         public const string AddClientToDBSuccessful = "Neuer Kunde der Datenbank erfolgreich eingefügt";
