@@ -9,7 +9,7 @@ namespace EcosiaPrime.Gui
 
         public Form1(IGuiService guiService)
         {
-            _controlsList = Controls.OfType<Control>().Where(x => x is TextBox || x is ComboBox && x.Name != "optionComboBox");
+            _controlsList = Controls.OfType<Control>().Where(x => x is TextBox || x is ComboBox && x.Name != "optionComboBox" || x is DateTimePicker);
             _guiService = guiService;
 
             InitializeComponent();
@@ -45,36 +45,42 @@ namespace EcosiaPrime.Gui
         {
             if (dropdownMenuOption.Text == ComboBoxOptionConstants.Erstellen)
             {
-                await _guiService.CreateClientAsync(responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
+                var successful = await _guiService.CreateClientAsync(responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
                     passwordTextfield, countryTextfield, stateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
                     streetNumberTextfield, startDatePicker, endDatePicker, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
-                ClearAllControls();
+
+                if (successful)
+                {
+                    ClearAllControls();
+                }
             }
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Bearbeiten)
             {
-                //Update Gui Logik ist nicht richtig, wenn man die daten geladen hat, alles ausgefüllt hat und dann auf enter drückt, wird die options auswahl zurückgesetzt
-                await _guiService.UpdateClientAsync(
+                var successful = await _guiService.UpdateClientAsync(
                     responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
                     passwordTextfield, countryTextfield, stateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
                     streetNumberTextfield, startDatePicker, endDatePicker, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
 
-                /*dropdownMenuOption.Invoke(new Action(() =>
+                if (successful)
                 {
-                    dropdownMenuOption.SelectedIndex = -1;
-                }));*/
+                    ClearAllControls();
+                }
             }
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Löschen)
             {
-                await _guiService.DeleteClientAsync(
+                var successful = await _guiService.DeleteClientAsync(
                     responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
                     passwordTextfield, countryTextfield, stateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
                     streetNumberTextfield, startDatePicker, endDatePicker, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
-                ClearAllControls();
+
+                if (successful)
+                {
+                    ClearAllControls();
+                }
             }
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Anzeigen)
             {
                 await _guiService.ShowClientsAsync(dropdownMenuFilter, dataGrid, idTextfield.Text).ConfigureAwait(false);
-                //ClearAllControls();
             }
         }
 

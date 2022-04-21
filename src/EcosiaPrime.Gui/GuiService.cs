@@ -205,7 +205,7 @@ namespace EcosiaPrime.Gui
             InvokeListView(listView, GetFilledRow(client));
         }
 
-        public async Task CreateClientAsync(
+        public async Task<bool> CreateClientAsync(
             TextBox response,
             TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
             TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber,
@@ -220,13 +220,13 @@ namespace EcosiaPrime.Gui
             if (responseLines.Any())
             {
                 InvokeResponseTextBox(response, responseLines);
-                return;
+                return false;
             }
 
             if (await DoesIdExist(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
             {
                 InvokeResponseTextBox(response, new List<string> { ResponseMessagesConstants.IDAlreadyExistsInDB });
-                return;
+                return false;
             }
 
             var client = new Client();
@@ -248,8 +248,8 @@ namespace EcosiaPrime.Gui
             client.Subscription.StartDate = startDate.Text;
             client.Subscription.EndDate = endDate.Text;
 
-            client.Subscription.PaymentMethod = GetPaymentMethod(InvokeComboBox(paymentMethod));
-            client.Subscription.SubscriptionType = GetSubscriptionType(InvokeComboBox(subscriptionType));
+            client.Subscription.PaymentMethod = InvokeComboBox(paymentMethod);//GetPaymentMethod(InvokeComboBox(paymentMethod));
+            client.Subscription.SubscriptionType = InvokeComboBox(subscriptionType);//GetSubscriptionType(InvokeComboBox(subscriptionType));
 
             var successful = await _mongoDBService.InsertRecordAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, client).ConfigureAwait(false);
             if (successful)
@@ -260,9 +260,10 @@ namespace EcosiaPrime.Gui
             {
                 InvokeResponseTextBox(response, new List<string> { ResponseMessagesConstants.AddClientToDBFailure });
             }
+            return successful;
         }
 
-        public async Task UpdateClientAsync(
+        public async Task<bool> UpdateClientAsync(
             TextBox response,
             TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
             TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber,
@@ -271,7 +272,7 @@ namespace EcosiaPrime.Gui
             if (!await DoesIdExist(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
             {
                 InvokeResponseTextBox(response, new List<string> { ResponseMessagesConstants.IDDoesntExistInDB });
-                return;
+                return false;
             }
 
             if (ArePersonInputFieldsEmptyExeptId(id, firstName, lastName, email, password) && AreAdressInputFieldsEmpty(country, state, postCode, city, streetNumber, street) && !ArePaymentSubscriptionInputFieldsEmpty(startDate, endDate))
@@ -297,6 +298,8 @@ namespace EcosiaPrime.Gui
                 InvokeComboBox(subscriptionType, clientDB.Subscription.SubscriptionType);
 
                 InvokeResponseTextBox(response, new List<string> { });
+                //Hier muss --> false <-- zurückgegeben werden, obwohl alles funktioniert hat, da ansonsten alle Felder geleert werden!
+                return false;
             }
             else
             {
@@ -309,7 +312,7 @@ namespace EcosiaPrime.Gui
                 if (responseLines.Any())
                 {
                     InvokeResponseTextBox(response, responseLines);
-                    return;
+                    return false;
                 }
 
                 var client = new Client();
@@ -331,8 +334,8 @@ namespace EcosiaPrime.Gui
                 client.Subscription.StartDate = startDate.Text;
                 client.Subscription.EndDate = endDate.Text;
 
-                client.Subscription.PaymentMethod = GetPaymentMethod(paymentMethod.Text);
-                client.Subscription.SubscriptionType = GetSubscriptionType(subscriptionType.Text);
+                client.Subscription.PaymentMethod = InvokeComboBox(paymentMethod);//GetPaymentMethod(InvokeComboBox(paymentMethod));
+                client.Subscription.SubscriptionType = InvokeComboBox(subscriptionType);//GetSubscriptionType(InvokeComboBox(subscriptionType));
 
                 var successful = await _mongoDBService.UpsertRecordAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, client.Id, client).ConfigureAwait(false);
                 if (successful)
@@ -343,10 +346,11 @@ namespace EcosiaPrime.Gui
                 {
                     InvokeResponseTextBox(response, new List<string> { ResponseMessagesConstants.UpdateClientToDBFailure });
                 }
+                return successful;
             }
         }
 
-        public async Task DeleteClientAsync(
+        public async Task<bool> DeleteClientAsync(
             TextBox response,
             TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
             TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber,
@@ -362,7 +366,7 @@ namespace EcosiaPrime.Gui
             if (responseLines.Any())
             {
                 InvokeResponseTextBox(response, responseLines);
-                return;
+                return false;
             }
 
             var successful = await _mongoDBService.DeleteRecordAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false);
@@ -374,6 +378,7 @@ namespace EcosiaPrime.Gui
             {
                 InvokeResponseTextBox(response, new List<string> { ResponseMessagesConstants.DeleteClientToDBFailure });
             }
+            return successful;
         }
 
         public async Task ShowClientsAsync(ComboBox filter, ListView table, string id)

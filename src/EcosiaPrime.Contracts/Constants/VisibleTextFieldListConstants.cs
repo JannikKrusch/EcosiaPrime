@@ -47,14 +47,16 @@
         public static readonly List<string> Löschen = new List<string>
         {
             "idTextfield",
-            "dropdownMenuOption"
+            "dropdownMenuOption",
+            "responseTextField"
         };
 
         public static readonly List<string> Anzeigen = new List<string>
         {
             "idTextfield",
             "dropdownMenuFilter",
-            "dropdownMenuOption"
+            "dropdownMenuOption",
+            "responseTextField"
         };
     }
 }
