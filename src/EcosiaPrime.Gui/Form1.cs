@@ -43,7 +43,6 @@ namespace EcosiaPrime.Gui
 
         private async void Enter_Click(object sender, EventArgs e)
         {
-            FilterOptionsConstants.FilterOptions.ForEach(x => dropdownMenuFilter.Items.Add(x));
             if (dropdownMenuOption.Text == ComboBoxOptionConstants.Erstellen)
             {
                 var successful = await _guiService.CreateClientAsync(responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
@@ -85,7 +84,6 @@ namespace EcosiaPrime.Gui
             }
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Suchen)
             {
-                SearchFunctionConstants.SearchFunctions.ForEach(x => dropdownMenuFilter.Items.Add(x)); 
                 await _guiService.SearchFunction(
                     dataGrid, dropdownMenuFilter,
                     responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
@@ -141,14 +139,14 @@ namespace EcosiaPrime.Gui
                 {
                     dropdownMenuFilter.Items.Clear();
                     FilterOptionsConstants.FilterOptions.ForEach(x => dropdownMenuFilter.Items.Add(x));
+                    dropdownMenuFilter.SelectedIndex = 0;
                 }
                 else if(option == ComboBoxOptionConstants.Suchen)
                 {
                     dropdownMenuFilter.Items.Clear();
                     SearchFunctionConstants.SearchFunctions.ForEach(x => dropdownMenuFilter.Items.Add(x));
+                    dropdownMenuFilter.SelectedIndex = 0;
                 }
-                
-                //dropdownMenuFilter.SelectedIndex = 0;
             }
 
             foreach (Control control in _controlsList)

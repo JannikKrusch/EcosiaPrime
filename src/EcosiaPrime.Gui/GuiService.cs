@@ -644,6 +644,20 @@ namespace EcosiaPrime.Gui
                         searchStringSecondary = endDate.Text;
                     }
                     break;
+                case SearchFunctionConstants.SearchForPaymentOption:
+                    if (paymentMethod.Text != "" )
+                    {
+                        searchForString = SearchFunctionConstants.SearchForPaymentOption;
+                        searchStringPrimary = paymentMethod.Text;
+                    }
+                    break;
+                case SearchFunctionConstants.SearchForSubscriptionOption:
+                    if (paymentMethod.Text != "")
+                    {
+                        searchForString = SearchFunctionConstants.SearchForSubscriptionOption;
+                        searchStringPrimary = subscriptionType.Text;
+                    }
+                    break;
             }
 
             if (searchForString != "" && searchStringPrimary != "")
@@ -697,6 +711,14 @@ namespace EcosiaPrime.Gui
                     var abc = ParseCutString(searchStringPrimary);
                     var z = abc;
                     foundList = people.Where(x => DateTime.Parse(x.Subscription.StartDate) >= ParseCutString(searchStringPrimary) && DateTime.Parse(x.Subscription.EndDate) <= ParseCutString(searchStringSecondary));
+                    break;
+
+                case SearchFunctionConstants.SearchForPaymentOption:
+                    foundList = people.Where(x => x.Subscription.PaymentMethod.Contains(searchStringPrimary));
+                    break;
+
+                case SearchFunctionConstants.SearchForSubscriptionOption:
+                    foundList = people.Where(x => x.Subscription.SubscriptionType.Contains(searchStringPrimary));
                     break;
             }
             table.Invoke(new Action(() =>
