@@ -580,6 +580,7 @@ namespace EcosiaPrime.Gui
                         searchStringPrimary = id.Text;
                     }
                     break;
+
                 case SearchFunctionConstants.SearchForFirstname:
                     if (firstName.Text != "")
                     {
@@ -587,6 +588,7 @@ namespace EcosiaPrime.Gui
                         searchStringPrimary = firstName.Text;
                     }
                     break;
+
                 case SearchFunctionConstants.SearchForLastName:
                     if (lastName.Text != "")
                     {
@@ -594,6 +596,7 @@ namespace EcosiaPrime.Gui
                         searchStringPrimary = lastName.Text;
                     }
                     break;
+
                 case SearchFunctionConstants.SearchForEmail:
                     if (email.Text != "")
                     {
@@ -601,6 +604,7 @@ namespace EcosiaPrime.Gui
                         searchStringPrimary = email.Text;
                     }
                     break;
+
                 case SearchFunctionConstants.SearchForCountry:
                     if (country.Text != "")
                     {
@@ -608,6 +612,7 @@ namespace EcosiaPrime.Gui
                         searchStringPrimary = country.Text;
                     }
                     break;
+
                 case SearchFunctionConstants.SearchForState:
                     if (state.Text != "")
                     {
@@ -615,6 +620,7 @@ namespace EcosiaPrime.Gui
                         searchStringPrimary = state.Text;
                     }
                     break;
+
                 case SearchFunctionConstants.SearchForPostCode:
                     if (postCode.Text != "")
                     {
@@ -622,6 +628,7 @@ namespace EcosiaPrime.Gui
                         searchStringPrimary = postCode.Text;
                     }
                     break;
+
                 case SearchFunctionConstants.SearchForCity:
                     if (city.Text != "")
                     {
@@ -629,6 +636,7 @@ namespace EcosiaPrime.Gui
                         searchStringPrimary = city.Text;
                     }
                     break;
+
                 case SearchFunctionConstants.SearchForStreet:
                     if (street.Text != "")
                     {
@@ -636,6 +644,7 @@ namespace EcosiaPrime.Gui
                         searchStringPrimary = street.Text;
                     }
                     break;
+
                 case SearchFunctionConstants.SearchForTimeSpan:
                     if (startDate.Text != "" && endDate.Text != "" && ParseCutString(startDate.Text) != DateTime.Today && ParseCutString(endDate.Text) != DateTime.Today)
                     {
@@ -644,13 +653,15 @@ namespace EcosiaPrime.Gui
                         searchStringSecondary = endDate.Text;
                     }
                     break;
+
                 case SearchFunctionConstants.SearchForPaymentOption:
-                    if (paymentMethod.Text != "" )
+                    if (paymentMethod.Text != "")
                     {
                         searchForString = SearchFunctionConstants.SearchForPaymentOption;
                         searchStringPrimary = paymentMethod.Text;
                     }
                     break;
+
                 case SearchFunctionConstants.SearchForSubscriptionOption:
                     if (paymentMethod.Text != "")
                     {
@@ -665,7 +676,6 @@ namespace EcosiaPrime.Gui
                 await SearchAttributes(table, searchForString, searchStringPrimary, searchStringSecondary).ConfigureAwait(false);
             }
         }
-
 
         public async Task<bool> SearchAttributes(ListView table, string searchForString, string searchStringPrimary, string searchStringSecondary)
         {

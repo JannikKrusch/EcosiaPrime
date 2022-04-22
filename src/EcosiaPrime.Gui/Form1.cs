@@ -135,13 +135,13 @@ namespace EcosiaPrime.Gui
 
             if (_controlsList.Count() > 0)
             {
-                if(option == ComboBoxOptionConstants.Anzeigen)
+                if (option == ComboBoxOptionConstants.Anzeigen)
                 {
                     dropdownMenuFilter.Items.Clear();
                     FilterOptionsConstants.FilterOptions.ForEach(x => dropdownMenuFilter.Items.Add(x));
                     dropdownMenuFilter.SelectedIndex = 0;
                 }
-                else if(option == ComboBoxOptionConstants.Suchen)
+                else if (option == ComboBoxOptionConstants.Suchen)
                 {
                     dropdownMenuFilter.Items.Clear();
                     SearchFunctionConstants.SearchFunctions.ForEach(x => dropdownMenuFilter.Items.Add(x));
@@ -190,6 +190,7 @@ namespace EcosiaPrime.Gui
 
                 case ComboBoxOptionConstants.Suchen:
                     return VisibleTextFieldListConstants.Suchen;
+
                 default:
                     return VisibleTextFieldListConstants.Erstellen;
             }
@@ -217,7 +218,6 @@ namespace EcosiaPrime.Gui
 
         private void filterComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
         }
 
         private async void emailTextfield_TextChanged(object sender, EventArgs e)
@@ -246,7 +246,6 @@ namespace EcosiaPrime.Gui
 
         private void houseNumberTextfield_TextChanged(object sender, EventArgs e)
         {
-
         }
     }
 }
