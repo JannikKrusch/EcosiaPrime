@@ -14,7 +14,7 @@
             "postcodeTextfield",
             "cityTextfield",
             "streetNameTextfield",
-            "streetNumberTextfield",
+            "houseNumberTextfield",
             "startDatePicker",
             "endDatePicker",
             "dropdownMenuPayment",
@@ -35,7 +35,7 @@
             "postcodeTextfield",
             "cityTextfield",
             "streetNameTextfield",
-            "streetNumberTextfield",
+            "houseNumberTextfield",
             "startDatePicker",
             "endDatePicker",
             "dropdownMenuPayment",
@@ -56,6 +56,28 @@
             "idTextfield",
             "dropdownMenuFilter",
             "dropdownMenuOption",
+            "responseTextField"
+        };
+
+        public static readonly List<string> Suchen = new List<string>
+        {
+            "idTextfield",
+            "firstNameTextfield",
+            "lastNameTextfield",
+            "emailTextfield",
+            "passwordTextfield",
+            "countryTextfield",
+            "stateTextfield",
+            "postcodeTextfield",
+            "cityTextfield",
+            "streetNameTextfield",
+            "houseNumberTextfield",
+            "startDatePicker",
+            "endDatePicker",
+            "dropdownMenuPayment",
+            "dropdownMenuSubscription",
+            "dropdownMenuOption",
+            "dropdownMenuFilter",
             "responseTextField"
         };
     }

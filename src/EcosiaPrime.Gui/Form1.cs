@@ -27,7 +27,7 @@ namespace EcosiaPrime.Gui
             SubscriptionTypeConstants.SubscriptionType.ForEach(x => dropdownMenuSubscription.Items.Add(x));
             dropdownMenuSubscription.SelectedIndex = 0;
 
-            FilterOptionsConstants.FilterOptions.ForEach(x => dropdownMenuFilter.Items.Add(x));
+            //FilterOptionsConstants.FilterOptions.ForEach(x => dropdownMenuFilter.Items.Add(x));
 
             ComboBoxOptionConstants.OptionConstants.ForEach(x => dropdownMenuOption.Items.Add(x));
         }
@@ -43,11 +43,12 @@ namespace EcosiaPrime.Gui
 
         private async void Enter_Click(object sender, EventArgs e)
         {
+            FilterOptionsConstants.FilterOptions.ForEach(x => dropdownMenuFilter.Items.Add(x));
             if (dropdownMenuOption.Text == ComboBoxOptionConstants.Erstellen)
             {
                 var successful = await _guiService.CreateClientAsync(responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
                     passwordTextfield, countryTextfield, stateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
-                    streetNumberTextfield, startDatePicker, endDatePicker, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
+                    houseNumberTextfield, startDatePicker, endDatePicker, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
 
                 if (successful)
                 {
@@ -59,7 +60,7 @@ namespace EcosiaPrime.Gui
                 var successful = await _guiService.UpdateClientAsync(
                     responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
                     passwordTextfield, countryTextfield, stateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
-                    streetNumberTextfield, startDatePicker, endDatePicker, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
+                    houseNumberTextfield, startDatePicker, endDatePicker, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
 
                 if (successful)
                 {
@@ -71,7 +72,7 @@ namespace EcosiaPrime.Gui
                 var successful = await _guiService.DeleteClientAsync(
                     responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
                     passwordTextfield, countryTextfield, stateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
-                    streetNumberTextfield, startDatePicker, endDatePicker, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
+                    houseNumberTextfield, startDatePicker, endDatePicker, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
 
                 if (successful)
                 {
@@ -84,11 +85,12 @@ namespace EcosiaPrime.Gui
             }
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Suchen)
             {
+                SearchFunctionConstants.SearchFunctions.ForEach(x => dropdownMenuFilter.Items.Add(x)); 
                 await _guiService.SearchFunction(
-                    dataGrid,
+                    dataGrid, dropdownMenuFilter,
                     responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
                     passwordTextfield, countryTextfield, stateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
-                    streetNumberTextfield, startDatePicker, endDatePicker, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
+                    houseNumberTextfield, startDatePicker, endDatePicker, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
             }
         }
 
@@ -116,6 +118,10 @@ namespace EcosiaPrime.Gui
                     ChangeVisibilityOfFields(ComboBoxOptionConstants.Anzeigen);
                     break;
 
+                case ComboBoxOptionConstants.Suchen:
+                    ChangeVisibilityOfFields(ComboBoxOptionConstants.Suchen);
+                    break;
+
                 default:
                     ChangeVisibilityOfFields(ComboBoxOptionConstants.Clear);
                     break;
@@ -131,7 +137,18 @@ namespace EcosiaPrime.Gui
 
             if (_controlsList.Count() > 0)
             {
-                dropdownMenuFilter.SelectedIndex = 0;
+                if(option == ComboBoxOptionConstants.Anzeigen)
+                {
+                    dropdownMenuFilter.Items.Clear();
+                    FilterOptionsConstants.FilterOptions.ForEach(x => dropdownMenuFilter.Items.Add(x));
+                }
+                else if(option == ComboBoxOptionConstants.Suchen)
+                {
+                    dropdownMenuFilter.Items.Clear();
+                    SearchFunctionConstants.SearchFunctions.ForEach(x => dropdownMenuFilter.Items.Add(x));
+                }
+                
+                //dropdownMenuFilter.SelectedIndex = 0;
             }
 
             foreach (Control control in _controlsList)
@@ -173,6 +190,8 @@ namespace EcosiaPrime.Gui
                 case ComboBoxOptionConstants.Anzeigen:
                     return VisibleTextFieldListConstants.Anzeigen;
 
+                case ComboBoxOptionConstants.Suchen:
+                    return VisibleTextFieldListConstants.Suchen;
                 default:
                     return VisibleTextFieldListConstants.Erstellen;
             }
@@ -200,9 +219,10 @@ namespace EcosiaPrime.Gui
 
         private void filterComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
         }
 
-        private void emailTextfield_TextChanged(object sender, EventArgs e)
+        private async void emailTextfield_TextChanged(object sender, EventArgs e)
         {
         }
 
@@ -224,6 +244,11 @@ namespace EcosiaPrime.Gui
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
+        }
+
+        private void houseNumberTextfield_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

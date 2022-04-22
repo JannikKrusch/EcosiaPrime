@@ -51,6 +51,32 @@ namespace EcosiaPrime.Gui
             return s;
         }
 
+        public string CutDateString(string dateString)
+        {
+            var x = dateString.Split(", ");
+            if (x.Length == 2)
+            {
+                return x[1];
+            }
+            return "";
+        }
+
+        public DateTime ParseCutString(string dateString)
+        {
+            var cutDateString = CutDateString(dateString);
+
+            var couldParse = DateTime.TryParse(cutDateString, out DateTime parsedDate);
+
+            if (couldParse)
+            {
+                return parsedDate;
+            }
+            else
+            {
+                return DateTime.Parse("31.12.9999");
+            }
+        }
+
         public async Task<bool> DoesIdExist(string collectionName, string id)
         {
             var exists = await _mongoDBService.LoadRecordByIdAsync<Client>(collectionName, id).ConfigureAwait(false);
@@ -105,9 +131,6 @@ namespace EcosiaPrime.Gui
             }
 
             return responseLines;
-            /*var containsLowerCase = password.Text.Any(char.IsLower);
-            var containsUpperCase = password.Text.Any(char.IsUpper);
-            var hasMinAmountOfCharacters = password.Text.Count() >= 8;*/
         }
 
         public IEnumerable<string> CheckInputFieldsEmpty(
@@ -280,7 +303,7 @@ namespace EcosiaPrime.Gui
             {
                 string[] row = {
                 client.Id, client.FirstName, client.LastName, client.Email, client.Password,
-                client.Address.Country, client.Address.State, client.Address.PostCode, client.Address.City, client.Address.Street, client.Address.StreetNumber,
+                client.Address.Country, client.Address.State, client.Address.PostCode, client.Address.City, client.Address.Street, client.Address.HouseNumber,
                 client.Subscription.StartDate, client.Subscription.EndDate, client.Subscription.PaymentMethod, client.Subscription.SubscriptionType
                 };
                 return row;
@@ -290,10 +313,6 @@ namespace EcosiaPrime.Gui
 
         public void FillListView(ListView listView, IEnumerable<Client> clients)
         {
-            listView.Invoke(new Action(() =>
-            {
-                listView.Items.Clear();
-            }));
             clients.ToList().ForEach(client => InvokeListView(listView, GetFilledRow(client)));
         }
 
@@ -305,14 +324,14 @@ namespace EcosiaPrime.Gui
         public async Task<bool> CreateClientAsync(
             TextBox response,
             TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
-            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber,
+            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox houseNumber,
             DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType)
         {
             var responseLines = CheckInputFieldsEmpty(
                 response,
                 id, firstName, lastName, email,
                 password, country, state, postCode, city, street,
-                streetNumber, startDate, endDate, paymentMethod, subscriptionType);
+                houseNumber, startDate, endDate, paymentMethod, subscriptionType);
 
             if (responseLines.Any())
             {
@@ -339,14 +358,14 @@ namespace EcosiaPrime.Gui
             client.Address.PostCode = postCode.Text;
             client.Address.City = city.Text;
             client.Address.Street = street.Text;
-            client.Address.StreetNumber = streetNumber.Text;
+            client.Address.HouseNumber = houseNumber.Text;
 
             client.Subscription = new Subscription();
             client.Subscription.StartDate = startDate.Text;
             client.Subscription.EndDate = endDate.Text;
 
-            client.Subscription.PaymentMethod = InvokeComboBox(paymentMethod);//GetPaymentMethod(InvokeComboBox(paymentMethod));
-            client.Subscription.SubscriptionType = InvokeComboBox(subscriptionType);//GetSubscriptionType(InvokeComboBox(subscriptionType));
+            client.Subscription.PaymentMethod = InvokeComboBox(paymentMethod);
+            client.Subscription.SubscriptionType = InvokeComboBox(subscriptionType);
 
             var successful = await _mongoDBService.InsertRecordAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, client).ConfigureAwait(false);
             if (successful)
@@ -387,7 +406,7 @@ namespace EcosiaPrime.Gui
                 InvokeTextBox(postCode, clientDB.Address.PostCode);
                 InvokeTextBox(city, clientDB.Address.City);
                 InvokeTextBox(street, clientDB.Address.Street);
-                InvokeTextBox(streetNumber, clientDB.Address.StreetNumber);
+                InvokeTextBox(streetNumber, clientDB.Address.HouseNumber);
 
                 InvokeDateTimePicker(startDate, clientDB.Subscription.StartDate);
                 InvokeDateTimePicker(endDate, clientDB.Subscription.EndDate);
@@ -425,14 +444,14 @@ namespace EcosiaPrime.Gui
                 client.Address.PostCode = postCode.Text;
                 client.Address.City = city.Text;
                 client.Address.Street = street.Text;
-                client.Address.StreetNumber = streetNumber.Text;
+                client.Address.HouseNumber = streetNumber.Text;
 
                 client.Subscription = new Subscription();
                 client.Subscription.StartDate = startDate.Text;
                 client.Subscription.EndDate = endDate.Text;
 
-                client.Subscription.PaymentMethod = InvokeComboBox(paymentMethod);//GetPaymentMethod(InvokeComboBox(paymentMethod));
-                client.Subscription.SubscriptionType = InvokeComboBox(subscriptionType);//GetSubscriptionType(InvokeComboBox(subscriptionType));
+                client.Subscription.PaymentMethod = InvokeComboBox(paymentMethod);
+                client.Subscription.SubscriptionType = InvokeComboBox(subscriptionType);
 
                 var successful = await _mongoDBService.UpsertRecordAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, client.Id, client).ConfigureAwait(false);
                 if (successful)
@@ -480,8 +499,6 @@ namespace EcosiaPrime.Gui
 
         public async Task ShowClientsAsync(ComboBox filter, ListView table, string id)
         {
-            //table.Items.Clear();
-
             IEnumerable<Client> clients = new List<Client>();
             var client = new Client();
 
@@ -516,11 +533,16 @@ namespace EcosiaPrime.Gui
                     break;
             }
 
+            table.Invoke(new Action(() =>
+            {
+                table.Items.Clear();
+            }));
+
             if (clients.Any())
             {
                 FillListView(table, clients);
             }
-            else
+            else if (client != null)
             {
                 FillListView(table, client);
             }
@@ -540,71 +562,98 @@ namespace EcosiaPrime.Gui
         }
 
         public async Task SearchFunction(
-            ListView table,
+            ListView table, ComboBox filter,
             TextBox response,
             TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
             TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber,
             DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType)
         {
             var searchForString = "";
-            var searchString = "";
+            var searchStringPrimary = "";
+            var searchStringSecondary = "";
+            switch (filter.Text)
+            {
+                case SearchFunctionConstants.SearchForID:
+                    if (id.Text != "")
+                    {
+                        searchForString = SearchFunctionConstants.SearchForID;
+                        searchStringPrimary = id.Text;
+                    }
+                    break;
+                case SearchFunctionConstants.SearchForFirstname:
+                    if (firstName.Text != "")
+                    {
+                        searchForString = SearchFunctionConstants.SearchForFirstname;
+                        searchStringPrimary = firstName.Text;
+                    }
+                    break;
+                case SearchFunctionConstants.SearchForLastName:
+                    if (lastName.Text != "")
+                    {
+                        searchForString = SearchFunctionConstants.SearchForLastName;
+                        searchStringPrimary = lastName.Text;
+                    }
+                    break;
+                case SearchFunctionConstants.SearchForEmail:
+                    if (email.Text != "")
+                    {
+                        searchForString = SearchFunctionConstants.SearchForEmail;
+                        searchStringPrimary = email.Text;
+                    }
+                    break;
+                case SearchFunctionConstants.SearchForCountry:
+                    if (country.Text != "")
+                    {
+                        searchForString = SearchFunctionConstants.SearchForCountry;
+                        searchStringPrimary = country.Text;
+                    }
+                    break;
+                case SearchFunctionConstants.SearchForState:
+                    if (state.Text != "")
+                    {
+                        searchForString = SearchFunctionConstants.SearchForState;
+                        searchStringPrimary = state.Text;
+                    }
+                    break;
+                case SearchFunctionConstants.SearchForPostCode:
+                    if (postCode.Text != "")
+                    {
+                        searchForString = SearchFunctionConstants.SearchForPostCode;
+                        searchStringPrimary = postCode.Text;
+                    }
+                    break;
+                case SearchFunctionConstants.SearchForCity:
+                    if (city.Text != "")
+                    {
+                        searchForString = SearchFunctionConstants.SearchForCity;
+                        searchStringPrimary = city.Text;
+                    }
+                    break;
+                case SearchFunctionConstants.SearchForStreet:
+                    if (street.Text != "")
+                    {
+                        searchForString = SearchFunctionConstants.SearchForStreet;
+                        searchStringPrimary = street.Text;
+                    }
+                    break;
+                case SearchFunctionConstants.SearchForTimeSpan:
+                    if (startDate.Text != "" && endDate.Text != "" && ParseCutString(startDate.Text) != DateTime.Today && ParseCutString(endDate.Text) != DateTime.Today)
+                    {
+                        searchForString = SearchFunctionConstants.SearchForTimeSpan;
+                        searchStringPrimary = startDate.Text;
+                        searchStringSecondary = endDate.Text;
+                    }
+                    break;
+            }
 
-            if (id.Text != "")
+            if (searchForString != "" && searchStringPrimary != "")
             {
-                searchForString = SearchFunctionConstants.SearchForID;
-                searchString = id.Text;
+                await SearchAttributes(table, searchForString, searchStringPrimary, searchStringSecondary).ConfigureAwait(false);
             }
-            else if (firstName.Text != "")
-            {
-                searchForString = SearchFunctionConstants.SearchForFirstname;
-                searchString = firstName.Text;
-            }
-            else if (lastName.Text != "")
-            {
-                searchForString = SearchFunctionConstants.SearchForLastName;
-                searchString = lastName.Text;
-            }
-            else if (email.Text != "")
-            {
-                searchForString = SearchFunctionConstants.SearchForEmail;
-                searchString = email.Text;
-            }
-            else if (country.Text != "")
-            {
-                searchForString = SearchFunctionConstants.SearchForCountry;
-                searchString = country.Text;
-            }
-            else if (state.Text != "")
-            {
-                searchForString = SearchFunctionConstants.SearchForState;
-                searchString = state.Text;
-            }
-            else if (postCode.Text != "")
-            {
-                searchForString = SearchFunctionConstants.SearchForPostCode;
-                searchString = postCode.Text;
-            }
-            else if (city.Text != "")
-            {
-                searchForString = SearchFunctionConstants.SearchForCity;
-                searchString = city.Text;
-            }
-            else if (street.Text != "")
-            {
-                searchForString = SearchFunctionConstants.SearchForStreet;
-                searchString = street.Text;
-            }
-            else if (startDate.Text != "" && endDate.Text != "")
-            {
-                searchForString = SearchFunctionConstants.SearchForStreet;
-                searchString = street.Text;
-            }
-
-            await SearchAttributes(table, searchForString, searchString).ConfigureAwait(false);
         }
 
 
-        public async Task<bool> SearchAttributes(ListView table, string searchForString, string searchString)
+        public async Task<bool> SearchAttributes(ListView table, string searchForString, string searchStringPrimary, string searchStringSecondary)
         {
             var people = await _mongoDBService.LoadRecordsAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName).ConfigureAwait(false);
 
@@ -613,38 +662,47 @@ namespace EcosiaPrime.Gui
             switch (searchForString)
             {
                 case SearchFunctionConstants.SearchForID:
-                    foundList = people.Where(x => x.Id.Contains(searchString));
+                    foundList = people.Where(x => x.Id.Contains(searchStringPrimary));
                     break;
 
                 case SearchFunctionConstants.SearchForFirstname:
-                    foundList = people.Where(x => x.FirstName.Contains(searchString));
+                    foundList = people.Where(x => x.FirstName.Contains(searchStringPrimary));
                     break;
 
                 case SearchFunctionConstants.SearchForLastName:
-                    foundList = people.Where(x => x.FirstName.Contains(searchString));
+                    foundList = people.Where(x => x.FirstName.Contains(searchStringPrimary));
                     break;
 
                 case SearchFunctionConstants.SearchForEmail:
-                    foundList = people.Where(x => x.Email.Contains(searchString));
+                    foundList = people.Where(x => x.Email.Contains(searchStringPrimary));
                     break;
 
                 case SearchFunctionConstants.SearchForCountry:
-                    foundList = people.Where(x => x.Address.Country.Contains(searchString));
+                    foundList = people.Where(x => x.Address.Country.Contains(searchStringPrimary));
                     break;
 
                 case SearchFunctionConstants.SearchForState:
-                    foundList = people.Where(x => x.Address.State.Contains(searchString));
+                    foundList = people.Where(x => x.Address.State.Contains(searchStringPrimary));
                     break;
 
                 case SearchFunctionConstants.SearchForCity:
-                    foundList = people.Where(x => x.Address.City.Contains(searchString));
+                    foundList = people.Where(x => x.Address.City.Contains(searchStringPrimary));
                     break;
 
                 case SearchFunctionConstants.SearchForStreet:
-                    foundList = people.Where(x => x.Address.Street.Contains(searchString));
+                    foundList = people.Where(x => x.Address.Street.Contains(searchStringPrimary));
+                    break;
+
+                case SearchFunctionConstants.SearchForTimeSpan:
+                    var abc = ParseCutString(searchStringPrimary);
+                    var z = abc;
+                    foundList = people.Where(x => DateTime.Parse(x.Subscription.StartDate) >= ParseCutString(searchStringPrimary) && DateTime.Parse(x.Subscription.EndDate) <= ParseCutString(searchStringSecondary));
                     break;
             }
-
+            table.Invoke(new Action(() =>
+            {
+                table.Items.Clear();
+            }));
             var x = foundList.ToList();
             if (foundList.Any())
             {

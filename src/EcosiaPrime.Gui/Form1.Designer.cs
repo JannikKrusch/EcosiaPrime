@@ -43,7 +43,7 @@ namespace EcosiaPrime.Gui
             this.postcodeTextfield = new System.Windows.Forms.TextBox();
             this.cityTextfield = new System.Windows.Forms.TextBox();
             this.streetNameTextfield = new System.Windows.Forms.TextBox();
-            this.streetNumberTextfield = new System.Windows.Forms.TextBox();
+            this.houseNumberTextfield = new System.Windows.Forms.TextBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.paymentMethodPanel = new System.Windows.Forms.Label();
             this.dropdownMenuPayment = new System.Windows.Forms.ComboBox();
@@ -199,15 +199,16 @@ namespace EcosiaPrime.Gui
             this.streetNameTextfield.Size = new System.Drawing.Size(308, 61);
             this.streetNameTextfield.TabIndex = 12;
             // 
-            // streetNumberTextfield
+            // houseNumberTextfield
             // 
-            this.streetNumberTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.streetNumberTextfield.Location = new System.Drawing.Point(838, 471);
-            this.streetNumberTextfield.Margin = new System.Windows.Forms.Padding(1);
-            this.streetNumberTextfield.Name = "streetNumberTextfield";
-            this.streetNumberTextfield.PlaceholderText = "Straßennummer";
-            this.streetNumberTextfield.Size = new System.Drawing.Size(308, 61);
-            this.streetNumberTextfield.TabIndex = 13;
+            this.houseNumberTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.houseNumberTextfield.Location = new System.Drawing.Point(838, 471);
+            this.houseNumberTextfield.Margin = new System.Windows.Forms.Padding(1);
+            this.houseNumberTextfield.Name = "houseNumberTextfield";
+            this.houseNumberTextfield.PlaceholderText = "Hausnummer";
+            this.houseNumberTextfield.Size = new System.Drawing.Size(308, 61);
+            this.houseNumberTextfield.TabIndex = 13;
+            this.houseNumberTextfield.TextChanged += new System.EventHandler(this.houseNumberTextfield_TextChanged);
             // 
             // flowLayoutPanel1
             // 
@@ -443,7 +444,7 @@ namespace EcosiaPrime.Gui
             this.Controls.Add(this.dropdownMenuSubscription);
             this.Controls.Add(this.dropdownMenuPayment);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Controls.Add(this.streetNumberTextfield);
+            this.Controls.Add(this.houseNumberTextfield);
             this.Controls.Add(this.streetNameTextfield);
             this.Controls.Add(this.cityTextfield);
             this.Controls.Add(this.postcodeTextfield);
@@ -483,7 +484,7 @@ namespace EcosiaPrime.Gui
         private TextBox postcodeTextfield;
         private TextBox cityTextfield;
         private TextBox streetNameTextfield;
-        private TextBox streetNumberTextfield;
+        private TextBox houseNumberTextfield;
         private FlowLayoutPanel flowLayoutPanel1;
         private Label paymentMethodPanel;
         private ComboBox dropdownMenuPayment;

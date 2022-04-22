@@ -13,6 +13,7 @@ namespace EcosiaPrime.Gui
         IEnumerable<string> CheckInputFieldsEmptyExeptID(TextBox response, TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password, TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber, DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType);
         List<string> CheckPassword(string password);
         Task<bool> CreateClientAsync(TextBox response, TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password, TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber, DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType);
+        string CutDateString(string dateString);
         Task<bool> DeleteClientAsync(TextBox response, TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password, TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber, DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType);
         Task<bool> DoesIdExist(string collectionName, string id);
         void FillListView(ListView listView, Client client);
@@ -28,8 +29,9 @@ namespace EcosiaPrime.Gui
         void InvokeResponseTextBox(TextBox response, IEnumerable<string> lines);
         void InvokeTextBox(TextBox textBox, string input);
         bool IsStartDateAfterEndDate(DateTimePicker startDate, DateTimePicker endDate);
-        Task<bool> SearchAttributes(ListView table, string searchForString, string searchString);
-        Task SearchFunction(ListView table, TextBox response, TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password, TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber, DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType);
+        DateTime ParseCutString(string dateString);
+        Task<bool> SearchAttributes(ListView table, string searchForString, string searchStringPrimary, string searchStringSecondary);
+        Task SearchFunction(ListView table, ComboBox filter, TextBox response, TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password, TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber, DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType);
         Task ShowClientsAsync(ComboBox filter, ListView table, string id);
         Task<bool> UpdateClientAsync(TextBox response, TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password, TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber, DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType);
     }
