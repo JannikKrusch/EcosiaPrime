@@ -561,7 +561,7 @@ namespace EcosiaPrime.Gui
             }));
         }
 
-        public async Task SearchFunction(
+        public async Task SearchFunctionAsync(
             ListView table, ComboBox filter,
             TextBox response,
             TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
@@ -673,11 +673,11 @@ namespace EcosiaPrime.Gui
 
             if (searchForString != "" && searchStringPrimary != "")
             {
-                await SearchAttributes(table, searchForString, searchStringPrimary, searchStringSecondary).ConfigureAwait(false);
+                await SearchAttributesAsync(table, searchForString, searchStringPrimary, searchStringSecondary).ConfigureAwait(false);
             }
         }
 
-        public async Task<bool> SearchAttributes(ListView table, string searchForString, string searchStringPrimary, string searchStringSecondary)
+        public async Task SearchAttributesAsync(ListView table, string searchForString, string searchStringPrimary, string searchStringSecondary)
         {
             var people = await _mongoDBService.LoadRecordsAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName).ConfigureAwait(false);
 
@@ -740,8 +740,6 @@ namespace EcosiaPrime.Gui
             {
                 FillListView(table, foundList);
             }
-
-            return true;
         }
     }
 }

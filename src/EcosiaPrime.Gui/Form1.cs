@@ -84,7 +84,7 @@ namespace EcosiaPrime.Gui
             }
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Suchen)
             {
-                await _guiService.SearchFunction(
+                await _guiService.SearchFunctionAsync(
                     dataGrid, dropdownMenuFilter,
                     responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
                     passwordTextfield, countryTextfield, stateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
