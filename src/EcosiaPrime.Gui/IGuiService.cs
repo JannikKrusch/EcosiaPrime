@@ -28,6 +28,8 @@ namespace EcosiaPrime.Gui
         void InvokeResponseTextBox(TextBox response, IEnumerable<string> lines);
         void InvokeTextBox(TextBox textBox, string input);
         bool IsStartDateAfterEndDate(DateTimePicker startDate, DateTimePicker endDate);
+        Task<bool> SearchAttributes(ListView table, string searchForString, string searchString);
+        Task SearchFunction(ListView table, TextBox response, TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password, TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber, DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType);
         Task ShowClientsAsync(ComboBox filter, ListView table, string id);
         Task<bool> UpdateClientAsync(TextBox response, TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password, TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber, DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType);
     }

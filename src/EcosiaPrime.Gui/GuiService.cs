@@ -132,7 +132,7 @@ namespace EcosiaPrime.Gui
                 responseLines.Add(ResponseMessagesConstants.PaymentSubscriptionInputFieldsAreEmpty);
             }
 
-            if(email.Text != "")
+            if (email.Text != "")
             {
                 var emailLines = CheckEmail(email.Text);
                 if (emailLines.Any())
@@ -141,7 +141,7 @@ namespace EcosiaPrime.Gui
                 }
             }
 
-            if(password.Text != "")
+            if (password.Text != "")
             {
                 var passwordLines = CheckPassword(password.Text);
                 if (passwordLines.Any())
@@ -290,6 +290,10 @@ namespace EcosiaPrime.Gui
 
         public void FillListView(ListView listView, IEnumerable<Client> clients)
         {
+            listView.Invoke(new Action(() =>
+            {
+                listView.Items.Clear();
+            }));
             clients.ToList().ForEach(client => InvokeListView(listView, GetFilledRow(client)));
         }
 
@@ -476,7 +480,7 @@ namespace EcosiaPrime.Gui
 
         public async Task ShowClientsAsync(ComboBox filter, ListView table, string id)
         {
-            table.Items.Clear();
+            //table.Items.Clear();
 
             IEnumerable<Client> clients = new List<Client>();
             var client = new Client();
@@ -533,6 +537,121 @@ namespace EcosiaPrime.Gui
                     }
                 }
             }));
+        }
+
+        public async Task SearchFunction(
+            ListView table,
+            TextBox response,
+            TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
+            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber,
+            DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType)
+        {
+            var searchForString = "";
+            var searchString = "";
+
+            if (id.Text != "")
+            {
+                searchForString = SearchFunctionConstants.SearchForID;
+                searchString = id.Text;
+            }
+            else if (firstName.Text != "")
+            {
+                searchForString = SearchFunctionConstants.SearchForFirstname;
+                searchString = firstName.Text;
+            }
+            else if (lastName.Text != "")
+            {
+                searchForString = SearchFunctionConstants.SearchForLastName;
+                searchString = lastName.Text;
+            }
+            else if (email.Text != "")
+            {
+                searchForString = SearchFunctionConstants.SearchForEmail;
+                searchString = email.Text;
+            }
+            else if (country.Text != "")
+            {
+                searchForString = SearchFunctionConstants.SearchForCountry;
+                searchString = country.Text;
+            }
+            else if (state.Text != "")
+            {
+                searchForString = SearchFunctionConstants.SearchForState;
+                searchString = state.Text;
+            }
+            else if (postCode.Text != "")
+            {
+                searchForString = SearchFunctionConstants.SearchForPostCode;
+                searchString = postCode.Text;
+            }
+            else if (city.Text != "")
+            {
+                searchForString = SearchFunctionConstants.SearchForCity;
+                searchString = city.Text;
+            }
+            else if (street.Text != "")
+            {
+                searchForString = SearchFunctionConstants.SearchForStreet;
+                searchString = street.Text;
+            }
+            else if (startDate.Text != "" && endDate.Text != "")
+            {
+                searchForString = SearchFunctionConstants.SearchForStreet;
+                searchString = street.Text;
+            }
+
+            await SearchAttributes(table, searchForString, searchString).ConfigureAwait(false);
+        }
+
+
+        public async Task<bool> SearchAttributes(ListView table, string searchForString, string searchString)
+        {
+            var people = await _mongoDBService.LoadRecordsAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName).ConfigureAwait(false);
+
+            IEnumerable<Client> foundList = new List<Client>();
+
+            switch (searchForString)
+            {
+                case SearchFunctionConstants.SearchForID:
+                    foundList = people.Where(x => x.Id.Contains(searchString));
+                    break;
+
+                case SearchFunctionConstants.SearchForFirstname:
+                    foundList = people.Where(x => x.FirstName.Contains(searchString));
+                    break;
+
+                case SearchFunctionConstants.SearchForLastName:
+                    foundList = people.Where(x => x.FirstName.Contains(searchString));
+                    break;
+
+                case SearchFunctionConstants.SearchForEmail:
+                    foundList = people.Where(x => x.Email.Contains(searchString));
+                    break;
+
+                case SearchFunctionConstants.SearchForCountry:
+                    foundList = people.Where(x => x.Address.Country.Contains(searchString));
+                    break;
+
+                case SearchFunctionConstants.SearchForState:
+                    foundList = people.Where(x => x.Address.State.Contains(searchString));
+                    break;
+
+                case SearchFunctionConstants.SearchForCity:
+                    foundList = people.Where(x => x.Address.City.Contains(searchString));
+                    break;
+
+                case SearchFunctionConstants.SearchForStreet:
+                    foundList = people.Where(x => x.Address.Street.Contains(searchString));
+                    break;
+            }
+
+            var x = foundList.ToList();
+            if (foundList.Any())
+            {
+                FillListView(table, foundList);
+            }
+
+            return true;
         }
     }
 }

@@ -43,8 +43,6 @@ namespace EcosiaPrime.Gui
 
         private async void Enter_Click(object sender, EventArgs e)
         {
-            var x = _guiService.CheckPassword("Admin@123xcxcyDSDS");
-
             if (dropdownMenuOption.Text == ComboBoxOptionConstants.Erstellen)
             {
                 var successful = await _guiService.CreateClientAsync(responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
@@ -83,6 +81,14 @@ namespace EcosiaPrime.Gui
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Anzeigen)
             {
                 await _guiService.ShowClientsAsync(dropdownMenuFilter, dataGrid, idTextfield.Text).ConfigureAwait(false);
+            }
+            else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Suchen)
+            {
+                await _guiService.SearchFunction(
+                    dataGrid,
+                    responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
+                    passwordTextfield, countryTextfield, stateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
+                    streetNumberTextfield, startDatePicker, endDatePicker, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
             }
         }
 

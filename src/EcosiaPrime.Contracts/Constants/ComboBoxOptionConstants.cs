@@ -8,6 +8,7 @@
             Bearbeiten,
             Löschen,
             Anzeigen,
+            Suchen,
             Clear
         };
 
@@ -16,5 +17,6 @@
         public const string Löschen = "Löschen";
         public const string Clear = "Clear";
         public const string Anzeigen = "Anzeigen";
+        public const string Suchen = "Suchen";
     }
 }
