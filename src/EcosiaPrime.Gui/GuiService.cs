@@ -1,6 +1,8 @@
 ﻿using EcosiaPrime.Contracts.Constants;
 using EcosiaPrime.Contracts.Models;
 using EcosiaPrime.MongoDB;
+using System.Net.Mail;
+using System.Text.RegularExpressions;
 
 namespace EcosiaPrime.Gui
 {
@@ -55,6 +57,59 @@ namespace EcosiaPrime.Gui
             return exists != null;
         }
 
+        public List<string> CheckEmail(string email)
+        {
+            var responseLines = new List<string>();
+            try
+            {
+                MailAddress mailAddress = new MailAddress(email);
+                return responseLines;
+            }
+            catch (Exception ex)
+            {
+                responseLines.Add(ResponseMessagesConstants.EmailIsNotValid);
+                return responseLines;
+            }
+        }
+
+        public List<string> CheckPassword(string password)
+        {
+            var responseLines = new List<string>();
+
+            //https://stackoverflow.com/questions/34715501/validating-password-using-regex-c-sharp
+            var hasNumber = new Regex(@"[0-9]+");
+            var hasUpperChar = new Regex(@"[A-Z]+");
+            var hasLowerChar = new Regex(@"[a-z]+");
+            var hasMiniMaxChars = new Regex(@"^.{8,20}$");
+            var hasSymbols = new Regex(@"[!@#$%^&*()_+=\[{\]};:<>|./?,-]");
+
+            if (!hasNumber.IsMatch(password))
+            {
+                responseLines.Add(ResponseMessagesConstants.PasswordNoNumber);
+            }
+            if (!hasUpperChar.IsMatch(password))
+            {
+                responseLines.Add(ResponseMessagesConstants.PasswordNoUpperCase);
+            }
+            if (!hasLowerChar.IsMatch(password))
+            {
+                responseLines.Add(ResponseMessagesConstants.PasswordNoLowerCase);
+            }
+            if (!hasMiniMaxChars.IsMatch(password))
+            {
+                responseLines.Add(ResponseMessagesConstants.PasswordNoMinMaxChars);
+            }
+            if (!hasSymbols.IsMatch(password))
+            {
+                responseLines.Add(ResponseMessagesConstants.PasswordNoSymbols);
+            }
+
+            return responseLines;
+            /*var containsLowerCase = password.Text.Any(char.IsLower);
+            var containsUpperCase = password.Text.Any(char.IsUpper);
+            var hasMinAmountOfCharacters = password.Text.Count() >= 8;*/
+        }
+
         public IEnumerable<string> CheckInputFieldsEmpty(
             TextBox response,
             TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
@@ -76,6 +131,25 @@ namespace EcosiaPrime.Gui
             {
                 responseLines.Add(ResponseMessagesConstants.PaymentSubscriptionInputFieldsAreEmpty);
             }
+
+            if(email.Text != "")
+            {
+                var emailLines = CheckEmail(email.Text);
+                if (emailLines.Any())
+                {
+                    responseLines.AddRange(emailLines);
+                }
+            }
+
+            if(password.Text != "")
+            {
+                var passwordLines = CheckPassword(password.Text);
+                if (passwordLines.Any())
+                {
+                    responseLines.AddRange(passwordLines);
+                }
+            }
+
             return responseLines;
         }
 
@@ -100,6 +174,25 @@ namespace EcosiaPrime.Gui
             {
                 responseLines.Add(ResponseMessagesConstants.PaymentSubscriptionInputFieldsAreEmpty);
             }
+
+            if (email.Text != "")
+            {
+                var emailLines = CheckEmail(email.Text);
+                if (emailLines.Any())
+                {
+                    responseLines.AddRange(emailLines);
+                }
+            }
+
+            if (password.Text != "")
+            {
+                var passwordLines = CheckPassword(password.Text);
+                if (passwordLines.Any())
+                {
+                    responseLines.AddRange(passwordLines);
+                }
+            }
+
             return responseLines;
         }
 

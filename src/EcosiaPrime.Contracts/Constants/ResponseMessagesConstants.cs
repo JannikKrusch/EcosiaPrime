@@ -15,5 +15,14 @@
         public const string DeleteClientToDBSuccessful = "Löschung der Kundendaten war erfolgreich!";
         public const string DeleteClientToDBFailure = "Löschung der Kundendaten ist fehlgeschlagen!";
         public const string IDIsEmpty = "Eingabefeld für id ist leer";
+
+        public const string EmailIsNotValid = "Keine gültige Email!";
+
+        public const string PasswordNoNumber = "Passwort muss mindestes eine Zahl haben!";
+        public const string PasswordNoUpperCase = "Passwort muss mindestes ein großen Buchstaben haben!";
+        public const string PasswordNoLowerCase = "Passwort muss mindestes ein kleinen Buchstaben haben!";
+        public const string PasswordNoMinMaxChars = "Passwort muss mindestens 8 und maximal 20 Buchstaben haben!";
+        public const string PasswordNoSymbols = "Passwort muss mindestens ein Sonderzeichen haben!";
+
     }
 }

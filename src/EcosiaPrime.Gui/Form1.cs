@@ -43,6 +43,8 @@ namespace EcosiaPrime.Gui
 
         private async void Enter_Click(object sender, EventArgs e)
         {
+            var x = _guiService.CheckPassword("Admin@123xcxcyDSDS");
+
             if (dropdownMenuOption.Text == ComboBoxOptionConstants.Erstellen)
             {
                 var successful = await _guiService.CreateClientAsync(responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
