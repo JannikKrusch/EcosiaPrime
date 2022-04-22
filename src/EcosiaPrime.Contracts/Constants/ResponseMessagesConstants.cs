@@ -24,5 +24,17 @@
         public const string PasswordNoMinMaxChars = "Passwort muss mindestens 8 und maximal 20 Buchstaben haben!";
         public const string PasswordNoSymbols = "Passwort muss mindestens ein Sonderzeichen haben!";
 
+        public const string HouseNumberMustBeAnInteger = "Hausnummer muss eine Zahl sein";
+        public const string PostCodeMustBeAnInteger = "Postleitzahl muss eine Zahl sein";
+        public const string PostCodeMustHaveCertainLength = "Postleitzahl muss 5 Stellen haben";
+
+        public const string FirstnameCantContainNumber = "Vorname kann keine Zahl behinhalten";
+        public const string LastnameCantContainNumber = "Nachname kann keine Zahl behinhalten";
+        public const string CountyCantContainNumber = "Land kann keine Zahl behinhalten";
+        public const string StateCantContainNumber = "Bundesland kann keine Zahl behinhalten";
+        public const string CityCantContainNumber = "Stadt kann keine Zahl behinhalten";
+        public const string StreetCantContainNumber = "Straße kann keine Zahl behinhalten";
+
+
     }
 }

@@ -61,7 +61,7 @@ namespace EcosiaPrime.Gui
             this.columnPostcode = new System.Windows.Forms.ColumnHeader();
             this.columnCity = new System.Windows.Forms.ColumnHeader();
             this.columnStreetName = new System.Windows.Forms.ColumnHeader();
-            this.columnStreetNumber = new System.Windows.Forms.ColumnHeader();
+            this.columnHouseNumber = new System.Windows.Forms.ColumnHeader();
             this.columnStartDate = new System.Windows.Forms.ColumnHeader();
             this.columnEndDate = new System.Windows.Forms.ColumnHeader();
             this.columnPayment = new System.Windows.Forms.ColumnHeader();
@@ -292,7 +292,7 @@ namespace EcosiaPrime.Gui
             this.columnPostcode,
             this.columnCity,
             this.columnStreetName,
-            this.columnStreetNumber,
+            this.columnHouseNumber,
             this.columnStartDate,
             this.columnEndDate,
             this.columnPayment,
@@ -359,10 +359,10 @@ namespace EcosiaPrime.Gui
             this.columnStreetName.Text = "Straße";
             this.columnStreetName.Width = 150;
             // 
-            // columnStreetNumber
+            // columnHouseNumber
             // 
-            this.columnStreetNumber.Text = "Straßennummer";
-            this.columnStreetNumber.Width = 150;
+            this.columnHouseNumber.Text = "Straßennummer";
+            this.columnHouseNumber.Width = 150;
             // 
             // columnStartDate
             // 
@@ -502,7 +502,7 @@ namespace EcosiaPrime.Gui
         private ColumnHeader columnPostcode;
         private ColumnHeader columnCity;
         private ColumnHeader columnStreetName;
-        private ColumnHeader columnStreetNumber;
+        private ColumnHeader columnHouseNumber;
         private ColumnHeader columnStartDate;
         private ColumnHeader columnEndDate;
         private ColumnHeader columnPayment;

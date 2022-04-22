@@ -25,9 +25,9 @@ namespace EcosiaPrime.Gui
             return (id.Text != "" && (firstName.Text == "" || lastName.Text == "" || email.Text == "" || password.Text == ""));
         }
 
-        public bool AreAdressInputFieldsEmpty(TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber)
+        public bool AreAdressInputFieldsEmpty(TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox houseNumber)
         {
-            return (country.Text == "" || state.Text == "" || postCode.Text == "" || city.Text == "" || street.Text == "" || streetNumber.Text == "");
+            return (country.Text == "" || state.Text == "" || postCode.Text == "" || city.Text == "" || street.Text == "" || houseNumber.Text == "");
         }
 
         public bool ArePaymentSubscriptionInputFieldsEmpty(DateTimePicker startDate, DateTimePicker endDate)
@@ -133,10 +133,75 @@ namespace EcosiaPrime.Gui
             return responseLines;
         }
 
+        public List<string> CheckNumberInputsForNumbers(string postCode, string houseNumber)
+        {
+            var responseLines = new List<string>();
+
+            var couldParse = Int32.TryParse(postCode, out int convertedNumber);
+            if (!couldParse)
+            {
+                responseLines.Add(ResponseMessagesConstants.HouseNumberMustBeAnInteger);
+            }
+
+            if (!couldParse)
+            {
+                responseLines.Add(ResponseMessagesConstants.HouseNumberMustBeAnInteger);
+            }
+            else
+            {
+                if (houseNumber.Length != 5)
+                {
+                    responseLines.Add(ResponseMessagesConstants.PostCodeMustHaveCertainLength);
+                }
+            }
+
+            return responseLines;
+        }
+
+        public List<string> CheckNonNumberInputsForNumbers(
+            string firstName, string lastName,
+            string country, string state, string city, string street)
+        {
+            var responseLines = new List<string>();
+            var hasNumber = new Regex(@"[0-9]+");
+
+            if (hasNumber.IsMatch(firstName))
+            {
+                responseLines.Add(ResponseMessagesConstants.FirstnameCantContainNumber);
+            }
+
+            if (hasNumber.IsMatch(lastName))
+            {
+                responseLines.Add(ResponseMessagesConstants.LastnameCantContainNumber);
+            }
+
+            if (hasNumber.IsMatch(country))
+            {
+                responseLines.Add(ResponseMessagesConstants.CountyCantContainNumber);
+            }
+
+            if (hasNumber.IsMatch(state))
+            {
+                responseLines.Add(ResponseMessagesConstants.StateCantContainNumber);
+            }
+
+            if (hasNumber.IsMatch(city))
+            {
+                responseLines.Add(ResponseMessagesConstants.CityCantContainNumber);
+            }
+
+            if (hasNumber.IsMatch(street))
+            {
+                responseLines.Add(ResponseMessagesConstants.StreetCantContainNumber);
+            }
+
+            return responseLines;
+        }
+
         public IEnumerable<string> CheckInputFieldsEmpty(
             TextBox response,
             TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
-            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber,
+            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox houseNumber,
             DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType)
         {
             var responseLines = new List<string>();
@@ -145,7 +210,7 @@ namespace EcosiaPrime.Gui
                 responseLines.Add(ResponseMessagesConstants.PersonDataInputFieldsAreEmpty);
             }
 
-            if (AreAdressInputFieldsEmpty(country, state, postCode, city, street, streetNumber))
+            if (AreAdressInputFieldsEmpty(country, state, postCode, city, street, houseNumber))
             {
                 responseLines.Add(ResponseMessagesConstants.AddressDataInputFieldsAreEmpty);
             }
@@ -155,22 +220,28 @@ namespace EcosiaPrime.Gui
                 responseLines.Add(ResponseMessagesConstants.PaymentSubscriptionInputFieldsAreEmpty);
             }
 
-            if (email.Text != "")
+            var emailLines = CheckEmail(email.Text);
+            if (emailLines.Any())
             {
-                var emailLines = CheckEmail(email.Text);
-                if (emailLines.Any())
-                {
-                    responseLines.AddRange(emailLines);
-                }
+                responseLines.AddRange(emailLines);
             }
 
-            if (password.Text != "")
+            var passwordLines = CheckPassword(password.Text);
+            if (passwordLines.Any())
             {
-                var passwordLines = CheckPassword(password.Text);
-                if (passwordLines.Any())
-                {
-                    responseLines.AddRange(passwordLines);
-                }
+                responseLines.AddRange(passwordLines);
+            }
+
+            var nonNumberLines = CheckNonNumberInputsForNumbers(firstName.Text, lastName.Text, country.Text, state.Text, city.Text, street.Text);
+            if (nonNumberLines.Any())
+            {
+                responseLines.AddRange(nonNumberLines);
+            }
+
+            var postcodehouseLines = CheckNumberInputsForNumbers(postCode.Text, houseNumber.Text);
+            if (postcodehouseLines.Any())
+            {
+                responseLines.AddRange(postcodehouseLines);
             }
 
             return responseLines;
@@ -179,7 +250,7 @@ namespace EcosiaPrime.Gui
         public IEnumerable<string> CheckInputFieldsEmptyExeptID(
             TextBox response,
             TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
-            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber,
+            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox houseNumber,
             DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType)
         {
             var responseLines = new List<string>();
@@ -188,7 +259,7 @@ namespace EcosiaPrime.Gui
                 responseLines.Add(ResponseMessagesConstants.PersonDataInputFieldsAreEmptyExceptID);
             }
 
-            if (AreAdressInputFieldsEmpty(country, state, postCode, city, street, streetNumber))
+            if (AreAdressInputFieldsEmpty(country, state, postCode, city, street, houseNumber))
             {
                 responseLines.Add(ResponseMessagesConstants.AddressDataInputFieldsAreEmpty);
             }
@@ -198,22 +269,28 @@ namespace EcosiaPrime.Gui
                 responseLines.Add(ResponseMessagesConstants.PaymentSubscriptionInputFieldsAreEmpty);
             }
 
-            if (email.Text != "")
+            var emailLines = CheckEmail(email.Text);
+            if (emailLines.Any())
             {
-                var emailLines = CheckEmail(email.Text);
-                if (emailLines.Any())
-                {
-                    responseLines.AddRange(emailLines);
-                }
+                responseLines.AddRange(emailLines);
             }
 
-            if (password.Text != "")
+            var passwordLines = CheckPassword(password.Text);
+            if (passwordLines.Any())
             {
-                var passwordLines = CheckPassword(password.Text);
-                if (passwordLines.Any())
-                {
-                    responseLines.AddRange(passwordLines);
-                }
+                responseLines.AddRange(passwordLines);
+            }
+
+            var nonNumberLines = CheckNonNumberInputsForNumbers(firstName.Text, lastName.Text, country.Text, state.Text, city.Text, street.Text);
+            if (nonNumberLines.Any())
+            {
+                responseLines.AddRange(nonNumberLines);
+            }
+
+            var numberLines = CheckNumberInputsForNumbers(postCode.Text, houseNumber.Text);
+            if (numberLines.Any())
+            {
+                responseLines.AddRange(numberLines);
             }
 
             return responseLines;
@@ -382,7 +459,7 @@ namespace EcosiaPrime.Gui
         public async Task<bool> UpdateClientAsync(
             TextBox response,
             TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
-            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber,
+            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox houseNumber,
             DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType)
         {
             if (!await DoesIdExist(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
@@ -391,7 +468,7 @@ namespace EcosiaPrime.Gui
                 return false;
             }
 
-            if (ArePersonInputFieldsEmptyExeptId(id, firstName, lastName, email, password) && AreAdressInputFieldsEmpty(country, state, postCode, city, streetNumber, street) && !ArePaymentSubscriptionInputFieldsEmpty(startDate, endDate))
+            if (ArePersonInputFieldsEmptyExeptId(id, firstName, lastName, email, password) && AreAdressInputFieldsEmpty(country, state, postCode, city, houseNumber, street) && !ArePaymentSubscriptionInputFieldsEmpty(startDate, endDate))
             {
                 var clientDB = await _mongoDBService.LoadRecordByIdAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false);
 
@@ -406,7 +483,7 @@ namespace EcosiaPrime.Gui
                 InvokeTextBox(postCode, clientDB.Address.PostCode);
                 InvokeTextBox(city, clientDB.Address.City);
                 InvokeTextBox(street, clientDB.Address.Street);
-                InvokeTextBox(streetNumber, clientDB.Address.HouseNumber);
+                InvokeTextBox(houseNumber, clientDB.Address.HouseNumber);
 
                 InvokeDateTimePicker(startDate, clientDB.Subscription.StartDate);
                 InvokeDateTimePicker(endDate, clientDB.Subscription.EndDate);
@@ -423,7 +500,7 @@ namespace EcosiaPrime.Gui
                 response,
                 id, firstName, lastName, email,
                 password, country, state, postCode, city, street,
-                streetNumber, startDate, endDate, paymentMethod, subscriptionType);
+                houseNumber, startDate, endDate, paymentMethod, subscriptionType);
 
                 if (responseLines.Any())
                 {
@@ -444,7 +521,7 @@ namespace EcosiaPrime.Gui
                 client.Address.PostCode = postCode.Text;
                 client.Address.City = city.Text;
                 client.Address.Street = street.Text;
-                client.Address.HouseNumber = streetNumber.Text;
+                client.Address.HouseNumber = houseNumber.Text;
 
                 client.Subscription = new Subscription();
                 client.Subscription.StartDate = startDate.Text;
@@ -469,7 +546,7 @@ namespace EcosiaPrime.Gui
         public async Task<bool> DeleteClientAsync(
             TextBox response,
             TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
-            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber,
+            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox houseNumber,
             DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType)
         {
             var responseLines = new List<string>();
@@ -565,7 +642,7 @@ namespace EcosiaPrime.Gui
             ListView table, ComboBox filter,
             TextBox response,
             TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
-            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox streetNumber,
+            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox houseNumber,
             DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType)
         {
             var searchForString = "";
