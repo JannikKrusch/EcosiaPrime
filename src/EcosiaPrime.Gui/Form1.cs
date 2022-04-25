@@ -203,5 +203,15 @@ namespace EcosiaPrime.Gui
                 }
             }
         }
+
+        private void firstNameTextfield_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void houseNumberTextfield_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

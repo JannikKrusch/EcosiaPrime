@@ -76,7 +76,7 @@ namespace EcosiaPrime.Gui
             // 
             this.idTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0)))));
             this.idTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.idTextfield.Location = new System.Drawing.Point(85, 154);
+            this.idTextfield.Location = new System.Drawing.Point(85, 167);
             this.idTextfield.Margin = new System.Windows.Forms.Padding(1);
             this.idTextfield.Name = "idTextfield";
             this.idTextfield.PlaceholderText = "ID";
@@ -87,18 +87,19 @@ namespace EcosiaPrime.Gui
             // 
             this.firstNameTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(172)))), ((int)(((byte)(184)))));
             this.firstNameTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.firstNameTextfield.Location = new System.Drawing.Point(85, 217);
+            this.firstNameTextfield.Location = new System.Drawing.Point(85, 230);
             this.firstNameTextfield.Margin = new System.Windows.Forms.Padding(1);
             this.firstNameTextfield.Name = "firstNameTextfield";
             this.firstNameTextfield.PlaceholderText = "Vorname";
             this.firstNameTextfield.Size = new System.Drawing.Size(308, 61);
             this.firstNameTextfield.TabIndex = 4;
+            this.firstNameTextfield.TextChanged += new System.EventHandler(this.firstNameTextfield_TextChanged);
             // 
             // lastNameTextfield
             // 
             this.lastNameTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0)))));
             this.lastNameTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lastNameTextfield.Location = new System.Drawing.Point(85, 280);
+            this.lastNameTextfield.Location = new System.Drawing.Point(85, 293);
             this.lastNameTextfield.Margin = new System.Windows.Forms.Padding(1);
             this.lastNameTextfield.Name = "lastNameTextfield";
             this.lastNameTextfield.PlaceholderText = "Nachname";
@@ -109,7 +110,7 @@ namespace EcosiaPrime.Gui
             // 
             this.emailTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(172)))), ((int)(((byte)(184)))));
             this.emailTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.emailTextfield.Location = new System.Drawing.Point(85, 344);
+            this.emailTextfield.Location = new System.Drawing.Point(85, 356);
             this.emailTextfield.Margin = new System.Windows.Forms.Padding(1);
             this.emailTextfield.Name = "emailTextfield";
             this.emailTextfield.PlaceholderText = "Email";
@@ -120,7 +121,7 @@ namespace EcosiaPrime.Gui
             // 
             this.passwordTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0)))));
             this.passwordTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.passwordTextfield.Location = new System.Drawing.Point(85, 407);
+            this.passwordTextfield.Location = new System.Drawing.Point(85, 419);
             this.passwordTextfield.Margin = new System.Windows.Forms.Padding(1);
             this.passwordTextfield.Name = "passwordTextfield";
             this.passwordTextfield.PlaceholderText = "Passwort";
@@ -131,7 +132,7 @@ namespace EcosiaPrime.Gui
             // 
             this.countryTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(172)))), ((int)(((byte)(184)))));
             this.countryTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.countryTextfield.Location = new System.Drawing.Point(838, 154);
+            this.countryTextfield.Location = new System.Drawing.Point(811, 167);
             this.countryTextfield.Margin = new System.Windows.Forms.Padding(1);
             this.countryTextfield.Name = "countryTextfield";
             this.countryTextfield.PlaceholderText = "Land";
@@ -142,7 +143,7 @@ namespace EcosiaPrime.Gui
             // 
             this.stateTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0)))));
             this.stateTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.stateTextfield.Location = new System.Drawing.Point(838, 217);
+            this.stateTextfield.Location = new System.Drawing.Point(811, 230);
             this.stateTextfield.Margin = new System.Windows.Forms.Padding(1);
             this.stateTextfield.Name = "stateTextfield";
             this.stateTextfield.PlaceholderText = "Bundesland";
@@ -153,7 +154,7 @@ namespace EcosiaPrime.Gui
             // 
             this.postcodeTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(172)))), ((int)(((byte)(184)))));
             this.postcodeTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.postcodeTextfield.Location = new System.Drawing.Point(838, 280);
+            this.postcodeTextfield.Location = new System.Drawing.Point(811, 293);
             this.postcodeTextfield.Margin = new System.Windows.Forms.Padding(1);
             this.postcodeTextfield.Name = "postcodeTextfield";
             this.postcodeTextfield.PlaceholderText = "Postleitzahl";
@@ -164,7 +165,7 @@ namespace EcosiaPrime.Gui
             // 
             this.cityTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0)))));
             this.cityTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cityTextfield.Location = new System.Drawing.Point(838, 344);
+            this.cityTextfield.Location = new System.Drawing.Point(811, 356);
             this.cityTextfield.Margin = new System.Windows.Forms.Padding(1);
             this.cityTextfield.Name = "cityTextfield";
             this.cityTextfield.PlaceholderText = "Stadt";
@@ -175,7 +176,7 @@ namespace EcosiaPrime.Gui
             // 
             this.streetNameTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(172)))), ((int)(((byte)(184)))));
             this.streetNameTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.streetNameTextfield.Location = new System.Drawing.Point(838, 407);
+            this.streetNameTextfield.Location = new System.Drawing.Point(811, 419);
             this.streetNameTextfield.Margin = new System.Windows.Forms.Padding(1);
             this.streetNameTextfield.Name = "streetNameTextfield";
             this.streetNameTextfield.PlaceholderText = "Straße";
@@ -186,12 +187,13 @@ namespace EcosiaPrime.Gui
             // 
             this.houseNumberTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0)))));
             this.houseNumberTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.houseNumberTextfield.Location = new System.Drawing.Point(838, 471);
+            this.houseNumberTextfield.Location = new System.Drawing.Point(811, 482);
             this.houseNumberTextfield.Margin = new System.Windows.Forms.Padding(1);
             this.houseNumberTextfield.Name = "houseNumberTextfield";
             this.houseNumberTextfield.PlaceholderText = "Hausnummer";
             this.houseNumberTextfield.Size = new System.Drawing.Size(308, 61);
             this.houseNumberTextfield.TabIndex = 13;
+            this.houseNumberTextfield.TextChanged += new System.EventHandler(this.houseNumberTextfield_TextChanged);
             // 
             // paymentMethodPanel
             // 
@@ -211,7 +213,7 @@ namespace EcosiaPrime.Gui
             this.dropdownMenuPayment.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dropdownMenuPayment.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.dropdownMenuPayment.FormattingEnabled = true;
-            this.dropdownMenuPayment.Location = new System.Drawing.Point(1510, 280);
+            this.dropdownMenuPayment.Location = new System.Drawing.Point(1510, 293);
             this.dropdownMenuPayment.Margin = new System.Windows.Forms.Padding(1);
             this.dropdownMenuPayment.Name = "dropdownMenuPayment";
             this.dropdownMenuPayment.Size = new System.Drawing.Size(308, 62);
@@ -224,7 +226,7 @@ namespace EcosiaPrime.Gui
             this.dropdownMenuSubscription.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dropdownMenuSubscription.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.dropdownMenuSubscription.FormattingEnabled = true;
-            this.dropdownMenuSubscription.Location = new System.Drawing.Point(1510, 344);
+            this.dropdownMenuSubscription.Location = new System.Drawing.Point(1510, 356);
             this.dropdownMenuSubscription.Margin = new System.Windows.Forms.Padding(1);
             this.dropdownMenuSubscription.Name = "dropdownMenuSubscription";
             this.dropdownMenuSubscription.Size = new System.Drawing.Size(308, 62);
@@ -378,7 +380,7 @@ namespace EcosiaPrime.Gui
             // 
             this.startDatePicker.CalendarFont = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.startDatePicker.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.startDatePicker.Location = new System.Drawing.Point(1510, 154);
+            this.startDatePicker.Location = new System.Drawing.Point(1510, 167);
             this.startDatePicker.MinimumSize = new System.Drawing.Size(0, 61);
             this.startDatePicker.Name = "startDatePicker";
             this.startDatePicker.Size = new System.Drawing.Size(308, 61);
@@ -387,7 +389,7 @@ namespace EcosiaPrime.Gui
             // endDatePicker
             // 
             this.endDatePicker.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.endDatePicker.Location = new System.Drawing.Point(1510, 221);
+            this.endDatePicker.Location = new System.Drawing.Point(1510, 230);
             this.endDatePicker.MinimumSize = new System.Drawing.Size(0, 61);
             this.endDatePicker.Name = "endDatePicker";
             this.endDatePicker.Size = new System.Drawing.Size(308, 61);
@@ -395,18 +397,19 @@ namespace EcosiaPrime.Gui
             // 
             // responseTextField
             // 
-            this.responseTextField.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.responseTextField.Location = new System.Drawing.Point(587, 837);
+            this.responseTextField.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.responseTextField.Location = new System.Drawing.Point(567, 830);
             this.responseTextField.Multiline = true;
             this.responseTextField.Name = "responseTextField";
             this.responseTextField.PlaceholderText = "Response";
-            this.responseTextField.Size = new System.Drawing.Size(796, 65);
+            this.responseTextField.Size = new System.Drawing.Size(796, 54);
             this.responseTextField.TabIndex = 26;
+            this.responseTextField.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // logo
             // 
             this.logo.Image = ((System.Drawing.Image)(resources.GetObject("logo.Image")));
-            this.logo.Location = new System.Drawing.Point(838, 12);
+            this.logo.Location = new System.Drawing.Point(811, 12);
             this.logo.Name = "logo";
             this.logo.Size = new System.Drawing.Size(308, 138);
             this.logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;

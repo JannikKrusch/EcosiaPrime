@@ -1,5 +1,6 @@
 ﻿using EcosiaPrime.Contracts.Constants;
 using EcosiaPrime.Contracts.Models;
+using EcosiaPrime.Gui.ExtensionMethods;
 using EcosiaPrime.MongoDB;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
@@ -15,361 +16,10 @@ namespace EcosiaPrime.Gui
             _mongoDBService = mongoDBService;
         }
 
-        public bool ArePersonInputFieldsEmpty(TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password)
-        {
-            return (id.Text == "" || firstName.Text == "" || lastName.Text == "" || email.Text == "" || password.Text == "");
-        }
-
-        public bool ArePersonInputFieldsEmptyExeptId(TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password)
-        {
-            return (id.Text != "" && (firstName.Text == "" || lastName.Text == "" || email.Text == "" || password.Text == ""));
-        }
-
-        public bool AreAdressInputFieldsEmpty(TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox houseNumber)
-        {
-            return (country.Text == "" || state.Text == "" || postCode.Text == "" || city.Text == "" || street.Text == "" || houseNumber.Text == "");
-        }
-
-        public bool ArePaymentSubscriptionInputFieldsEmpty(DateTimePicker startDate, DateTimePicker endDate)
-        {
-            return IsStartDateAfterEndDate(startDate, endDate);
-        }
-
-        public bool IsStartDateAfterEndDate(DateTimePicker startDate, DateTimePicker endDate)
-        {
-            return GetDateTime(startDate) > GetDateTime(endDate);
-        }
-
-        public DateTime GetDateTime(DateTimePicker dateTimePicker)
-        {
-            DateTime s = default;
-            dateTimePicker.Invoke(new Action(() =>
-            {
-                s = dateTimePicker.Value.Date;
-            }));
-
-            return s;
-        }
-
-        public string CutDateString(string dateString)
-        {
-            var x = dateString.Split(", ");
-            if (x.Length == 2)
-            {
-                return x[1];
-            }
-            return "";
-        }
-
-        public DateTime ParseCutString(string dateString)
-        {
-            var cutDateString = CutDateString(dateString);
-
-            var couldParse = DateTime.TryParse(cutDateString, out DateTime parsedDate);
-
-            if (couldParse)
-            {
-                return parsedDate;
-            }
-            else
-            {
-                return DateTime.Parse("31.12.9999");
-            }
-        }
-
         public async Task<bool> DoesIdExist(string collectionName, string id)
         {
             var exists = await _mongoDBService.LoadRecordByIdAsync<Client>(collectionName, id).ConfigureAwait(false);
             return exists != null;
-        }
-
-        public List<string> CheckEmail(string email)
-        {
-            var responseLines = new List<string>();
-            try
-            {
-                MailAddress mailAddress = new MailAddress(email);
-                return responseLines;
-            }
-            catch (Exception ex)
-            {
-                responseLines.Add(ResponseMessagesConstants.EmailIsNotValid);
-                return responseLines;
-            }
-        }
-
-        public List<string> CheckPassword(string password)
-        {
-            var responseLines = new List<string>();
-
-            //https://stackoverflow.com/questions/34715501/validating-password-using-regex-c-sharp
-            var hasNumber = new Regex(@"[0-9]+");
-            var hasUpperChar = new Regex(@"[A-Z]+");
-            var hasLowerChar = new Regex(@"[a-z]+");
-            var hasMiniMaxChars = new Regex(@"^.{8,20}$");
-            var hasSymbols = new Regex(@"[!@#$%^&*()_+=\[{\]};:<>|./?,-]");
-
-            if (!hasNumber.IsMatch(password))
-            {
-                responseLines.Add(ResponseMessagesConstants.PasswordNoNumber);
-            }
-            if (!hasUpperChar.IsMatch(password))
-            {
-                responseLines.Add(ResponseMessagesConstants.PasswordNoUpperCase);
-            }
-            if (!hasLowerChar.IsMatch(password))
-            {
-                responseLines.Add(ResponseMessagesConstants.PasswordNoLowerCase);
-            }
-            if (!hasMiniMaxChars.IsMatch(password))
-            {
-                responseLines.Add(ResponseMessagesConstants.PasswordNoMinMaxChars);
-            }
-            if (!hasSymbols.IsMatch(password))
-            {
-                responseLines.Add(ResponseMessagesConstants.PasswordNoSymbols);
-            }
-
-            return responseLines;
-        }
-
-        public List<string> CheckNumberInputsForNumbers(string postCode, string houseNumber)
-        {
-            var responseLines = new List<string>();
-
-            var couldParse = Int32.TryParse(houseNumber, out int convertedHouseNumber);
-            if (!couldParse)
-            {
-                responseLines.Add(ResponseMessagesConstants.HouseNumberMustBeAnInteger);
-            }
-            couldParse = Int32.TryParse(postCode, out int convertedPostCode);
-            if (!couldParse)
-            {
-                responseLines.Add(ResponseMessagesConstants.PostCodeMustBeAnInteger);
-            }
-            else
-            {
-                if (postCode.Length != 5)
-                {
-                    responseLines.Add(ResponseMessagesConstants.PostCodeMustHaveCertainLength);
-                }
-            }
-
-            return responseLines;
-        }
-
-        public List<string> CheckNonNumberInputsForNumbers(
-            string firstName, string lastName,
-            string country, string state, string city, string street)
-        {
-            var responseLines = new List<string>();
-            var hasNumber = new Regex(@"[0-9]+");
-
-            if (hasNumber.IsMatch(firstName))
-            {
-                responseLines.Add(ResponseMessagesConstants.FirstnameCantContainNumber);
-            }
-
-            if (hasNumber.IsMatch(lastName))
-            {
-                responseLines.Add(ResponseMessagesConstants.LastnameCantContainNumber);
-            }
-
-            if (hasNumber.IsMatch(country))
-            {
-                responseLines.Add(ResponseMessagesConstants.CountyCantContainNumber);
-            }
-
-            if (hasNumber.IsMatch(state))
-            {
-                responseLines.Add(ResponseMessagesConstants.StateCantContainNumber);
-            }
-
-            if (hasNumber.IsMatch(city))
-            {
-                responseLines.Add(ResponseMessagesConstants.CityCantContainNumber);
-            }
-
-            if (hasNumber.IsMatch(street))
-            {
-                responseLines.Add(ResponseMessagesConstants.StreetCantContainNumber);
-            }
-
-            return responseLines;
-        }
-
-        public IEnumerable<string> CheckInputFieldsEmpty(
-            TextBox response,
-            TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
-            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox houseNumber,
-            DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType)
-        {
-            var responseLines = new List<string>();
-            if (ArePersonInputFieldsEmpty(id, firstName, lastName, email, password))
-            {
-                responseLines.Add(ResponseMessagesConstants.PersonDataInputFieldsAreEmpty);
-            }
-
-            if (AreAdressInputFieldsEmpty(country, state, postCode, city, street, houseNumber))
-            {
-                responseLines.Add(ResponseMessagesConstants.AddressDataInputFieldsAreEmpty);
-            }
-
-            if (ArePaymentSubscriptionInputFieldsEmpty(startDate, endDate))
-            {
-                responseLines.Add(ResponseMessagesConstants.PaymentSubscriptionInputFieldsAreEmpty);
-            }
-
-            var emailLines = CheckEmail(email.Text);
-            if (emailLines.Any())
-            {
-                responseLines.AddRange(emailLines);
-            }
-
-            var passwordLines = CheckPassword(password.Text);
-            if (passwordLines.Any())
-            {
-                responseLines.AddRange(passwordLines);
-            }
-
-            var nonNumberLines = CheckNonNumberInputsForNumbers(firstName.Text, lastName.Text, country.Text, state.Text, city.Text, street.Text);
-            if (nonNumberLines.Any())
-            {
-                responseLines.AddRange(nonNumberLines);
-            }
-
-            var postcodehouseLines = CheckNumberInputsForNumbers(postCode.Text, houseNumber.Text);
-            if (postcodehouseLines.Any())
-            {
-                responseLines.AddRange(postcodehouseLines);
-            }
-
-            return responseLines;
-        }
-
-        public IEnumerable<string> CheckInputFieldsEmptyExeptID(
-            TextBox response,
-            TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
-            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox houseNumber,
-            DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType)
-        {
-            var responseLines = new List<string>();
-            if (!ArePersonInputFieldsEmptyExeptId(id, firstName, lastName, email, password))
-            {
-                responseLines.Add(ResponseMessagesConstants.PersonDataInputFieldsAreEmptyExceptID);
-            }
-
-            if (AreAdressInputFieldsEmpty(country, state, postCode, city, street, houseNumber))
-            {
-                responseLines.Add(ResponseMessagesConstants.AddressDataInputFieldsAreEmpty);
-            }
-
-            if (ArePaymentSubscriptionInputFieldsEmpty(startDate, endDate))
-            {
-                responseLines.Add(ResponseMessagesConstants.PaymentSubscriptionInputFieldsAreEmpty);
-            }
-
-            var emailLines = CheckEmail(email.Text);
-            if (emailLines.Any())
-            {
-                responseLines.AddRange(emailLines);
-            }
-
-            var passwordLines = CheckPassword(password.Text);
-            if (passwordLines.Any())
-            {
-                responseLines.AddRange(passwordLines);
-            }
-
-            var nonNumberLines = CheckNonNumberInputsForNumbers(firstName.Text, lastName.Text, country.Text, state.Text, city.Text, street.Text);
-            if (nonNumberLines.Any())
-            {
-                responseLines.AddRange(nonNumberLines);
-            }
-
-            var numberLines = CheckNumberInputsForNumbers(postCode.Text, houseNumber.Text);
-            if (numberLines.Any())
-            {
-                responseLines.AddRange(numberLines);
-            }
-
-            return responseLines;
-        }
-
-        public string InvokeComboBox(ComboBox comboBox)
-        {
-            var text = "";
-            comboBox.Invoke(new Action(() =>
-            {
-                text = comboBox.Text;
-            }));
-            return text;
-        }
-
-        public void InvokeComboBox(ComboBox comboBox, string input)
-        {
-            comboBox.Invoke(new Action(() =>
-            {
-                comboBox.Text = input;
-            }));
-        }
-
-        public void InvokeTextBox(TextBox textBox, string input)
-        {
-            textBox.Invoke(new Action(() =>
-            {
-                textBox.Text = input;
-            }));
-        }
-
-        public void InvokeResponseTextBox(TextBox response, IEnumerable<string> lines)
-        {
-            response.Invoke(new Action(() =>
-            {
-                var x = lines.ToArray();
-                response.Lines = x;
-            }));
-        }
-
-        public void InvokeDateTimePicker(DateTimePicker dateTimePicker, string input)
-        {
-            dateTimePicker.Invoke(new Action(() =>
-            {
-                dateTimePicker.Text = input;
-            }));
-        }
-
-        public void InvokeListView(ListView listView, string[] input)
-        {
-            var listViewItem = new ListViewItem(input);
-            listView.Invoke(new Action(() =>
-            {
-                listView.Items.Add(listViewItem);
-            }));
-        }
-
-        public string[] GetFilledRow(Client client)
-        {
-            if (client != null && client.Id != null)
-            {
-                string[] row = {
-                client.Id, client.FirstName, client.LastName, client.Email, client.Password,
-                client.Address.Country, client.Address.State, client.Address.PostCode, client.Address.City, client.Address.Street, client.Address.HouseNumber,
-                client.Subscription.StartDate, client.Subscription.EndDate, client.Subscription.PaymentMethod, client.Subscription.SubscriptionType
-                };
-                return row;
-            }
-            return new string[] { };
-        }
-
-        public void FillListView(ListView listView, IEnumerable<Client> clients)
-        {
-            clients.ToList().ForEach(client => InvokeListView(listView, GetFilledRow(client)));
-        }
-
-        public void FillListView(ListView listView, Client client)
-        {
-            InvokeListView(listView, GetFilledRow(client));
         }
 
         public async Task<bool> CreateClientAsync(
@@ -378,7 +28,7 @@ namespace EcosiaPrime.Gui
             TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox houseNumber,
             DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType)
         {
-            var responseLines = CheckInputFieldsEmpty(
+            var responseLines = CheckSyntaxExtensionMethods.CheckInputFieldsEmpty(
                 response,
                 id, firstName, lastName, email,
                 password, country, state, postCode, city, street,
@@ -386,13 +36,13 @@ namespace EcosiaPrime.Gui
 
             if (responseLines.Any())
             {
-                InvokeResponseTextBox(response, responseLines);
+                response.InvokeResponseTextBox(responseLines);
                 return false;
             }
 
             if (await DoesIdExist(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
             {
-                InvokeResponseTextBox(response, new List<string> { ResponseMessagesConstants.IDAlreadyExistsInDB });
+                response.InvokeResponseTextBox(new List<string> { ResponseMessagesConstants.IDAlreadyExistsInDB });
                 return false;
             }
 
@@ -415,17 +65,17 @@ namespace EcosiaPrime.Gui
             client.Subscription.StartDate = startDate.Text;
             client.Subscription.EndDate = endDate.Text;
 
-            client.Subscription.PaymentMethod = InvokeComboBox(paymentMethod);
-            client.Subscription.SubscriptionType = InvokeComboBox(subscriptionType);
+            client.Subscription.PaymentMethod = paymentMethod.InvokeComboBox();
+            client.Subscription.SubscriptionType = subscriptionType.InvokeComboBox();
 
             var successful = await _mongoDBService.InsertRecordAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, client).ConfigureAwait(false);
             if (successful)
             {
-                InvokeResponseTextBox(response, new List<string> { ResponseMessagesConstants.AddClientToDBSuccessful });
+                response.InvokeResponseTextBox(new List<string> { ResponseMessagesConstants.AddClientToDBSuccessful });
             }
             else
             {
-                InvokeResponseTextBox(response, new List<string> { ResponseMessagesConstants.AddClientToDBFailure });
+                response.InvokeResponseTextBox(new List<string> { ResponseMessagesConstants.AddClientToDBFailure });
             }
             return successful;
         }
@@ -438,47 +88,46 @@ namespace EcosiaPrime.Gui
         {
             if (!await DoesIdExist(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
             {
-                InvokeResponseTextBox(response, new List<string> { ResponseMessagesConstants.IDDoesntExistInDB });
+                response.InvokeResponseTextBox(new List<string> { ResponseMessagesConstants.IDDoesntExistInDB });
                 return false;
             }
 
-            if (ArePersonInputFieldsEmptyExeptId(id, firstName, lastName, email, password) && AreAdressInputFieldsEmpty(country, state, postCode, city, houseNumber, street) && !ArePaymentSubscriptionInputFieldsEmpty(startDate, endDate))
+            if (id.ArePersonInputFieldsEmptyExeptId(firstName, lastName, email, password) && country.AreAdressInputFieldsEmpty(state, postCode, city, houseNumber, street) && !startDate.ArePaymentSubscriptionInputFieldsEmpty(endDate))
             {
                 var clientDB = await _mongoDBService.LoadRecordByIdAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false);
 
-                InvokeTextBox(id, clientDB.Id);
-                InvokeTextBox(firstName, clientDB.FirstName);
-                InvokeTextBox(lastName, clientDB.LastName);
-                InvokeTextBox(email, clientDB.Email);
-                InvokeTextBox(password, clientDB.Password);
+                id.InvokeTextBox(clientDB.Id);
+                firstName.InvokeTextBox(clientDB.FirstName);
+                lastName.InvokeTextBox(clientDB.LastName);
+                email.InvokeTextBox(clientDB.Email);
+                password.InvokeTextBox(clientDB.Password);
 
-                InvokeTextBox(country, clientDB.Address.Country);
-                InvokeTextBox(state, clientDB.Address.State);
-                InvokeTextBox(postCode, clientDB.Address.PostCode);
-                InvokeTextBox(city, clientDB.Address.City);
-                InvokeTextBox(street, clientDB.Address.Street);
-                InvokeTextBox(houseNumber, clientDB.Address.HouseNumber);
+                country.InvokeTextBox(clientDB.Address.Country);
+                state.InvokeTextBox(clientDB.Address.State);
+                postCode.InvokeTextBox(clientDB.Address.PostCode);
+                city.InvokeTextBox(clientDB.Address.City);
+                street.InvokeTextBox(clientDB.Address.Street);
+                houseNumber.InvokeTextBox(clientDB.Address.HouseNumber);
 
-                InvokeDateTimePicker(startDate, clientDB.Subscription.StartDate);
-                InvokeDateTimePicker(endDate, clientDB.Subscription.EndDate);
-                InvokeComboBox(paymentMethod, clientDB.Subscription.PaymentMethod);
-                InvokeComboBox(subscriptionType, clientDB.Subscription.SubscriptionType);
+                startDate.InvokeDateTimePicker(clientDB.Subscription.StartDate);
+                endDate.InvokeDateTimePicker(clientDB.Subscription.EndDate);
+                paymentMethod.InvokeComboBox(clientDB.Subscription.PaymentMethod);
+                subscriptionType.InvokeComboBox(clientDB.Subscription.SubscriptionType);
 
-                InvokeResponseTextBox(response, new List<string> { });
+                response.InvokeResponseTextBox(new List<string> { });
                 //Hier muss --> false <-- zurückgegeben werden, obwohl alles funktioniert hat, da ansonsten alle Felder geleert werden!
                 return false;
             }
             else
             {
-                var responseLines = CheckInputFieldsEmpty(
-                response,
+                var responseLines = response.CheckInputFieldsEmpty(
                 id, firstName, lastName, email,
                 password, country, state, postCode, city, street,
                 houseNumber, startDate, endDate, paymentMethod, subscriptionType);
 
                 if (responseLines.Any())
                 {
-                    InvokeResponseTextBox(response, responseLines);
+                    response.InvokeResponseTextBox(responseLines);
                     return false;
                 }
 
@@ -501,17 +150,17 @@ namespace EcosiaPrime.Gui
                 client.Subscription.StartDate = startDate.Text;
                 client.Subscription.EndDate = endDate.Text;
 
-                client.Subscription.PaymentMethod = InvokeComboBox(paymentMethod);
-                client.Subscription.SubscriptionType = InvokeComboBox(subscriptionType);
+                client.Subscription.PaymentMethod = paymentMethod.InvokeComboBox();
+                client.Subscription.SubscriptionType = subscriptionType.InvokeComboBox();
 
                 var successful = await _mongoDBService.UpsertRecordAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, client.Id, client).ConfigureAwait(false);
                 if (successful)
                 {
-                    InvokeResponseTextBox(response, new List<string> { ResponseMessagesConstants.UpdateClientToDBSuccessful });
+                    response.InvokeResponseTextBox(new List<string> { ResponseMessagesConstants.UpdateClientToDBSuccessful });
                 }
                 else
                 {
-                    InvokeResponseTextBox(response, new List<string> { ResponseMessagesConstants.UpdateClientToDBFailure });
+                    response.InvokeResponseTextBox(new List<string> { ResponseMessagesConstants.UpdateClientToDBFailure });
                 }
                 return successful;
             }
@@ -532,18 +181,18 @@ namespace EcosiaPrime.Gui
 
             if (responseLines.Any())
             {
-                InvokeResponseTextBox(response, responseLines);
+                response.InvokeResponseTextBox(responseLines);
                 return false;
             }
 
             var successful = await _mongoDBService.DeleteRecordAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false);
             if (successful)
             {
-                InvokeResponseTextBox(response, new List<string> { ResponseMessagesConstants.DeleteClientToDBSuccessful });
+                response.InvokeResponseTextBox(new List<string> { ResponseMessagesConstants.DeleteClientToDBSuccessful });
             }
             else
             {
-                InvokeResponseTextBox(response, new List<string> { ResponseMessagesConstants.DeleteClientToDBFailure });
+                response.InvokeResponseTextBox(new List<string> { ResponseMessagesConstants.DeleteClientToDBFailure });
             }
             return successful;
         }
@@ -591,11 +240,11 @@ namespace EcosiaPrime.Gui
 
             if (clients.Any())
             {
-                FillListView(table, clients);
+                table.FillListView(clients);
             }
             else if (client != null)
             {
-                FillListView(table, client);
+                table.FillListView(client);
             }
 
             table.Invoke(new Action(() =>
@@ -697,7 +346,7 @@ namespace EcosiaPrime.Gui
                     break;
 
                 case SearchFunctionConstants.SearchForTimeSpan:
-                    if (startDate.Text != "" && endDate.Text != "" && ParseCutString(startDate.Text) != DateTime.Today && ParseCutString(endDate.Text) != DateTime.Today)
+                    if (startDate.Text != "" && endDate.Text != "" && startDate.Text.ParseCutString() != DateTime.Today && endDate.Text.ParseCutString() != DateTime.Today)
                     {
                         searchForString = SearchFunctionConstants.SearchForTimeSpan;
                         searchStringPrimary = startDate.Text;
@@ -769,9 +418,9 @@ namespace EcosiaPrime.Gui
                     break;
 
                 case SearchFunctionConstants.SearchForTimeSpan:
-                    var abc = ParseCutString(searchStringPrimary);
+                    var abc = searchStringPrimary.ParseCutString();
                     var z = abc;
-                    foundList = people.Where(x => DateTime.Parse(x.Subscription.StartDate) >= ParseCutString(searchStringPrimary) && DateTime.Parse(x.Subscription.EndDate) <= ParseCutString(searchStringSecondary));
+                    foundList = people.Where(x => DateTime.Parse(x.Subscription.StartDate) >= searchStringPrimary.ParseCutString() && DateTime.Parse(x.Subscription.EndDate) <= searchStringSecondary.ParseCutString());
                     break;
 
                 case SearchFunctionConstants.SearchForPaymentOption:
@@ -789,7 +438,7 @@ namespace EcosiaPrime.Gui
             var x = foundList.ToList();
             if (foundList.Any())
             {
-                FillListView(table, foundList);
+                table.FillListView(foundList);
             }
         }
     }
