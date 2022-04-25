@@ -4,19 +4,17 @@
     {
         public static readonly List<string> OptionConstants = new List<string>
         {
-            Erstellen,
-            Bearbeiten,
-            Löschen,
-            Anzeigen,
-            Suchen,
-            Clear
+            Create,
+            Update,
+            Delete,
+            Show,
+            Search,
         };
 
-        public const string Erstellen = "Erstellen";
-        public const string Bearbeiten = "Bearbeiten";
-        public const string Löschen = "Löschen";
-        public const string Clear = "Clear";
-        public const string Anzeigen = "Anzeigen";
-        public const string Suchen = "Suchen";
+        public const string Create = "Erstellen";
+        public const string Update = "Bearbeiten";
+        public const string Delete = "Löschen";
+        public const string Show = "Anzeigen";
+        public const string Search = "Suchen";
     }
 }

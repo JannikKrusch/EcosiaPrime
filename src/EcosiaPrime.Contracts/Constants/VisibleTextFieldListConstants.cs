@@ -2,7 +2,7 @@
 {
     public static class VisibleTextFieldListConstants
     {
-        public static readonly List<string> Erstellen = new List<string>
+        public static readonly List<string> Create = new List<string>
         {
             "idTextfield",
             "firstNameTextfield",
@@ -23,62 +23,23 @@
             "responseTextField"
         };
 
-        public static readonly List<string> Bearbeiten = new List<string>
-        {
-            "idTextfield",
-            "firstNameTextfield",
-            "lastNameTextfield",
-            "emailTextfield",
-            "passwordTextfield",
-            "countryTextfield",
-            "stateTextfield",
-            "postcodeTextfield",
-            "cityTextfield",
-            "streetNameTextfield",
-            "houseNumberTextfield",
-            "startDatePicker",
-            "endDatePicker",
-            "dropdownMenuPayment",
-            "dropdownMenuSubscription",
-            "dropdownMenuOption",
-            "responseTextField"
-        };
+        public static readonly List<string> Update = new List<string>(Create);
 
-        public static readonly List<string> Löschen = new List<string>
+        public static readonly List<string> Delete = new List<string>
         {
             "idTextfield",
             "dropdownMenuOption",
             "responseTextField"
         };
 
-        public static readonly List<string> Anzeigen = new List<string>
-        {
-            "idTextfield",
+        public static readonly List<string> Show = new List<string>(Delete)
+        { 
             "dropdownMenuFilter",
-            "dropdownMenuOption",
-            "responseTextField"
         };
 
-        public static readonly List<string> Suchen = new List<string>
+        public static readonly List<string> Search = new List<string>(Create)
         {
-            "idTextfield",
-            "firstNameTextfield",
-            "lastNameTextfield",
-            "emailTextfield",
-            "passwordTextfield",
-            "countryTextfield",
-            "stateTextfield",
-            "postcodeTextfield",
-            "cityTextfield",
-            "streetNameTextfield",
-            "houseNumberTextfield",
-            "startDatePicker",
-            "endDatePicker",
-            "dropdownMenuPayment",
-            "dropdownMenuSubscription",
-            "dropdownMenuOption",
-            "dropdownMenuFilter",
-            "responseTextField"
+            "dropdownMenuFilter"
         };
     }
 }

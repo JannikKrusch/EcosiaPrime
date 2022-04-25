@@ -14,9 +14,6 @@ namespace EcosiaPrime.Gui
 
             InitializeComponent();
             FillComboBoxes();
-            /*dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            filterComboBox.Visible = false;*/
         }
 
         public void FillComboBoxes()
@@ -31,10 +28,6 @@ namespace EcosiaPrime.Gui
             
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-        }
-
         private void dropdownMenuPayment_SelectedIndexChanged(object sender, EventArgs e)
         {
             var text = dropdownMenuPayment.Text;
@@ -42,7 +35,7 @@ namespace EcosiaPrime.Gui
 
         private async void Enter_Click(object sender, EventArgs e)
         {
-            if (dropdownMenuOption.Text == ComboBoxOptionConstants.Erstellen)
+            if (dropdownMenuOption.Text == ComboBoxOptionConstants.Create)
             {
                 var successful = await _guiService.CreateClientAsync(responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
                     passwordTextfield, countryTextfield, stateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
@@ -53,7 +46,7 @@ namespace EcosiaPrime.Gui
                     ClearAllControls();
                 }
             }
-            else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Bearbeiten)
+            else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Update)
             {
                 var successful = await _guiService.UpdateClientAsync(
                     responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
@@ -65,7 +58,7 @@ namespace EcosiaPrime.Gui
                     ClearAllControls();
                 }
             }
-            else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Löschen)
+            else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Delete)
             {
                 var successful = await _guiService.DeleteClientAsync(
                     responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
@@ -77,11 +70,11 @@ namespace EcosiaPrime.Gui
                     ClearAllControls();
                 }
             }
-            else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Anzeigen)
+            else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Show)
             {
                 await _guiService.ShowClientsAsync(dropdownMenuFilter, dataGrid, idTextfield.Text).ConfigureAwait(false);
             }
-            else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Suchen)
+            else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Search)
             {
                 await _guiService.SearchFunctionAsync(
                     dataGrid, dropdownMenuFilter,
@@ -91,36 +84,32 @@ namespace EcosiaPrime.Gui
             }
         }
 
-        private void firstNameTextfield_TextChanged(object sender, EventArgs e)
-        {
-        }
-
         private void optionComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (dropdownMenuOption.Text)
             {
-                case ComboBoxOptionConstants.Erstellen:
-                    ChangeVisibilityOfFields(ComboBoxOptionConstants.Erstellen);
+                case ComboBoxOptionConstants.Create:
+                    ChangeVisibilityOfFields(ComboBoxOptionConstants.Create);
                     break;
 
-                case ComboBoxOptionConstants.Bearbeiten:
-                    ChangeVisibilityOfFields(ComboBoxOptionConstants.Bearbeiten);
+                case ComboBoxOptionConstants.Update:
+                    ChangeVisibilityOfFields(ComboBoxOptionConstants.Update);
                     break;
 
-                case ComboBoxOptionConstants.Löschen:
-                    ChangeVisibilityOfFields(ComboBoxOptionConstants.Löschen);
+                case ComboBoxOptionConstants.Delete:
+                    ChangeVisibilityOfFields(ComboBoxOptionConstants.Delete);
                     break;
 
-                case ComboBoxOptionConstants.Anzeigen:
-                    ChangeVisibilityOfFields(ComboBoxOptionConstants.Anzeigen);
+                case ComboBoxOptionConstants.Show:
+                    ChangeVisibilityOfFields(ComboBoxOptionConstants.Show);
                     break;
 
-                case ComboBoxOptionConstants.Suchen:
-                    ChangeVisibilityOfFields(ComboBoxOptionConstants.Suchen);
+                case ComboBoxOptionConstants.Search:
+                    ChangeVisibilityOfFields(ComboBoxOptionConstants.Search);
                     break;
 
                 default:
-                    ChangeVisibilityOfFields(ComboBoxOptionConstants.Clear);
+                    ChangeVisibilityOfFields(ComboBoxOptionConstants.Create);
                     break;
             }
         }
@@ -132,15 +121,15 @@ namespace EcosiaPrime.Gui
                 return;
             }
 
-            if (_controlsList.Count() > 0)
+            if (_controlsList.Any())
             {
-                if (option == ComboBoxOptionConstants.Anzeigen)
+                if (option == ComboBoxOptionConstants.Show)
                 {
                     dropdownMenuFilter.Items.Clear();
                     FilterOptionsConstants.FilterOptions.ForEach(x => dropdownMenuFilter.Items.Add(x));
                     dropdownMenuFilter.SelectedIndex = 0;
                 }
-                else if (option == ComboBoxOptionConstants.Suchen)
+                else if (option == ComboBoxOptionConstants.Search)
                 {
                     dropdownMenuFilter.Items.Clear();
                     SearchFunctionConstants.SearchFunctions.ForEach(x => dropdownMenuFilter.Items.Add(x));
@@ -175,23 +164,23 @@ namespace EcosiaPrime.Gui
         {
             switch (option)
             {
-                case ComboBoxOptionConstants.Erstellen:
-                    return VisibleTextFieldListConstants.Erstellen;
+                case ComboBoxOptionConstants.Create:
+                    return VisibleTextFieldListConstants.Create;
 
-                case ComboBoxOptionConstants.Bearbeiten:
-                    return VisibleTextFieldListConstants.Bearbeiten;
+                case ComboBoxOptionConstants.Update:
+                    return VisibleTextFieldListConstants.Update;
 
-                case ComboBoxOptionConstants.Löschen:
-                    return VisibleTextFieldListConstants.Löschen;
+                case ComboBoxOptionConstants.Delete:
+                    return VisibleTextFieldListConstants.Delete;
 
-                case ComboBoxOptionConstants.Anzeigen:
-                    return VisibleTextFieldListConstants.Anzeigen;
+                case ComboBoxOptionConstants.Show:
+                    return VisibleTextFieldListConstants.Show;
 
-                case ComboBoxOptionConstants.Suchen:
-                    return VisibleTextFieldListConstants.Suchen;
+                case ComboBoxOptionConstants.Search:
+                    return VisibleTextFieldListConstants.Search;
 
                 default:
-                    return VisibleTextFieldListConstants.Erstellen;
+                    return VisibleTextFieldListConstants.Create;
             }
         }
 
@@ -213,38 +202,6 @@ namespace EcosiaPrime.Gui
                     }));
                 }
             }
-        }
-
-        private void filterComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
-        private async void emailTextfield_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void cityTextfield_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void countryTextfield_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void passwordTextfield_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void startDateTextfield_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void houseNumberTextfield_TextChanged(object sender, EventArgs e)
-        {
         }
     }
 }

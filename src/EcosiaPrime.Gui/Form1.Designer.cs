@@ -93,7 +93,6 @@ namespace EcosiaPrime.Gui
             this.firstNameTextfield.PlaceholderText = "Vorname";
             this.firstNameTextfield.Size = new System.Drawing.Size(308, 61);
             this.firstNameTextfield.TabIndex = 4;
-            this.firstNameTextfield.TextChanged += new System.EventHandler(this.firstNameTextfield_TextChanged);
             // 
             // lastNameTextfield
             // 
@@ -116,7 +115,6 @@ namespace EcosiaPrime.Gui
             this.emailTextfield.PlaceholderText = "Email";
             this.emailTextfield.Size = new System.Drawing.Size(308, 61);
             this.emailTextfield.TabIndex = 6;
-            this.emailTextfield.TextChanged += new System.EventHandler(this.emailTextfield_TextChanged);
             // 
             // passwordTextfield
             // 
@@ -128,7 +126,6 @@ namespace EcosiaPrime.Gui
             this.passwordTextfield.PlaceholderText = "Passwort";
             this.passwordTextfield.Size = new System.Drawing.Size(308, 61);
             this.passwordTextfield.TabIndex = 7;
-            this.passwordTextfield.TextChanged += new System.EventHandler(this.passwordTextfield_TextChanged);
             // 
             // countryTextfield
             // 
@@ -140,7 +137,6 @@ namespace EcosiaPrime.Gui
             this.countryTextfield.PlaceholderText = "Land";
             this.countryTextfield.Size = new System.Drawing.Size(308, 61);
             this.countryTextfield.TabIndex = 8;
-            this.countryTextfield.TextChanged += new System.EventHandler(this.countryTextfield_TextChanged);
             // 
             // stateTextfield
             // 
@@ -174,7 +170,6 @@ namespace EcosiaPrime.Gui
             this.cityTextfield.PlaceholderText = "Stadt";
             this.cityTextfield.Size = new System.Drawing.Size(308, 61);
             this.cityTextfield.TabIndex = 11;
-            this.cityTextfield.TextChanged += new System.EventHandler(this.cityTextfield_TextChanged);
             // 
             // streetNameTextfield
             // 
@@ -197,7 +192,6 @@ namespace EcosiaPrime.Gui
             this.houseNumberTextfield.PlaceholderText = "Hausnummer";
             this.houseNumberTextfield.Size = new System.Drawing.Size(308, 61);
             this.houseNumberTextfield.TabIndex = 13;
-            this.houseNumberTextfield.TextChanged += new System.EventHandler(this.houseNumberTextfield_TextChanged);
             // 
             // paymentMethodPanel
             // 
@@ -379,7 +373,6 @@ namespace EcosiaPrime.Gui
             this.dropdownMenuFilter.Name = "dropdownMenuFilter";
             this.dropdownMenuFilter.Size = new System.Drawing.Size(567, 62);
             this.dropdownMenuFilter.TabIndex = 22;
-            this.dropdownMenuFilter.SelectedIndexChanged += new System.EventHandler(this.filterComboBox_SelectedIndexChanged);
             // 
             // startDatePicker
             // 
@@ -390,7 +383,6 @@ namespace EcosiaPrime.Gui
             this.startDatePicker.Name = "startDatePicker";
             this.startDatePicker.Size = new System.Drawing.Size(308, 61);
             this.startDatePicker.TabIndex = 24;
-            this.startDatePicker.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // endDatePicker
             // 
@@ -453,7 +445,6 @@ namespace EcosiaPrime.Gui
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = " ";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.logo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

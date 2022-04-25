@@ -737,35 +737,35 @@ namespace EcosiaPrime.Gui
             switch (searchForString)
             {
                 case SearchFunctionConstants.SearchForID:
-                    foundList = people.Where(x => x.Id.Contains(searchStringPrimary));
+                    foundList = people.Where(x => x.Id.ToLower().Contains(searchStringPrimary.ToLower()));
                     break;
 
                 case SearchFunctionConstants.SearchForFirstname:
-                    foundList = people.Where(x => x.FirstName.Contains(searchStringPrimary));
+                    foundList = people.Where(x => x.FirstName.ToLower().Contains(searchStringPrimary.ToLower()));
                     break;
 
                 case SearchFunctionConstants.SearchForLastName:
-                    foundList = people.Where(x => x.FirstName.Contains(searchStringPrimary));
+                    foundList = people.Where(x => x.FirstName.ToLower().Contains(searchStringPrimary.ToLower()));
                     break;
 
                 case SearchFunctionConstants.SearchForEmail:
-                    foundList = people.Where(x => x.Email.Contains(searchStringPrimary));
+                    foundList = people.Where(x => x.Email.ToLower().Contains(searchStringPrimary.ToLower()));
                     break;
 
                 case SearchFunctionConstants.SearchForCountry:
-                    foundList = people.Where(x => x.Address.Country.Contains(searchStringPrimary));
+                    foundList = people.Where(x => x.Address.Country.ToLower().Contains(searchStringPrimary.ToLower()));
                     break;
 
                 case SearchFunctionConstants.SearchForState:
-                    foundList = people.Where(x => x.Address.State.Contains(searchStringPrimary));
+                    foundList = people.Where(x => x.Address.State.ToLower().Contains(searchStringPrimary.ToLower()));
                     break;
 
                 case SearchFunctionConstants.SearchForCity:
-                    foundList = people.Where(x => x.Address.City.Contains(searchStringPrimary));
+                    foundList = people.Where(x => x.Address.City.ToLower().Contains(searchStringPrimary.ToLower()));
                     break;
 
                 case SearchFunctionConstants.SearchForStreet:
-                    foundList = people.Where(x => x.Address.Street.Contains(searchStringPrimary));
+                    foundList = people.Where(x => x.Address.Street.ToLower().Contains(searchStringPrimary.ToLower()));
                     break;
 
                 case SearchFunctionConstants.SearchForTimeSpan:
