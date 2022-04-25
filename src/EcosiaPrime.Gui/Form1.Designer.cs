@@ -31,8 +31,7 @@ namespace EcosiaPrime.Gui
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.header = new System.Windows.Forms.Label();
             this.idTextfield = new System.Windows.Forms.TextBox();
             this.firstNameTextfield = new System.Windows.Forms.TextBox();
             this.lastNameTextfield = new System.Windows.Forms.TextBox();
@@ -73,26 +72,16 @@ namespace EcosiaPrime.Gui
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label1
+            // header
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(310, -25);
-            this.label1.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 20);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "label1";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(820, 9);
-            this.label3.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(352, 81);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "EcosiaPrime";
+            this.header.AutoSize = true;
+            this.header.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.header.Location = new System.Drawing.Point(820, 9);
+            this.header.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.header.Name = "header";
+            this.header.Size = new System.Drawing.Size(352, 81);
+            this.header.TabIndex = 2;
+            this.header.Text = "EcosiaPrime";
             // 
             // idTextfield
             // 
@@ -455,8 +444,7 @@ namespace EcosiaPrime.Gui
             this.Controls.Add(this.lastNameTextfield);
             this.Controls.Add(this.firstNameTextfield);
             this.Controls.Add(this.idTextfield);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.header);
             this.Margin = new System.Windows.Forms.Padding(1);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -472,8 +460,7 @@ namespace EcosiaPrime.Gui
 
         #endregion
 
-        private Label label1;
-        private Label label3;
+        private Label header;
         private TextBox idTextfield;
         private TextBox firstNameTextfield;
         private TextBox lastNameTextfield;
