@@ -22,8 +22,6 @@ namespace EcosiaPrime.Gui
         void FillListView(ListView listView, IEnumerable<Client> clients);
         DateTime GetDateTime(DateTimePicker dateTimePicker);
         string[] GetFilledRow(Client client);
-        string GetPaymentMethod(string paymentString);
-        string GetSubscriptionType(string subscriptionTypeString);
         string InvokeComboBox(ComboBox comboBox);
         void InvokeComboBox(ComboBox comboBox, string input);
         void InvokeDateTimePicker(DateTimePicker dateTimePicker, string input);

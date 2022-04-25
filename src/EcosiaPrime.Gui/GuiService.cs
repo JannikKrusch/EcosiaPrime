@@ -296,32 +296,6 @@ namespace EcosiaPrime.Gui
             return responseLines;
         }
 
-        public string GetPaymentMethod(string paymentString)
-        {
-            var paymentmethods = PaymentMethodConstants.PaymentMethods;
-            foreach (var paymentMethod in paymentmethods)
-            {
-                if (paymentMethod.ToLower() == paymentString.ToLower())
-                {
-                    return paymentMethod;
-                }
-            }
-            return "";
-        }
-
-        public string GetSubscriptionType(string subscriptionTypeString)
-        {
-            var subscriptionTypes = SubscriptionTypeConstants.SubscriptionType;
-            foreach (var subscriptionType in subscriptionTypes)
-            {
-                if (subscriptionType.ToLower() == subscriptionTypeString.ToLower())
-                {
-                    return subscriptionType;
-                }
-            }
-            return "";
-        }
-
         public string InvokeComboBox(ComboBox comboBox)
         {
             var text = "";
