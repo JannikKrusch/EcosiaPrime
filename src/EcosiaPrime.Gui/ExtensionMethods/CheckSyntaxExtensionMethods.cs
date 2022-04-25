@@ -203,7 +203,7 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType)
         {
             var responseLines = new List<string>();
-            if (!CheckIfEmptyExtensionMethods.ArePersonInputFieldsEmptyExeptId(id, firstName, lastName, email, password))
+            if (!CheckIfEmptyExtensionMethods.ArePersonInputFieldsEmptyExceptId(id, firstName, lastName, email, password))
             {
                 responseLines.Add(ResponseMessagesConstants.PersonDataInputFieldsAreEmptyExceptID);
             }

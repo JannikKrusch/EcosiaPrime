@@ -7,7 +7,7 @@
             return (id.Text == "" || firstName.Text == "" || lastName.Text == "" || email.Text == "" || password.Text == "");
         }
 
-        public static bool ArePersonInputFieldsEmptyExeptId(this TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password)
+        public static bool ArePersonInputFieldsEmptyExceptId(this TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password)
         {
             return (id.Text != "" && (firstName.Text == "" || lastName.Text == "" || email.Text == "" || password.Text == ""));
         }
