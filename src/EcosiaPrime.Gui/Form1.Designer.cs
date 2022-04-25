@@ -31,7 +31,7 @@ namespace EcosiaPrime.Gui
         /// </summary>
         private void InitializeComponent()
         {
-            this.header = new System.Windows.Forms.Label();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.idTextfield = new System.Windows.Forms.TextBox();
             this.firstNameTextfield = new System.Windows.Forms.TextBox();
             this.lastNameTextfield = new System.Windows.Forms.TextBox();
@@ -43,7 +43,6 @@ namespace EcosiaPrime.Gui
             this.cityTextfield = new System.Windows.Forms.TextBox();
             this.streetNameTextfield = new System.Windows.Forms.TextBox();
             this.houseNumberTextfield = new System.Windows.Forms.TextBox();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.paymentMethodPanel = new System.Windows.Forms.Label();
             this.dropdownMenuPayment = new System.Windows.Forms.ComboBox();
             this.dropdownMenuSubscription = new System.Windows.Forms.ComboBox();
@@ -69,22 +68,13 @@ namespace EcosiaPrime.Gui
             this.startDatePicker = new System.Windows.Forms.DateTimePicker();
             this.endDatePicker = new System.Windows.Forms.DateTimePicker();
             this.responseTextField = new System.Windows.Forms.TextBox();
-            this.flowLayoutPanel1.SuspendLayout();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // header
-            // 
-            this.header.AutoSize = true;
-            this.header.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.header.Location = new System.Drawing.Point(820, 9);
-            this.header.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.header.Name = "header";
-            this.header.Size = new System.Drawing.Size(352, 81);
-            this.header.TabIndex = 2;
-            this.header.Text = "EcosiaPrime";
             // 
             // idTextfield
             // 
+            this.idTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0)))));
             this.idTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.idTextfield.Location = new System.Drawing.Point(85, 154);
             this.idTextfield.Margin = new System.Windows.Forms.Padding(1);
@@ -95,6 +85,7 @@ namespace EcosiaPrime.Gui
             // 
             // firstNameTextfield
             // 
+            this.firstNameTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(172)))), ((int)(((byte)(184)))));
             this.firstNameTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.firstNameTextfield.Location = new System.Drawing.Point(85, 217);
             this.firstNameTextfield.Margin = new System.Windows.Forms.Padding(1);
@@ -106,6 +97,7 @@ namespace EcosiaPrime.Gui
             // 
             // lastNameTextfield
             // 
+            this.lastNameTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0)))));
             this.lastNameTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lastNameTextfield.Location = new System.Drawing.Point(85, 280);
             this.lastNameTextfield.Margin = new System.Windows.Forms.Padding(1);
@@ -116,6 +108,7 @@ namespace EcosiaPrime.Gui
             // 
             // emailTextfield
             // 
+            this.emailTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(172)))), ((int)(((byte)(184)))));
             this.emailTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.emailTextfield.Location = new System.Drawing.Point(85, 344);
             this.emailTextfield.Margin = new System.Windows.Forms.Padding(1);
@@ -127,6 +120,7 @@ namespace EcosiaPrime.Gui
             // 
             // passwordTextfield
             // 
+            this.passwordTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0)))));
             this.passwordTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.passwordTextfield.Location = new System.Drawing.Point(85, 407);
             this.passwordTextfield.Margin = new System.Windows.Forms.Padding(1);
@@ -138,17 +132,19 @@ namespace EcosiaPrime.Gui
             // 
             // countryTextfield
             // 
+            this.countryTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(172)))), ((int)(((byte)(184)))));
             this.countryTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.countryTextfield.Location = new System.Drawing.Point(838, 154);
             this.countryTextfield.Margin = new System.Windows.Forms.Padding(1);
             this.countryTextfield.Name = "countryTextfield";
-            this.countryTextfield.PlaceholderText = "Staat";
+            this.countryTextfield.PlaceholderText = "Land";
             this.countryTextfield.Size = new System.Drawing.Size(308, 61);
             this.countryTextfield.TabIndex = 8;
             this.countryTextfield.TextChanged += new System.EventHandler(this.countryTextfield_TextChanged);
             // 
             // stateTextfield
             // 
+            this.stateTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0)))));
             this.stateTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.stateTextfield.Location = new System.Drawing.Point(838, 217);
             this.stateTextfield.Margin = new System.Windows.Forms.Padding(1);
@@ -159,6 +155,7 @@ namespace EcosiaPrime.Gui
             // 
             // postcodeTextfield
             // 
+            this.postcodeTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(172)))), ((int)(((byte)(184)))));
             this.postcodeTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.postcodeTextfield.Location = new System.Drawing.Point(838, 280);
             this.postcodeTextfield.Margin = new System.Windows.Forms.Padding(1);
@@ -169,6 +166,7 @@ namespace EcosiaPrime.Gui
             // 
             // cityTextfield
             // 
+            this.cityTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0)))));
             this.cityTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cityTextfield.Location = new System.Drawing.Point(838, 344);
             this.cityTextfield.Margin = new System.Windows.Forms.Padding(1);
@@ -180,6 +178,7 @@ namespace EcosiaPrime.Gui
             // 
             // streetNameTextfield
             // 
+            this.streetNameTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(172)))), ((int)(((byte)(184)))));
             this.streetNameTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.streetNameTextfield.Location = new System.Drawing.Point(838, 407);
             this.streetNameTextfield.Margin = new System.Windows.Forms.Padding(1);
@@ -190,6 +189,7 @@ namespace EcosiaPrime.Gui
             // 
             // houseNumberTextfield
             // 
+            this.houseNumberTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0)))));
             this.houseNumberTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.houseNumberTextfield.Location = new System.Drawing.Point(838, 471);
             this.houseNumberTextfield.Margin = new System.Windows.Forms.Padding(1);
@@ -198,16 +198,6 @@ namespace EcosiaPrime.Gui
             this.houseNumberTextfield.Size = new System.Drawing.Size(308, 61);
             this.houseNumberTextfield.TabIndex = 13;
             this.houseNumberTextfield.TextChanged += new System.EventHandler(this.houseNumberTextfield_TextChanged);
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Controls.Add(this.paymentMethodPanel);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(1369, 271);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(1);
-            this.flowLayoutPanel1.MaximumSize = new System.Drawing.Size(279, 52);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(279, 0);
-            this.flowLayoutPanel1.TabIndex = 16;
             // 
             // paymentMethodPanel
             // 
@@ -222,6 +212,7 @@ namespace EcosiaPrime.Gui
             // 
             // dropdownMenuPayment
             // 
+            this.dropdownMenuPayment.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(172)))), ((int)(((byte)(184)))));
             this.dropdownMenuPayment.DisplayMember = "PayPal";
             this.dropdownMenuPayment.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dropdownMenuPayment.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -235,6 +226,7 @@ namespace EcosiaPrime.Gui
             // 
             // dropdownMenuSubscription
             // 
+            this.dropdownMenuSubscription.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0)))));
             this.dropdownMenuSubscription.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dropdownMenuSubscription.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.dropdownMenuSubscription.FormattingEnabled = true;
@@ -246,6 +238,7 @@ namespace EcosiaPrime.Gui
             // 
             // Enter
             // 
+            this.Enter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(219)))), ((int)(((byte)(49)))));
             this.Enter.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Enter.Location = new System.Drawing.Point(1578, 545);
             this.Enter.Margin = new System.Windows.Forms.Padding(1);
@@ -253,7 +246,7 @@ namespace EcosiaPrime.Gui
             this.Enter.Size = new System.Drawing.Size(169, 62);
             this.Enter.TabIndex = 19;
             this.Enter.Text = "Enter";
-            this.Enter.UseVisualStyleBackColor = true;
+            this.Enter.UseVisualStyleBackColor = false;
             this.Enter.Click += new System.EventHandler(this.Enter_Click);
             // 
             // dropdownMenuOption
@@ -418,11 +411,23 @@ namespace EcosiaPrime.Gui
             this.responseTextField.Size = new System.Drawing.Size(796, 65);
             this.responseTextField.TabIndex = 26;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(838, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(308, 138);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 27;
+            this.pictureBox1.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Gray;
             this.ClientSize = new System.Drawing.Size(1868, 954);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.responseTextField);
             this.Controls.Add(this.endDatePicker);
             this.Controls.Add(this.startDatePicker);
@@ -432,7 +437,6 @@ namespace EcosiaPrime.Gui
             this.Controls.Add(this.Enter);
             this.Controls.Add(this.dropdownMenuSubscription);
             this.Controls.Add(this.dropdownMenuPayment);
-            this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.houseNumberTextfield);
             this.Controls.Add(this.streetNameTextfield);
             this.Controls.Add(this.cityTextfield);
@@ -444,23 +448,19 @@ namespace EcosiaPrime.Gui
             this.Controls.Add(this.lastNameTextfield);
             this.Controls.Add(this.firstNameTextfield);
             this.Controls.Add(this.idTextfield);
-            this.Controls.Add(this.header);
             this.Margin = new System.Windows.Forms.Padding(1);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = " ";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private Label header;
         private TextBox idTextfield;
         private TextBox firstNameTextfield;
         private TextBox lastNameTextfield;
@@ -472,7 +472,6 @@ namespace EcosiaPrime.Gui
         private TextBox cityTextfield;
         private TextBox streetNameTextfield;
         private TextBox houseNumberTextfield;
-        private FlowLayoutPanel flowLayoutPanel1;
         private Label paymentMethodPanel;
         private ComboBox dropdownMenuPayment;
         private ComboBox dropdownMenuSubscription;
@@ -498,5 +497,6 @@ namespace EcosiaPrime.Gui
         private DateTimePicker startDatePicker;
         private DateTimePicker endDatePicker;
         private TextBox responseTextField;
+        private PictureBox pictureBox1;
     }
 }

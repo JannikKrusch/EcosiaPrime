@@ -27,9 +27,8 @@ namespace EcosiaPrime.Gui
             SubscriptionTypeConstants.SubscriptionType.ForEach(x => dropdownMenuSubscription.Items.Add(x));
             dropdownMenuSubscription.SelectedIndex = 0;
 
-            //FilterOptionsConstants.FilterOptions.ForEach(x => dropdownMenuFilter.Items.Add(x));
-
             ComboBoxOptionConstants.OptionConstants.ForEach(x => dropdownMenuOption.Items.Add(x));
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
