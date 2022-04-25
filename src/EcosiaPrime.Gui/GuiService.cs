@@ -137,19 +137,19 @@ namespace EcosiaPrime.Gui
         {
             var responseLines = new List<string>();
 
-            var couldParse = Int32.TryParse(postCode, out int convertedNumber);
+            var couldParse = Int32.TryParse(houseNumber, out int convertedHouseNumber);
             if (!couldParse)
             {
                 responseLines.Add(ResponseMessagesConstants.HouseNumberMustBeAnInteger);
             }
-
+            couldParse = Int32.TryParse(postCode, out int convertedPostCode);
             if (!couldParse)
             {
-                responseLines.Add(ResponseMessagesConstants.HouseNumberMustBeAnInteger);
+                responseLines.Add(ResponseMessagesConstants.PostCodeMustBeAnInteger);
             }
             else
             {
-                if (houseNumber.Length != 5)
+                if (postCode.Length != 5)
                 {
                     responseLines.Add(ResponseMessagesConstants.PostCodeMustHaveCertainLength);
                 }
