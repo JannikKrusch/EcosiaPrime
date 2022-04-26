@@ -16,7 +16,7 @@ namespace EcosiaPrime.Gui
             _mongoDBService = mongoDBService;
         }
 
-        public async Task<bool> DoesIdExist(string collectionName, string id)
+        public async Task<bool> DoesIdExistAsync(string collectionName, string id)
         {
             var exists = await _mongoDBService.LoadRecordByIdAsync<Client>(collectionName, id).ConfigureAwait(false);
             return exists != null;
@@ -40,7 +40,7 @@ namespace EcosiaPrime.Gui
                 return false;
             }
 
-            if (await DoesIdExist(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
+            if (await DoesIdExistAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
             {
                 response.InvokeResponseTextBox(new List<string> { ResponseMessagesConstants.IDAlreadyExistsInDB });
                 return false;
@@ -86,7 +86,7 @@ namespace EcosiaPrime.Gui
             TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox houseNumber,
             DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType)
         {
-            if (!await DoesIdExist(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
+            if (!await DoesIdExistAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
             {
                 response.InvokeResponseTextBox(new List<string> { ResponseMessagesConstants.IDDoesntExistInDB });
                 return false;
@@ -174,7 +174,7 @@ namespace EcosiaPrime.Gui
         {
             var responseLines = new List<string>();
 
-            if (!await DoesIdExist(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
+            if (!await DoesIdExistAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
             {
                 responseLines.Add(ResponseMessagesConstants.IDDoesntExistInDB);
             }
