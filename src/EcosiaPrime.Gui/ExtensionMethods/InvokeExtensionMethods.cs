@@ -56,7 +56,7 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             }));
         }
 
-        public static string[] GetFilledRow(this Client client)
+        private static string[] GetFilledRow(this Client client)
         {
             if (client != null && client.Id != null)
             {
@@ -77,7 +77,7 @@ namespace EcosiaPrime.Gui.ExtensionMethods
 
         public static void FillListView(this ListView listView, Client client)
         {
-            InvokeListView(listView, GetFilledRow(client));
+            listView.InvokeListView(GetFilledRow(client));
         }
     }
 }

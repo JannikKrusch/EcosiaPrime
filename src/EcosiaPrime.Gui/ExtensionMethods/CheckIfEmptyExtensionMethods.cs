@@ -22,12 +22,12 @@
             return IsStartDateAfterEndDate(startDate, endDate);
         }
 
-        public static bool IsStartDateAfterEndDate(this DateTimePicker startDate, DateTimePicker endDate)
+        private static bool IsStartDateAfterEndDate(this DateTimePicker startDate, DateTimePicker endDate)
         {
             return GetDateTime(startDate) > GetDateTime(endDate);
         }
 
-        public static DateTime GetDateTime(this DateTimePicker dateTimePicker)
+        private static DateTime GetDateTime(this DateTimePicker dateTimePicker)
         {
             DateTime s = default;
             dateTimePicker.Invoke(new Action(() =>

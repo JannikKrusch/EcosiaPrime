@@ -6,7 +6,7 @@ namespace EcosiaPrime.Gui.ExtensionMethods
 {
     public static class CheckSyntaxExtensionMethods
     {
-        public static string CutDateString(this string dateString)
+        private static string CutDateString(this string dateString)
         {
             var x = dateString.Split(", ");
             if (x.Length == 2)
@@ -32,7 +32,7 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             }
         }
 
-        public static List<string> CheckEmail(this string email)
+        private static List<string> CheckEmail(this string email)
         {
             var responseLines = new List<string>();
             try
@@ -47,7 +47,7 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             }
         }
 
-        public static List<string> CheckPassword(this string password)
+        private static List<string> CheckPassword(this string password)
         {
             var responseLines = new List<string>();
 
@@ -82,7 +82,7 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             return responseLines;
         }
 
-        public static List<string> CheckNumberInputsForNumbers(this string postCode, string houseNumber)
+        private static List<string> CheckNumberInputsForNumbers(this string postCode, string houseNumber)
         {
             var responseLines = new List<string>();
 
@@ -107,7 +107,7 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             return responseLines;
         }
 
-        public static List<string> CheckNonNumberInputsForNumbers(
+        private static List<string> CheckNonNumberInputsForNumbers(
             this string firstName, string lastName,
             string country, string state, string city, string street)
         {
@@ -196,7 +196,7 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             return responseLines;
         }
 
-        public static IEnumerable<string> CheckInputFieldsEmptyExeptID(
+        public static IEnumerable<string> CheckInputFieldsEmptyExceptID(
             this TextBox response,
             TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
             TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox houseNumber,

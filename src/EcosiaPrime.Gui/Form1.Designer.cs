@@ -247,6 +247,7 @@ namespace EcosiaPrime.Gui
             // 
             // dropdownMenuOption
             // 
+            this.dropdownMenuOption.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(219)))), ((int)(((byte)(49)))));
             this.dropdownMenuOption.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dropdownMenuOption.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.dropdownMenuOption.FormattingEnabled = true;
@@ -364,9 +365,10 @@ namespace EcosiaPrime.Gui
             // 
             // dropdownMenuFilter
             // 
-            this.dropdownMenuFilter.AutoCompleteCustomSource.AddRange(new string[] {
-            "Alle",
-            "Eine Person"});
+            //this.dropdownMenuFilter.AutoCompleteCustomSource.AddRange(new string[] {
+            //"Alle",
+            //"Eine Person"});
+            this.dropdownMenuFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(219)))), ((int)(((byte)(49)))));
             this.dropdownMenuFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dropdownMenuFilter.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.dropdownMenuFilter.FormattingEnabled = true;
