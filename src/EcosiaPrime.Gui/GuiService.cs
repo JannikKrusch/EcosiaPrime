@@ -435,7 +435,7 @@ namespace EcosiaPrime.Gui
             {
                 table.Items.Clear();
             }));
-            var x = foundList.ToList();
+
             if (foundList.Any())
             {
                 table.FillListView(foundList);
