@@ -54,6 +54,11 @@ namespace EcosiaPrime.MongoDB
          * Sort Methods 
         */
 
+        /// <summary>
+        /// Gibt nach ID sortiertes IEnumerable vom Typen Client zurück
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<Client>> SortRecordByIdAsync(string collectionName)
         {
             var records = await LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
@@ -61,6 +66,11 @@ namespace EcosiaPrime.MongoDB
             return sortedRecords;
         }
 
+        /// <summary>
+        /// Gibt nach Vornamen sortiertes IEnumerable vom Typen Client zurück
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<Client>> SortRecordByFirstNameAsync(string collectionName)
         {
             var records = await LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
@@ -68,6 +78,11 @@ namespace EcosiaPrime.MongoDB
             return sortedRecords;
         }
 
+        /// <summary>
+        /// Gibt nach Nachnamen sortiertes IEnumerable vom Typen Client zurück
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<Client>> SortRecordByLastNameAsync(string collectionName)
         {
             var records = await LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
@@ -75,6 +90,11 @@ namespace EcosiaPrime.MongoDB
             return sortedRecords;
         }
 
+        /// <summary>
+        /// Gibt nach Email sortiertes IEnumerable vom Typen Client zurück
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<Client>> SortRecordByEmailAsync(string collectionName)
         {
             var records = await LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
@@ -82,6 +102,11 @@ namespace EcosiaPrime.MongoDB
             return sortedRecords;
         }
 
+        /// <summary>
+        /// Gibt nach Land sortiertes IEnumerable vom Typen Client zurück
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<Client>> SortRecordByCountyAsync(string collectionName)
         {
             var records = await LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
@@ -89,11 +114,28 @@ namespace EcosiaPrime.MongoDB
             return sortedRecords;
         }
 
+        /// <summary>
+        /// Gibt nach Abotyp sortiertes IEnumerable vom Typen Client zurück
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<Client>> SortRecordBySubscriptionTypeAsync(string collectionName)
         {
             var records = await LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
             var sortedRecords = records.OrderBy(x => x.Subscription.SubscriptionType);
             return sortedRecords;
+        }
+
+        /// <summary>
+        /// Gibt Wahrheitswert zurück, ob ID in Datenbank existiert
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<bool> DoesIdExistAsync(string collectionName, string id)
+        {
+            var exists = await LoadRecordByIdAsync<Client>(collectionName, id).ConfigureAwait(false);
+            return exists != null;
         }
     }
 }

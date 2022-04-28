@@ -47,6 +47,17 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             }));
         }
 
+        public static DateTime GetDateTime(this DateTimePicker dateTimePicker)
+        {
+            DateTime s = default;
+            dateTimePicker.Invoke(new Action(() =>
+            {
+                s = dateTimePicker.Value.Date;
+            }));
+
+            return s;
+        }
+
         public static void InvokeListView(this ListView listView, string[] input)
         {
             var listViewItem = new ListViewItem(input);

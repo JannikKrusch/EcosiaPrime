@@ -25,7 +25,6 @@ namespace EcosiaPrime.Gui
             dropdownMenuSubscription.SelectedIndex = 0;
 
             ComboBoxOptionConstants.OptionConstants.ForEach(x => dropdownMenuOption.Items.Add(x));
-            
         }
 
         private void dropdownMenuPayment_SelectedIndexChanged(object sender, EventArgs e)
@@ -137,27 +136,23 @@ namespace EcosiaPrime.Gui
                 }
             }
 
-            foreach (Control control in _controlsList)
+            _controlsList.ToList().ForEach(control =>
             {
-                foreach (string opt in GetVisibleFieldsList(option))
+                if (GetVisibleFieldsList(option).Any(x => x == control.Name))
                 {
-                    if (control.Name == opt)
+                    control.Invoke(new Action(() =>
                     {
-                        control.Invoke(new Action(() =>
-                        {
-                            control.Visible = true;
-                        }));
-                        break;
-                    }
-                    else
-                    {
-                        control.Invoke(new Action(() =>
-                        {
-                            control.Visible = false;
-                        }));
-                    }
+                        control.Visible = true;
+                    }));
                 }
-            }
+                else
+                {
+                    control.Invoke(new Action(() =>
+                    {
+                        control.Visible = false;
+                    }));
+                }
+            });
         }
 
         public List<string> GetVisibleFieldsList(string option)
@@ -184,15 +179,15 @@ namespace EcosiaPrime.Gui
             }
         }
 
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        public void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
-        private void ClearAllControls()
+        public void ClearAllControls()
         {
-            foreach (Control control in _controlsList)
+            _controlsList.ToList().ForEach(control =>
             {
                 if (control is TextBox && control.Name != "responseTextField")
                 {
@@ -201,17 +196,7 @@ namespace EcosiaPrime.Gui
                         control.Text = string.Empty;
                     }));
                 }
-            }
-        }
-
-        private void firstNameTextfield_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void houseNumberTextfield_TextChanged(object sender, EventArgs e)
-        {
-
+            });
         }
     }
 }

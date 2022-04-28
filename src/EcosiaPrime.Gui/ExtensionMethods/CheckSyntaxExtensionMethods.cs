@@ -6,21 +6,14 @@ namespace EcosiaPrime.Gui.ExtensionMethods
 {
     public static class CheckSyntaxExtensionMethods
     {
-        private static string CutDateString(this string dateString)
+        /// <summary>
+        /// Gibt Datetime zurück, welches vom Parameter von String to Datetime geparsed wurde, wenn es nicht geparsed werde kann wird 31.12.9999 zurückgegeben
+        /// </summary>
+        /// <param name="dateString"></param>
+        /// <returns></returns>
+        public static DateTime ParseString(this string dateString)
         {
-            var x = dateString.Split(", ");
-            if (x.Length == 2)
-            {
-                return x[1];
-            }
-            return "";
-        }
-
-        public static DateTime ParseCutString(this string dateString)
-        {
-            var cutDateString = CutDateString(dateString);
-
-            var couldParse = DateTime.TryParse(cutDateString, out DateTime parsedDate);
+            var couldParse = DateTime.TryParse(dateString, out DateTime parsedDate);
 
             if (couldParse)
             {
@@ -32,6 +25,11 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             }
         }
 
+        /// <summary>
+        /// Gibt ResponseListe zurück, schaut ob der Parameter einer Email entspricht
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         private static List<string> CheckEmail(this string email)
         {
             var responseLines = new List<string>();
@@ -47,6 +45,11 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             }
         }
 
+        /// <summary>
+        /// Gibt RepsonseListe zurück, schaut, ob Passwort den Kriterien entspricht
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
         private static List<string> CheckPassword(this string password)
         {
             var responseLines = new List<string>();
@@ -82,6 +85,12 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             return responseLines;
         }
 
+        /// <summary>
+        /// Gibt RepsonseListe zurück, schaut, ob PLZ und Hausnummer in eine Zahl umgewandelt werden können und ob PLZ eine 5 stellige Zahl ist
+        /// </summary>
+        /// <param name="postCode"></param>
+        /// <param name="houseNumber"></param>
+        /// <returns></returns>
         private static List<string> CheckNumberInputsForNumbers(this string postCode, string houseNumber)
         {
             var responseLines = new List<string>();
@@ -107,6 +116,16 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             return responseLines;
         }
 
+        /// <summary>
+        /// Gibt ResponseList zurück, schaut, ob alle Nicht-Zahlenfelder auch keine Zahlen enthalten
+        /// </summary>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="country"></param>
+        /// <param name="state"></param>
+        /// <param name="city"></param>
+        /// <param name="street"></param>
+        /// <returns></returns>
         private static List<string> CheckNonNumberInputsForNumbers(
             this string firstName, string lastName,
             string country, string state, string city, string street)
@@ -147,6 +166,26 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             return responseLines;
         }
 
+        /// <summary>
+        /// Gibt ResponseList zurück, schaut ob Felder leer sind, Email, Passwort und PLZ Kriterien entsprechen + ob alle Nicht-Zahlenfelder keine Zahlen enthalten
+        /// </summary>
+        /// <param name="response"></param>
+        /// <param name="id"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <param name="country"></param>
+        /// <param name="state"></param>
+        /// <param name="postCode"></param>
+        /// <param name="city"></param>
+        /// <param name="street"></param>
+        /// <param name="houseNumber"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="paymentMethod"></param>
+        /// <param name="subscriptionType"></param>
+        /// <returns></returns>
         public static IEnumerable<string> CheckInputFieldsEmpty(
             this TextBox response,
             TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
@@ -196,6 +235,26 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             return responseLines;
         }
 
+        /// <summary>
+        /// Gibt ResponseList zurück, schaut ob Felder leer sind, Email, Passwort und PLZ Kriterien entsprechen + ob alle Nicht-Zahlenfelder keine Zahlen enthalten - mit der Ausnahme von ID
+        /// </summary>
+        /// <param name="response"></param>
+        /// <param name="id"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <param name="country"></param>
+        /// <param name="state"></param>
+        /// <param name="postCode"></param>
+        /// <param name="city"></param>
+        /// <param name="street"></param>
+        /// <param name="houseNumber"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="paymentMethod"></param>
+        /// <param name="subscriptionType"></param>
+        /// <returns></returns>
         public static IEnumerable<string> CheckInputFieldsEmptyExceptID(
             this TextBox response,
             TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,

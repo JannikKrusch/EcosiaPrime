@@ -15,11 +15,22 @@ namespace EcosiaPrime.MongoDB
             _mongoDatabase = client.GetDatabase(_mongoDBConfiguration.DataBaseName);
         }
 
+        /// <summary>
+        /// Gibt die MongoDB Configuration zurück
+        /// </summary>
+        /// <returns></returns>
         public MongoDBConfiguration GetMongoDBConfiguration()
         {
             return _mongoDBConfiguration;
         }
 
+        /// <summary>
+        /// Trägt einen Eintrag in die Datenbank ein
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collectionName"></param>
+        /// <param name="record"></param>
+        /// <returns></returns>
         public async Task<bool> InsertRecordAsync<T>(string collectionName, T record)
         {
             try
@@ -34,6 +45,13 @@ namespace EcosiaPrime.MongoDB
             }
         }
 
+        /// <summary>
+        /// Holt einen Eintrag aus der Datenbank per ID
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collectionName"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<T> LoadRecordByIdAsync<T>(string collectionName, string id)
         {
             var collection = _mongoDatabase.GetCollection<T>(collectionName);
@@ -42,6 +60,12 @@ namespace EcosiaPrime.MongoDB
             return result.FirstOrDefault();
         }
 
+        /// <summary>
+        /// Holt alle Einträge aus der Datenbank
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collectionName"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<T>> LoadRecordsAsync<T>(string collectionName)
         {
             var collection = _mongoDatabase.GetCollection<T>(collectionName);
@@ -50,6 +74,13 @@ namespace EcosiaPrime.MongoDB
             return result;
         }
 
+        /// <summary>
+        /// Löscht einen Eintrag aus der Datenbank per ID
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collectionName"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<bool> DeleteRecordAsync<T>(string collectionName, string id)
         {
             var colletion = _mongoDatabase.GetCollection<T>(collectionName);
@@ -60,6 +91,14 @@ namespace EcosiaPrime.MongoDB
             return result.IsAcknowledged;
         }
 
+        /// <summary>
+        /// Ersetzt einen Eintrag per ID bzw. erstellt einen neuen, wenn es diesen noch nicht gibt
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collectionName"></param>
+        /// <param name="id"></param>
+        /// <param name="record"></param>
+        /// <returns></returns>
         public async Task<bool> UpsertRecordAsync<T>(string collectionName, string id, T record)
         {
             var collection = _mongoDatabase.GetCollection<T>(collectionName);

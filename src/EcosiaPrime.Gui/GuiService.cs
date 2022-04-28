@@ -2,8 +2,6 @@
 using EcosiaPrime.Contracts.Models;
 using EcosiaPrime.Gui.ExtensionMethods;
 using EcosiaPrime.MongoDB;
-using System.Net.Mail;
-using System.Text.RegularExpressions;
 
 namespace EcosiaPrime.Gui
 {
@@ -16,12 +14,26 @@ namespace EcosiaPrime.Gui
             _mongoDBService = mongoDBService;
         }
 
-        public async Task<bool> DoesIdExistAsync(string collectionName, string id)
-        {
-            var exists = await _mongoDBService.LoadRecordByIdAsync<Client>(collectionName, id).ConfigureAwait(false);
-            return exists != null;
-        }
-
+        /// <summary>
+        /// Schaut, ob alle Felder richtig ausgefüllt sind, wenn ja: neues Client Objekt wird erzeugt der Datenbank hinzugefügt; wenn nein: werden entsprechene Fehler angezeigt
+        /// </summary>
+        /// <param name="response"></param>
+        /// <param name="id"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <param name="country"></param>
+        /// <param name="state"></param>
+        /// <param name="postCode"></param>
+        /// <param name="city"></param>
+        /// <param name="street"></param>
+        /// <param name="houseNumber"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="paymentMethod"></param>
+        /// <param name="subscriptionType"></param>
+        /// <returns></returns>
         public async Task<bool> CreateClientAsync(
             TextBox response,
             TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
@@ -40,7 +52,7 @@ namespace EcosiaPrime.Gui
                 return false;
             }
 
-            if (await DoesIdExistAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
+            if (await _mongoDBService.DoesIdExistAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
             {
                 response.InvokeResponseTextBox(new List<string> { ResponseMessagesConstants.IDAlreadyExistsInDB });
                 return false;
@@ -80,13 +92,36 @@ namespace EcosiaPrime.Gui
             return successful;
         }
 
+        /// <summary>
+        /// Methode hat 2 durchläufe
+        /// 1. Nur die ID ausgefüllt -> wenn ID in Datenbank existiert, werden die Daten in die Felder übertragen
+        /// 2. Wenn alle Felder ausgefüllt sind -> bearbeitete Version ersetzt die alte Version vom Kunden
+        /// Bei Fehlern werden Fehlermeldungen ausgegeben
+        /// </summary>
+        /// <param name="response"></param>
+        /// <param name="id"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <param name="country"></param>
+        /// <param name="state"></param>
+        /// <param name="postCode"></param>
+        /// <param name="city"></param>
+        /// <param name="street"></param>
+        /// <param name="houseNumber"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="paymentMethod"></param>
+        /// <param name="subscriptionType"></param>
+        /// <returns></returns>
         public async Task<bool> UpdateClientAsync(
             TextBox response,
             TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
             TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox houseNumber,
             DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType)
         {
-            if (!await DoesIdExistAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
+            if (!await _mongoDBService.DoesIdExistAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
             {
                 response.InvokeResponseTextBox(new List<string> { ResponseMessagesConstants.IDDoesntExistInDB });
                 return false;
@@ -166,6 +201,26 @@ namespace EcosiaPrime.Gui
             }
         }
 
+        /// <summary>
+        /// Schaut, ob eingebene ID existiert und löscht entsprechenen Eintag oder gibt Fehlermeldung aus
+        /// </summary>
+        /// <param name="response"></param>
+        /// <param name="id"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <param name="country"></param>
+        /// <param name="state"></param>
+        /// <param name="postCode"></param>
+        /// <param name="city"></param>
+        /// <param name="street"></param>
+        /// <param name="houseNumber"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="paymentMethod"></param>
+        /// <param name="subscriptionType"></param>
+        /// <returns></returns>
         public async Task<bool> DeleteClientAsync(
             TextBox response,
             TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
@@ -174,7 +229,7 @@ namespace EcosiaPrime.Gui
         {
             var responseLines = new List<string>();
 
-            if (!await DoesIdExistAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
+            if (!await _mongoDBService.DoesIdExistAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
             {
                 responseLines.Add(ResponseMessagesConstants.IDDoesntExistInDB);
             }
@@ -197,6 +252,13 @@ namespace EcosiaPrime.Gui
             return successful;
         }
 
+        /// <summary>
+        /// Einträge werden dem Filter entsprechend in die Tabelle(ListView) eingetragen
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <param name="table"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task ShowClientsAsync(ComboBox filter, ListView table, string id)
         {
             IEnumerable<Client> clients = new List<Client>();
@@ -261,6 +323,28 @@ namespace EcosiaPrime.Gui
             }));
         }
 
+        /// <summary>
+        /// Es wird nach Einträgen gesucht, die dem Suchkriterium entsprechen und werden in die Tabelle(ListView) eingetragen
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="filter"></param>
+        /// <param name="response"></param>
+        /// <param name="id"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <param name="country"></param>
+        /// <param name="state"></param>
+        /// <param name="postCode"></param>
+        /// <param name="city"></param>
+        /// <param name="street"></param>
+        /// <param name="houseNumber"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="paymentMethod"></param>
+        /// <param name="subscriptionType"></param>
+        /// <returns></returns>
         public async Task SearchFunctionAsync(
             ListView table, ComboBox filter,
             TextBox response,
@@ -346,7 +430,7 @@ namespace EcosiaPrime.Gui
                     break;
 
                 case SearchFunctionConstants.SearchForTimeSpan:
-                    if (startDate.Text != "" && endDate.Text != "" && startDate.Text.ParseCutString() != DateTime.Today && endDate.Text.ParseCutString() != DateTime.Today)
+                    if (startDate.Text != "" && endDate.Text != "" && startDate.Text.ParseString() != DateTime.Today && endDate.Text.ParseString() != DateTime.Today)
                     {
                         searchForString = SearchFunctionConstants.SearchForTimeSpan;
                         searchStringPrimary = startDate.Text;
@@ -373,11 +457,20 @@ namespace EcosiaPrime.Gui
 
             if (searchForString != "" && searchStringPrimary != "")
             {
-                await SearchAttributesAsync(table, searchForString, searchStringPrimary, searchStringSecondary).ConfigureAwait(false);
+                await SearchAttributesAsync(table, response, searchForString, searchStringPrimary, searchStringSecondary).ConfigureAwait(false);
             }
         }
 
-        public async Task SearchAttributesAsync(ListView table, string searchForString, string searchStringPrimary, string searchStringSecondary)
+        /// <summary>
+        /// Ist die eigentliche Suchfunktion für die obrige Methode
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="response"></param>
+        /// <param name="searchForString"></param>
+        /// <param name="searchStringPrimary"></param>
+        /// <param name="searchStringSecondary"></param>
+        /// <returns></returns>
+        public async Task SearchAttributesAsync(ListView table, TextBox response, string searchForString, string searchStringPrimary, string searchStringSecondary)
         {
             var people = await _mongoDBService.LoadRecordsAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName).ConfigureAwait(false);
 
@@ -387,6 +480,10 @@ namespace EcosiaPrime.Gui
             {
                 case SearchFunctionConstants.SearchForID:
                     foundList = people.Where(x => x.Id.ToLower().Contains(searchStringPrimary.ToLower()));
+                    if (!foundList.Any())
+                    {
+                        response.InvokeResponseTextBox(new List<string>() { ResponseMessagesConstants.IDDoesntExistInDB });
+                    }
                     break;
 
                 case SearchFunctionConstants.SearchForFirstname:
@@ -418,9 +515,7 @@ namespace EcosiaPrime.Gui
                     break;
 
                 case SearchFunctionConstants.SearchForTimeSpan:
-                    var abc = searchStringPrimary.ParseCutString();
-                    var z = abc;
-                    foundList = people.Where(x => DateTime.Parse(x.Subscription.StartDate) >= searchStringPrimary.ParseCutString() && DateTime.Parse(x.Subscription.EndDate) <= searchStringSecondary.ParseCutString());
+                    foundList = people.Where(x => DateTime.Parse(x.Subscription.StartDate) >= searchStringPrimary.ParseString() && DateTime.Parse(x.Subscription.EndDate) <= searchStringSecondary.ParseString());
                     break;
 
                 case SearchFunctionConstants.SearchForPaymentOption:
