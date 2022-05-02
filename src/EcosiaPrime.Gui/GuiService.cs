@@ -344,11 +344,11 @@ namespace EcosiaPrime.Gui
             {
                 table.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
 
-                foreach (ColumnHeader columnHeader in table.Columns)
+                table.Columns.OfType<ColumnHeader>().ToList().ForEach(column =>
                 {
-                    if (columnHeader.Width < 75)
+                    if (column.Width < 75)
                     {
-                        columnHeader.Width = 100;
+                        column.Width = 100;
                     }
                 }
             }));*/
