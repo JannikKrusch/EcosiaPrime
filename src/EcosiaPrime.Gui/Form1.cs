@@ -1,4 +1,5 @@
 using EcosiaPrime.Contracts.Constants;
+using EcosiaPrime.Gui.ExtensionMethods;
 
 namespace EcosiaPrime.Gui
 {
@@ -36,50 +37,84 @@ namespace EcosiaPrime.Gui
         {
             if (dropdownMenuOption.Text == ComboBoxOptionConstants.Create)
             {
-                var successful = await _guiService.CreateClientAsync(responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
-                    passwordTextfield, countryTextfield, stateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
-                    houseNumberTextfield, startDatePicker, endDatePicker, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
+                var fields = await _guiService.CreateClientAsync(
+                    responseTextField.Text, idTextfield.Text, firstNameTextfield.Text, lastNameTextfield.Text, emailTextfield.Text,
+                    passwordTextfield.Text, countryTextfield.Text, stateTextfield.Text, postcodeTextfield.Text, cityTextfield.Text, streetNameTextfield.Text,
+                    houseNumberTextfield.Text, startDatePicker.Text, endDatePicker.Text, dropdownMenuPayment.Text, dropdownMenuSubscription.Text);
 
-                if (successful)
+                responseTextField.Lines = fields.ToArray();
+                if(fields.ToArray()[0] == ResponseMessagesConstants.AddClientToDBSuccessful)
                 {
                     ClearAllControls();
                 }
             }
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Update)
             {
-                var successful = await _guiService.UpdateClientAsync(
-                    responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
-                    passwordTextfield, countryTextfield, stateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
-                    houseNumberTextfield, startDatePicker, endDatePicker, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
+                var fields = await _guiService.UpdateClientAsync(
+                    responseTextField.Text, idTextfield.Text, firstNameTextfield.Text, lastNameTextfield.Text, emailTextfield.Text,
+                    passwordTextfield.Text, countryTextfield.Text, stateTextfield.Text, postcodeTextfield.Text, cityTextfield.Text, streetNameTextfield.Text,
+                    houseNumberTextfield.Text, startDatePicker.Text, endDatePicker.Text, dropdownMenuPayment.Text, dropdownMenuSubscription.Text);
 
-                if (successful)
+                var fieldList = fields.ToList();
+
+                if (fields.Count() == 1)
                 {
-                    ClearAllControls();
+                    responseTextField.Lines = fields.ToArray();
+                    if (fields.ToArray()[0] == ResponseMessagesConstants.UpdateClientToDBSuccessful)
+                    {
+                        ClearAllControls();
+                    }
+                }
+                else if (fields.Count() == 16)
+                {
+                    responseTextField.Text = fieldList[0];
+                    idTextfield.Text = fieldList[1];
+                    firstNameTextfield.Text = fieldList[2];
+                    lastNameTextfield.Text = fieldList[3];
+                    emailTextfield.Text = fieldList[4];
+                    passwordTextfield.Text = fieldList[5];
+                    countryTextfield.Text = fieldList[6];
+                    stateTextfield.Text = fieldList[7];
+                    postcodeTextfield.Text = fieldList[8];
+                    cityTextfield.Text = fieldList[9];
+                    streetNameTextfield.Text = fieldList[10];
+                    houseNumberTextfield.Text = fieldList[11];
+                    startDatePicker.Text = fieldList[12];
+                    endDatePicker.Text = fieldList[13];
+                    dropdownMenuPayment.Text = fieldList[14];
+                    dropdownMenuSubscription.Text = fieldList[15];
                 }
             }
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Delete)
             {
-                var successful = await _guiService.DeleteClientAsync(
-                    responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
-                    passwordTextfield, countryTextfield, stateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
-                    houseNumberTextfield, startDatePicker, endDatePicker, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
+                var fields = await _guiService.DeleteClientAsync(
+                   responseTextField.Text, idTextfield.Text, firstNameTextfield.Text, lastNameTextfield.Text, emailTextfield.Text,
+                    passwordTextfield.Text, countryTextfield.Text, stateTextfield.Text, postcodeTextfield.Text, cityTextfield.Text, streetNameTextfield.Text,
+                    houseNumberTextfield.Text, startDatePicker.Text, endDatePicker.Text, dropdownMenuPayment.Text, dropdownMenuSubscription.Text);
 
-                if (successful)
+                responseTextField.Lines = fields.ToArray();
+                if (fields.ToArray()[0] == ResponseMessagesConstants.DeleteClientToDBSuccessful)
                 {
                     ClearAllControls();
                 }
             }
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Show)
             {
-                await _guiService.ShowClientsAsync(dropdownMenuFilter, dataGrid, idTextfield.Text).ConfigureAwait(false);
+                var clients = await _guiService.ShowClientsAsync(dropdownMenuFilter.Text, idTextfield.Text);
+
+                dataGrid.Items.Clear();
+                dataGrid.FillListView(clients);
             }
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Search)
             {
-                await _guiService.SearchFunctionAsync(
-                    dataGrid, dropdownMenuFilter,
-                    responseTextField, idTextfield, firstNameTextfield, lastNameTextfield, emailTextfield,
-                    passwordTextfield, countryTextfield, stateTextfield, postcodeTextfield, cityTextfield, streetNameTextfield,
-                    houseNumberTextfield, startDatePicker, endDatePicker, dropdownMenuPayment, dropdownMenuSubscription).ConfigureAwait(false);
+                var clients = await _guiService.SearchFunctionAsync(
+                    dropdownMenuFilter.Text,
+                    idTextfield.Text, firstNameTextfield.Text, lastNameTextfield.Text, emailTextfield.Text,
+                     passwordTextfield.Text, countryTextfield.Text, stateTextfield.Text, postcodeTextfield.Text, cityTextfield.Text, streetNameTextfield.Text,
+                     houseNumberTextfield.Text, startDatePicker.Text, endDatePicker.Text, dropdownMenuPayment.Text, dropdownMenuSubscription.Text);
+
+                dataGrid.Items.Clear();
+                dataGrid.FillListView(clients);
             }
         }
 

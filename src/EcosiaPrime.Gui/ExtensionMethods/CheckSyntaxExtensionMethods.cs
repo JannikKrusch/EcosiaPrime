@@ -187,10 +187,10 @@ namespace EcosiaPrime.Gui.ExtensionMethods
         /// <param name="subscriptionType"></param>
         /// <returns></returns>
         public static IEnumerable<string> CheckInputFieldsEmpty(
-            this TextBox response,
-            TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
-            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox houseNumber,
-            DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType)
+            this string response,
+            string id, string firstName, string lastName, string email, string password,
+            string country, string state, string postCode, string city, string street, string houseNumber,
+            string startDate, string endDate, string paymentMethod, string subscriptionType)
         {
             var responseLines = new List<string>();
             if (CheckIfEmptyExtensionMethods.ArePersonInputFieldsEmpty(id, firstName, lastName, email, password))
@@ -208,25 +208,25 @@ namespace EcosiaPrime.Gui.ExtensionMethods
                 responseLines.Add(ResponseMessagesConstants.PaymentSubscriptionInputFieldsAreEmpty);
             }
 
-            var emailLines = CheckEmail(email.Text);
+            var emailLines = CheckEmail(email);
             if (emailLines.Any())
             {
                 responseLines.AddRange(emailLines);
             }
 
-            var passwordLines = CheckPassword(password.Text);
+            var passwordLines = CheckPassword(password);
             if (passwordLines.Any())
             {
                 responseLines.AddRange(passwordLines);
             }
 
-            var nonNumberLines = CheckNonNumberInputsForNumbers(firstName.Text, lastName.Text, country.Text, state.Text, city.Text, street.Text);
+            var nonNumberLines = CheckNonNumberInputsForNumbers(firstName, lastName, country, state, city, street);
             if (nonNumberLines.Any())
             {
                 responseLines.AddRange(nonNumberLines);
             }
 
-            var postcodehouseLines = CheckNumberInputsForNumbers(postCode.Text, houseNumber.Text);
+            var postcodehouseLines = CheckNumberInputsForNumbers(postCode, houseNumber);
             if (postcodehouseLines.Any())
             {
                 responseLines.AddRange(postcodehouseLines);
@@ -256,10 +256,10 @@ namespace EcosiaPrime.Gui.ExtensionMethods
         /// <param name="subscriptionType"></param>
         /// <returns></returns>
         public static IEnumerable<string> CheckInputFieldsEmptyExceptID(
-            this TextBox response,
-            TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
-            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox houseNumber,
-            DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType)
+            this string response,
+            string id, string firstName, string lastName, string email, string password,
+            string country, string state, string postCode, string city, string street, string houseNumber,
+            string startDate, string endDate, string paymentMethod, string subscriptionType)
         {
             var responseLines = new List<string>();
             if (!CheckIfEmptyExtensionMethods.ArePersonInputFieldsEmptyExceptId(id, firstName, lastName, email, password))
@@ -277,25 +277,25 @@ namespace EcosiaPrime.Gui.ExtensionMethods
                 responseLines.Add(ResponseMessagesConstants.PaymentSubscriptionInputFieldsAreEmpty);
             }
 
-            var emailLines = CheckEmail(email.Text);
+            var emailLines = CheckEmail(email);
             if (emailLines.Any())
             {
                 responseLines.AddRange(emailLines);
             }
 
-            var passwordLines = CheckPassword(password.Text);
+            var passwordLines = CheckPassword(password);
             if (passwordLines.Any())
             {
                 responseLines.AddRange(passwordLines);
             }
 
-            var nonNumberLines = CheckNonNumberInputsForNumbers(firstName.Text, lastName.Text, country.Text, state.Text, city.Text, street.Text);
+            var nonNumberLines = CheckNonNumberInputsForNumbers(firstName, lastName, country, state, city, street);
             if (nonNumberLines.Any())
             {
                 responseLines.AddRange(nonNumberLines);
             }
 
-            var numberLines = CheckNumberInputsForNumbers(postCode.Text, houseNumber.Text);
+            var numberLines = CheckNumberInputsForNumbers(postCode, houseNumber);
             if (numberLines.Any())
             {
                 responseLines.AddRange(numberLines);

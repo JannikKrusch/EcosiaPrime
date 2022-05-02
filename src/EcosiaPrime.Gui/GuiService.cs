@@ -34,11 +34,11 @@ namespace EcosiaPrime.Gui
         /// <param name="paymentMethod"></param>
         /// <param name="subscriptionType"></param>
         /// <returns></returns>
-        public async Task<bool> CreateClientAsync(
-            TextBox response,
-            TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
-            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox houseNumber,
-            DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType)
+        public async Task<IEnumerable<string>> CreateClientAsync(
+            string response,
+            string id, string firstName, string lastName, string email, string password,
+            string country, string state, string postCode, string city, string street, string houseNumber,
+            string startDate, string endDate, string paymentMethod, string subscriptionType)
         {
             var responseLines = CheckSyntaxExtensionMethods.CheckInputFieldsEmpty(
                 response,
@@ -48,48 +48,46 @@ namespace EcosiaPrime.Gui
 
             if (responseLines.Any())
             {
-                response.InvokeResponseTextBox(responseLines);
-                return false;
+                //response.InvokeResponseTextBox(responseLines);
+                return responseLines;
             }
 
-            if (await _mongoDBService.DoesIdExistAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
+            if (await _mongoDBService.DoesIdExistAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, id).ConfigureAwait(false))
             {
-                response.InvokeResponseTextBox(new List<string> { ResponseMessagesConstants.IDAlreadyExistsInDB });
-                return false;
+                return new List<string> { ResponseMessagesConstants.IDAlreadyExistsInDB };
             }
 
             var client = new Client();
-            client.Id = id.Text;
-            client.FirstName = firstName.Text;
-            client.LastName = lastName.Text;
-            client.Email = email.Text;
-            client.Password = password.Text;
+            client.Id = id;
+            client.FirstName = firstName;
+            client.LastName = lastName;
+            client.Email = email;
+            client.Password = password;
 
             client.Address = new Address();
-            client.Address.Country = country.Text;
-            client.Address.State = state.Text;
-            client.Address.PostCode = postCode.Text;
-            client.Address.City = city.Text;
-            client.Address.Street = street.Text;
-            client.Address.HouseNumber = houseNumber.Text;
+            client.Address.Country = country;
+            client.Address.State = state;
+            client.Address.PostCode = postCode;
+            client.Address.City = city;
+            client.Address.Street = street;
+            client.Address.HouseNumber = houseNumber;
 
             client.Subscription = new Subscription();
-            client.Subscription.StartDate = startDate.Text;
-            client.Subscription.EndDate = endDate.Text;
+            client.Subscription.StartDate = startDate;
+            client.Subscription.EndDate = endDate;
 
-            client.Subscription.PaymentMethod = paymentMethod.InvokeComboBox();
-            client.Subscription.SubscriptionType = subscriptionType.InvokeComboBox();
+            client.Subscription.PaymentMethod = paymentMethod;
+            client.Subscription.SubscriptionType = subscriptionType;
 
             var successful = await _mongoDBService.InsertRecordAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, client).ConfigureAwait(false);
             if (successful)
             {
-                response.InvokeResponseTextBox(new List<string> { ResponseMessagesConstants.AddClientToDBSuccessful });
+                return new List<string> { ResponseMessagesConstants.AddClientToDBSuccessful };
             }
             else
             {
-                response.InvokeResponseTextBox(new List<string> { ResponseMessagesConstants.AddClientToDBFailure });
+                return new List<string> { ResponseMessagesConstants.AddClientToDBFailure };
             }
-            return successful;
         }
 
         /// <summary>
@@ -115,23 +113,41 @@ namespace EcosiaPrime.Gui
         /// <param name="paymentMethod"></param>
         /// <param name="subscriptionType"></param>
         /// <returns></returns>
-        public async Task<bool> UpdateClientAsync(
-            TextBox response,
-            TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
-            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox houseNumber,
-            DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType)
+        public async Task<IEnumerable<string>> UpdateClientAsync(
+            string response,
+            string id, string firstName, string lastName, string email, string password,
+            string country, string state, string postCode, string city, string street, string houseNumber,
+            string startDate, string endDate, string paymentMethod, string subscriptionType)
         {
-            if (!await _mongoDBService.DoesIdExistAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
+            if (!await _mongoDBService.DoesIdExistAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, id).ConfigureAwait(false))
             {
-                response.InvokeResponseTextBox(new List<string> { ResponseMessagesConstants.IDDoesntExistInDB });
-                return false;
+                return new List<string> { ResponseMessagesConstants.IDDoesntExistInDB };
             }
 
             if (id.ArePersonInputFieldsEmptyExceptId(firstName, lastName, email, password) && country.AreAdressInputFieldsEmpty(state, postCode, city, houseNumber, street) && !startDate.ArePaymentSubscriptionInputFieldsEmpty(endDate))
             {
-                var clientDB = await _mongoDBService.LoadRecordByIdAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false);
+                var clientDB = await _mongoDBService.LoadRecordByIdAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, id).ConfigureAwait(false);
 
-                id.InvokeTextBox(clientDB.Id);
+                var fields = new List<string>();
+                fields.Add(clientDB.Id);
+                fields.Add(clientDB.FirstName);
+                fields.Add(clientDB.LastName);
+                fields.Add(clientDB.Email);
+                fields.Add(clientDB.Password);
+                fields.Add(clientDB.Address.Country);
+                fields.Add(clientDB.Address.State);
+                fields.Add(clientDB.Address.PostCode);
+                fields.Add(clientDB.Address.City);
+                fields.Add(clientDB.Address.Street);
+                fields.Add(clientDB.Address.HouseNumber);
+                fields.Add(clientDB.Address.PostCode);
+                fields.Add(clientDB.Subscription.StartDate);
+                fields.Add(clientDB.Subscription.EndDate);
+                fields.Add(clientDB.Subscription.PaymentMethod);
+                fields.Add(clientDB.Subscription.SubscriptionType);
+
+                return fields;
+                /*id.InvokeTextBox(clientDB.Id);
                 firstName.InvokeTextBox(clientDB.FirstName);
                 lastName.InvokeTextBox(clientDB.LastName);
                 email.InvokeTextBox(clientDB.Email);
@@ -151,53 +167,53 @@ namespace EcosiaPrime.Gui
 
                 response.InvokeResponseTextBox(new List<string> { });
                 //Hier muss --> false <-- zurückgegeben werden, obwohl alles funktioniert hat, da ansonsten alle Felder geleert werden!
-                return false;
+                return false;*/
             }
             else
             {
                 var responseLines = response.CheckInputFieldsEmpty(
                 id, firstName, lastName, email,
                 password, country, state, postCode, city, street,
-                houseNumber, startDate, endDate, paymentMethod, subscriptionType);
+                houseNumber, startDate, endDate, paymentMethod, subscriptionType).ToList();
 
                 if (responseLines.Any())
                 {
-                    response.InvokeResponseTextBox(responseLines);
-                    return false;
+                    return responseLines;
                 }
 
                 var client = new Client();
-                client.Id = id.Text;
-                client.FirstName = firstName.Text;
-                client.LastName = lastName.Text;
-                client.Email = email.Text;
-                client.Password = password.Text;
+                client.Id = id;
+                client.FirstName = firstName;
+                client.LastName = lastName;
+                client.Email = email;
+                client.Password = password;
 
                 client.Address = new Address();
-                client.Address.Country = country.Text;
-                client.Address.State = state.Text;
-                client.Address.PostCode = postCode.Text;
-                client.Address.City = city.Text;
-                client.Address.Street = street.Text;
-                client.Address.HouseNumber = houseNumber.Text;
+                client.Address.Country = country;
+                client.Address.State = state;
+                client.Address.PostCode = postCode;
+                client.Address.City = city;
+                client.Address.Street = street;
+                client.Address.HouseNumber = houseNumber;
 
                 client.Subscription = new Subscription();
-                client.Subscription.StartDate = startDate.Text;
-                client.Subscription.EndDate = endDate.Text;
+                client.Subscription.StartDate = startDate;
+                client.Subscription.EndDate = endDate;
 
-                client.Subscription.PaymentMethod = paymentMethod.InvokeComboBox();
-                client.Subscription.SubscriptionType = subscriptionType.InvokeComboBox();
+                client.Subscription.PaymentMethod = paymentMethod;
+                client.Subscription.SubscriptionType = subscriptionType;
 
+                responseLines = new List<string>();
                 var successful = await _mongoDBService.UpsertRecordAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, client.Id, client).ConfigureAwait(false);
                 if (successful)
                 {
-                    response.InvokeResponseTextBox(new List<string> { ResponseMessagesConstants.UpdateClientToDBSuccessful });
+                    responseLines.Add(ResponseMessagesConstants.UpdateClientToDBSuccessful);
                 }
                 else
                 {
-                    response.InvokeResponseTextBox(new List<string> { ResponseMessagesConstants.UpdateClientToDBFailure });
+                    responseLines.Add(ResponseMessagesConstants.UpdateClientToDBFailure);
                 }
-                return successful;
+                return responseLines;
             }
         }
 
@@ -221,35 +237,36 @@ namespace EcosiaPrime.Gui
         /// <param name="paymentMethod"></param>
         /// <param name="subscriptionType"></param>
         /// <returns></returns>
-        public async Task<bool> DeleteClientAsync(
-            TextBox response,
-            TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
-            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox houseNumber,
-            DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType)
+        public async Task<IEnumerable<string>> DeleteClientAsync(
+            string response,
+            string id, string firstName, string lastName, string email, string password,
+            string country, string state, string postCode, string city, string street, string houseNumber,
+            string startDate, string endDate, string paymentMethod, string subscriptionType)
         {
             var responseLines = new List<string>();
 
-            if (!await _mongoDBService.DoesIdExistAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false))
+            if (!await _mongoDBService.DoesIdExistAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, id).ConfigureAwait(false))
             {
                 responseLines.Add(ResponseMessagesConstants.IDDoesntExistInDB);
             }
 
             if (responseLines.Any())
             {
-                response.InvokeResponseTextBox(responseLines);
-                return false;
+                return responseLines;
             }
 
-            var successful = await _mongoDBService.DeleteRecordAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, id.Text).ConfigureAwait(false);
+
+            var fields = new List<string>();
+            var successful = await _mongoDBService.DeleteRecordAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, id).ConfigureAwait(false);
             if (successful)
             {
-                response.InvokeResponseTextBox(new List<string> { ResponseMessagesConstants.DeleteClientToDBSuccessful });
+                fields.Add(ResponseMessagesConstants.DeleteClientToDBSuccessful);
             }
             else
             {
-                response.InvokeResponseTextBox(new List<string> { ResponseMessagesConstants.DeleteClientToDBFailure });
+                fields.Add(ResponseMessagesConstants.DeleteClientToDBFailure);
             }
-            return successful;
+            return fields;
         }
 
         /// <summary>
@@ -259,12 +276,12 @@ namespace EcosiaPrime.Gui
         /// <param name="table"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task ShowClientsAsync(ComboBox filter, ListView table, string id)
+        public async Task<IEnumerable<Client>> ShowClientsAsync(string filter, string id)
         {
             IEnumerable<Client> clients = new List<Client>();
             var client = new Client();
 
-            switch (filter.Text.ToString())
+            switch (filter)
             {
                 case FilterOptionsConstants.AllByID:
                     clients = await _mongoDBService.SortRecordByIdAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName).ConfigureAwait(false);
@@ -295,7 +312,21 @@ namespace EcosiaPrime.Gui
                     break;
             }
 
-            table.Invoke(new Action(() =>
+            if (clients.Any())
+            {
+                return clients;
+            }
+            else if (client != null)
+            {
+                return new List<Client>() { client };
+            }
+            else
+            {
+                return new List<Client>() { };
+            }
+
+
+            /*table.Invoke(new Action(() =>
             {
                 table.Items.Clear();
             }));
@@ -320,7 +351,7 @@ namespace EcosiaPrime.Gui
                         columnHeader.Width = 100;
                     }
                 }
-            }));
+            }));*/
         }
 
         /// <summary>
@@ -345,120 +376,120 @@ namespace EcosiaPrime.Gui
         /// <param name="paymentMethod"></param>
         /// <param name="subscriptionType"></param>
         /// <returns></returns>
-        public async Task SearchFunctionAsync(
-            ListView table, ComboBox filter,
-            TextBox response,
-            TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password,
-            TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox houseNumber,
-            DateTimePicker startDate, DateTimePicker endDate, ComboBox paymentMethod, ComboBox subscriptionType)
+        public async Task<IEnumerable<Client>> SearchFunctionAsync(
+            string filter,
+            string id, string firstName, string lastName, string email, string password,
+            string country, string state, string postCode, string city, string street, string houseNumber,
+            string startDate, string endDate, string paymentMethod, string subscriptionType)
         {
             var searchForString = "";
             var searchStringPrimary = "";
             var searchStringSecondary = "";
-            switch (filter.Text)
+            switch (filter)
             {
                 case SearchFunctionConstants.SearchForID:
-                    if (id.Text != "")
+                    if (id != "")
                     {
                         searchForString = SearchFunctionConstants.SearchForID;
-                        searchStringPrimary = id.Text;
+                        searchStringPrimary = id;
                     }
                     break;
 
                 case SearchFunctionConstants.SearchForFirstname:
-                    if (firstName.Text != "")
+                    if (firstName != "")
                     {
                         searchForString = SearchFunctionConstants.SearchForFirstname;
-                        searchStringPrimary = firstName.Text;
+                        searchStringPrimary = firstName;
                     }
                     break;
 
                 case SearchFunctionConstants.SearchForLastName:
-                    if (lastName.Text != "")
+                    if (lastName != "")
                     {
                         searchForString = SearchFunctionConstants.SearchForLastName;
-                        searchStringPrimary = lastName.Text;
+                        searchStringPrimary = lastName;
                     }
                     break;
 
                 case SearchFunctionConstants.SearchForEmail:
-                    if (email.Text != "")
+                    if (email != "")
                     {
                         searchForString = SearchFunctionConstants.SearchForEmail;
-                        searchStringPrimary = email.Text;
+                        searchStringPrimary = email;
                     }
                     break;
 
                 case SearchFunctionConstants.SearchForCountry:
-                    if (country.Text != "")
+                    if (country != "")
                     {
                         searchForString = SearchFunctionConstants.SearchForCountry;
-                        searchStringPrimary = country.Text;
+                        searchStringPrimary = country;
                     }
                     break;
 
                 case SearchFunctionConstants.SearchForState:
-                    if (state.Text != "")
+                    if (state != "")
                     {
                         searchForString = SearchFunctionConstants.SearchForState;
-                        searchStringPrimary = state.Text;
+                        searchStringPrimary = state;
                     }
                     break;
 
                 case SearchFunctionConstants.SearchForPostCode:
-                    if (postCode.Text != "")
+                    if (postCode != "")
                     {
                         searchForString = SearchFunctionConstants.SearchForPostCode;
-                        searchStringPrimary = postCode.Text;
+                        searchStringPrimary = postCode;
                     }
                     break;
 
                 case SearchFunctionConstants.SearchForCity:
-                    if (city.Text != "")
+                    if (city != "")
                     {
                         searchForString = SearchFunctionConstants.SearchForCity;
-                        searchStringPrimary = city.Text;
+                        searchStringPrimary = city;
                     }
                     break;
 
                 case SearchFunctionConstants.SearchForStreet:
-                    if (street.Text != "")
+                    if (street != "")
                     {
                         searchForString = SearchFunctionConstants.SearchForStreet;
-                        searchStringPrimary = street.Text;
+                        searchStringPrimary = street;
                     }
                     break;
 
                 case SearchFunctionConstants.SearchForTimeSpan:
-                    if (startDate.Text != "" && endDate.Text != "" && startDate.Text.ParseString() != DateTime.Today && endDate.Text.ParseString() != DateTime.Today)
+                    if (startDate != "" && endDate != "" && startDate.ParseString() != DateTime.Today && endDate.ParseString() != DateTime.Today)
                     {
                         searchForString = SearchFunctionConstants.SearchForTimeSpan;
-                        searchStringPrimary = startDate.Text;
-                        searchStringSecondary = endDate.Text;
+                        searchStringPrimary = startDate;
+                        searchStringSecondary = endDate;
                     }
                     break;
 
                 case SearchFunctionConstants.SearchForPaymentOption:
-                    if (paymentMethod.Text != "")
+                    if (paymentMethod != "")
                     {
                         searchForString = SearchFunctionConstants.SearchForPaymentOption;
-                        searchStringPrimary = paymentMethod.Text;
+                        searchStringPrimary = paymentMethod;
                     }
                     break;
 
                 case SearchFunctionConstants.SearchForSubscriptionOption:
-                    if (paymentMethod.Text != "")
+                    if (paymentMethod != "")
                     {
                         searchForString = SearchFunctionConstants.SearchForSubscriptionOption;
-                        searchStringPrimary = subscriptionType.Text;
+                        searchStringPrimary = subscriptionType;
                     }
                     break;
             }
 
             if (searchForString != "" && searchStringPrimary != "")
             {
-                await SearchAttributesAsync(table, response, searchForString, searchStringPrimary, searchStringSecondary).ConfigureAwait(false);
+                return await SearchAttributesAsync(searchForString, searchStringPrimary, searchStringSecondary).ConfigureAwait(false);
             }
+            return new List<Client>() { };
         }
 
         /// <summary>
@@ -470,7 +501,7 @@ namespace EcosiaPrime.Gui
         /// <param name="searchStringPrimary"></param>
         /// <param name="searchStringSecondary"></param>
         /// <returns></returns>
-        public async Task SearchAttributesAsync(ListView table, TextBox response, string searchForString, string searchStringPrimary, string searchStringSecondary)
+        public async Task<IEnumerable<Client>> SearchAttributesAsync(string searchForString, string searchStringPrimary, string searchStringSecondary)
         {
             var people = await _mongoDBService.LoadRecordsAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName).ConfigureAwait(false);
 
@@ -480,10 +511,10 @@ namespace EcosiaPrime.Gui
             {
                 case SearchFunctionConstants.SearchForID:
                     foundList = people.Where(x => x.Id.ToLower().Contains(searchStringPrimary.ToLower()));
-                    if (!foundList.Any())
+                    /*if (!foundList.Any())
                     {
                         response.InvokeResponseTextBox(new List<string>() { ResponseMessagesConstants.IDDoesntExistInDB });
-                    }
+                    }*/
                     break;
 
                 case SearchFunctionConstants.SearchForFirstname:
@@ -526,7 +557,9 @@ namespace EcosiaPrime.Gui
                     foundList = people.Where(x => x.Subscription.SubscriptionType.Contains(searchStringPrimary));
                     break;
             }
-            table.Invoke(new Action(() =>
+
+            return foundList;
+            /*table.Invoke(new Action(() =>
             {
                 table.Items.Clear();
             }));
@@ -534,7 +567,7 @@ namespace EcosiaPrime.Gui
             if (foundList.Any())
             {
                 table.FillListView(foundList);
-            }
+            }*/
         }
     }
 }

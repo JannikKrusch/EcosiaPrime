@@ -11,9 +11,9 @@
         /// <param name="email"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public static bool ArePersonInputFieldsEmpty(this TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password)
+        public static bool ArePersonInputFieldsEmpty(this string id, string firstName, string lastName, string email, string password)
         {
-            return (id.Text == "" || firstName.Text == "" || lastName.Text == "" || email.Text == "" || password.Text == "");
+            return (id == "" || firstName == "" || lastName == "" || email == "" || password == "");
         }
 
         /// <summary>
@@ -25,9 +25,9 @@
         /// <param name="email"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public static bool ArePersonInputFieldsEmptyExceptId(this TextBox id, TextBox firstName, TextBox lastName, TextBox email, TextBox password)
+        public static bool ArePersonInputFieldsEmptyExceptId(this string id, string firstName, string lastName, string email, string password)
         {
-            return (id.Text != "" && (firstName.Text == "" || lastName.Text == "" || email.Text == "" || password.Text == ""));
+            return (id != "" && (firstName == "" || lastName == "" || email == "" || password == ""));
         }
 
         /// <summary>
@@ -40,9 +40,9 @@
         /// <param name="street"></param>
         /// <param name="houseNumber"></param>
         /// <returns></returns>
-        public static bool AreAdressInputFieldsEmpty(this TextBox country, TextBox state, TextBox postCode, TextBox city, TextBox street, TextBox houseNumber)
+        public static bool AreAdressInputFieldsEmpty(this string country, string state, string postCode, string city, string street, string houseNumber)
         {
-            return (country.Text == "" || state.Text == "" || postCode.Text == "" || city.Text == "" || street.Text == "" || houseNumber.Text == "");
+            return (country == "" || state == "" || postCode == "" || city == "" || street == "" || houseNumber == "");
         }
 
         /// <summary>
@@ -51,7 +51,7 @@
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <returns></returns>
-        public static bool ArePaymentSubscriptionInputFieldsEmpty(this DateTimePicker startDate, DateTimePicker endDate)
+        public static bool ArePaymentSubscriptionInputFieldsEmpty(this string startDate, string endDate)
         {
             return IsStartDateAfterEndDate(startDate, endDate);
         }
@@ -62,7 +62,7 @@
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <returns></returns>
-        private static bool IsStartDateAfterEndDate(this DateTimePicker startDate, DateTimePicker endDate)
+        private static bool IsStartDateAfterEndDate(this string startDate, string endDate)
         {
             return startDate.GetDateTime() > endDate.GetDateTime();
         }
@@ -72,15 +72,16 @@
         ///// </summary>
         ///// <param name="dateTimePicker"></param>
         ///// <returns></returns>
-        //private static DateTime GetDateTime(this DateTimePicker dateTimePicker)
-        //{
-        //    DateTime s = default;
-        //    dateTimePicker.Invoke(new Action(() =>
-        //    {
-        //        s = dateTimePicker.Value.Date;
-        //    }));
+        private static DateTime GetDateTime(this string dateTimePicker)
+        {
+            //DateTime dateTime = default;
+            var dateTime = DateTime.Parse(dateTimePicker);
+            //dateTimePicker.Invoke(new Action(() =>
+            //{
+            //    s = dateTimePicker.Value.Date;
+            //}));
 
-        //    return s;
-        //}
+            return dateTime;
+        }
     }
 }
