@@ -169,7 +169,6 @@ namespace EcosiaPrime.Gui.ExtensionMethods
         /// <summary>
         /// Gibt ResponseList zurück, schaut ob Felder leer sind, Email, Passwort und PLZ Kriterien entsprechen + ob alle Nicht-Zahlenfelder keine Zahlen enthalten
         /// </summary>
-        /// <param name="response"></param>
         /// <param name="id"></param>
         /// <param name="firstName"></param>
         /// <param name="lastName"></param>
@@ -187,8 +186,8 @@ namespace EcosiaPrime.Gui.ExtensionMethods
         /// <param name="subscriptionType"></param>
         /// <returns></returns>
         public static IEnumerable<string> CheckInputFieldsEmpty(
-            this string response,
-            string id, string firstName, string lastName, string email, string password,
+            this string id,
+            string firstName, string lastName, string email, string password,
             string country, string state, string postCode, string city, string street, string houseNumber,
             string startDate, string endDate, string paymentMethod, string subscriptionType)
         {
@@ -238,7 +237,6 @@ namespace EcosiaPrime.Gui.ExtensionMethods
         /// <summary>
         /// Gibt ResponseList zurück, schaut ob Felder leer sind, Email, Passwort und PLZ Kriterien entsprechen + ob alle Nicht-Zahlenfelder keine Zahlen enthalten - mit der Ausnahme von ID
         /// </summary>
-        /// <param name="response"></param>
         /// <param name="id"></param>
         /// <param name="firstName"></param>
         /// <param name="lastName"></param>
@@ -256,8 +254,8 @@ namespace EcosiaPrime.Gui.ExtensionMethods
         /// <param name="subscriptionType"></param>
         /// <returns></returns>
         public static IEnumerable<string> CheckInputFieldsEmptyExceptID(
-            this string response,
-            string id, string firstName, string lastName, string email, string password,
+            this string id,
+            string firstName, string lastName, string email, string password,
             string country, string state, string postCode, string city, string street, string houseNumber,
             string startDate, string endDate, string paymentMethod, string subscriptionType)
         {

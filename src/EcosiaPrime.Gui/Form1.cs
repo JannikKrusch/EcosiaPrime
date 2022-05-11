@@ -38,7 +38,7 @@ namespace EcosiaPrime.Gui
             if (dropdownMenuOption.Text == ComboBoxOptionConstants.Create)
             {
                 var fields = await _guiService.CreateClientAsync(
-                    responseTextField.Text, idTextfield.Text, firstNameTextfield.Text, lastNameTextfield.Text, emailTextfield.Text,
+                    idTextfield.Text, firstNameTextfield.Text, lastNameTextfield.Text, emailTextfield.Text,
                     passwordTextfield.Text, countryTextfield.Text, stateTextfield.Text, postcodeTextfield.Text, cityTextfield.Text, streetNameTextfield.Text,
                     houseNumberTextfield.Text, startDatePicker.Text, endDatePicker.Text, dropdownMenuPayment.Text, dropdownMenuSubscription.Text);
 
@@ -51,7 +51,7 @@ namespace EcosiaPrime.Gui
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Update)
             {
                 var fields = await _guiService.UpdateClientAsync(
-                    responseTextField.Text, idTextfield.Text, firstNameTextfield.Text, lastNameTextfield.Text, emailTextfield.Text,
+                    idTextfield.Text, firstNameTextfield.Text, lastNameTextfield.Text, emailTextfield.Text,
                     passwordTextfield.Text, countryTextfield.Text, stateTextfield.Text, postcodeTextfield.Text, cityTextfield.Text, streetNameTextfield.Text,
                     houseNumberTextfield.Text, startDatePicker.Text, endDatePicker.Text, dropdownMenuPayment.Text, dropdownMenuSubscription.Text);
 
@@ -87,10 +87,7 @@ namespace EcosiaPrime.Gui
             }
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Delete)
             {
-                var fields = await _guiService.DeleteClientAsync(
-                   responseTextField.Text, idTextfield.Text, firstNameTextfield.Text, lastNameTextfield.Text, emailTextfield.Text,
-                    passwordTextfield.Text, countryTextfield.Text, stateTextfield.Text, postcodeTextfield.Text, cityTextfield.Text, streetNameTextfield.Text,
-                    houseNumberTextfield.Text, startDatePicker.Text, endDatePicker.Text, dropdownMenuPayment.Text, dropdownMenuSubscription.Text);
+                var fields = await _guiService.DeleteClientAsync(idTextfield.Text);
 
                 responseTextField.Lines = fields.ToArray();
                 if (fields.ToArray()[0] == ResponseMessagesConstants.DeleteClientToDBSuccessful)

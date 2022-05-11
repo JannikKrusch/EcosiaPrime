@@ -17,7 +17,6 @@ namespace EcosiaPrime.Gui
         /// <summary>
         /// Schaut, ob alle Felder richtig ausgefüllt sind, wenn ja: neues Client Objekt wird erzeugt der Datenbank hinzugefügt; wenn nein: werden entsprechene Fehler angezeigt
         /// </summary>
-        /// <param name="response"></param>
         /// <param name="id"></param>
         /// <param name="firstName"></param>
         /// <param name="lastName"></param>
@@ -35,20 +34,17 @@ namespace EcosiaPrime.Gui
         /// <param name="subscriptionType"></param>
         /// <returns></returns>
         public async Task<IEnumerable<string>> CreateClientAsync(
-            string response,
             string id, string firstName, string lastName, string email, string password,
             string country, string state, string postCode, string city, string street, string houseNumber,
             string startDate, string endDate, string paymentMethod, string subscriptionType)
         {
-            var responseLines = CheckSyntaxExtensionMethods.CheckInputFieldsEmpty(
-                response,
-                id, firstName, lastName, email,
+            var responseLines = id.CheckInputFieldsEmpty(
+                firstName, lastName, email,
                 password, country, state, postCode, city, street,
                 houseNumber, startDate, endDate, paymentMethod, subscriptionType);
 
             if (responseLines.Any())
             {
-                //response.InvokeResponseTextBox(responseLines);
                 return responseLines;
             }
 
@@ -96,7 +92,6 @@ namespace EcosiaPrime.Gui
         /// 2. Wenn alle Felder ausgefüllt sind -> bearbeitete Version ersetzt die alte Version vom Kunden
         /// Bei Fehlern werden Fehlermeldungen ausgegeben
         /// </summary>
-        /// <param name="response"></param>
         /// <param name="id"></param>
         /// <param name="firstName"></param>
         /// <param name="lastName"></param>
@@ -114,7 +109,6 @@ namespace EcosiaPrime.Gui
         /// <param name="subscriptionType"></param>
         /// <returns></returns>
         public async Task<IEnumerable<string>> UpdateClientAsync(
-            string response,
             string id, string firstName, string lastName, string email, string password,
             string country, string state, string postCode, string city, string street, string houseNumber,
             string startDate, string endDate, string paymentMethod, string subscriptionType)
@@ -147,32 +141,11 @@ namespace EcosiaPrime.Gui
                 fields.Add(clientDB.Subscription.SubscriptionType);
 
                 return fields;
-                /*id.InvokeTextBox(clientDB.Id);
-                firstName.InvokeTextBox(clientDB.FirstName);
-                lastName.InvokeTextBox(clientDB.LastName);
-                email.InvokeTextBox(clientDB.Email);
-                password.InvokeTextBox(clientDB.Password);
-
-                country.InvokeTextBox(clientDB.Address.Country);
-                state.InvokeTextBox(clientDB.Address.State);
-                postCode.InvokeTextBox(clientDB.Address.PostCode);
-                city.InvokeTextBox(clientDB.Address.City);
-                street.InvokeTextBox(clientDB.Address.Street);
-                houseNumber.InvokeTextBox(clientDB.Address.HouseNumber);
-
-                startDate.InvokeDateTimePicker(clientDB.Subscription.StartDate);
-                endDate.InvokeDateTimePicker(clientDB.Subscription.EndDate);
-                paymentMethod.InvokeComboBox(clientDB.Subscription.PaymentMethod);
-                subscriptionType.InvokeComboBox(clientDB.Subscription.SubscriptionType);
-
-                response.InvokeResponseTextBox(new List<string> { });
-                //Hier muss --> false <-- zurückgegeben werden, obwohl alles funktioniert hat, da ansonsten alle Felder geleert werden!
-                return false;*/
             }
             else
             {
-                var responseLines = response.CheckInputFieldsEmpty(
-                id, firstName, lastName, email,
+                var responseLines = id.CheckInputFieldsEmpty(
+                firstName, lastName, email,
                 password, country, state, postCode, city, street,
                 houseNumber, startDate, endDate, paymentMethod, subscriptionType).ToList();
 
@@ -220,28 +193,9 @@ namespace EcosiaPrime.Gui
         /// <summary>
         /// Schaut, ob eingebene ID existiert und löscht entsprechenen Eintag oder gibt Fehlermeldung aus
         /// </summary>
-        /// <param name="response"></param>
         /// <param name="id"></param>
-        /// <param name="firstName"></param>
-        /// <param name="lastName"></param>
-        /// <param name="email"></param>
-        /// <param name="password"></param>
-        /// <param name="country"></param>
-        /// <param name="state"></param>
-        /// <param name="postCode"></param>
-        /// <param name="city"></param>
-        /// <param name="street"></param>
-        /// <param name="houseNumber"></param>
-        /// <param name="startDate"></param>
-        /// <param name="endDate"></param>
-        /// <param name="paymentMethod"></param>
-        /// <param name="subscriptionType"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<string>> DeleteClientAsync(
-            string response,
-            string id, string firstName, string lastName, string email, string password,
-            string country, string state, string postCode, string city, string street, string houseNumber,
-            string startDate, string endDate, string paymentMethod, string subscriptionType)
+        public async Task<IEnumerable<string>> DeleteClientAsync(string id)
         {
             var responseLines = new List<string>();
 
@@ -254,7 +208,6 @@ namespace EcosiaPrime.Gui
             {
                 return responseLines;
             }
-
 
             var fields = new List<string>();
             var successful = await _mongoDBService.DeleteRecordAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, id).ConfigureAwait(false);
@@ -270,10 +223,9 @@ namespace EcosiaPrime.Gui
         }
 
         /// <summary>
-        /// Einträge werden dem Filter entsprechend in die Tabelle(ListView) eingetragen
+        /// Einträge werden dem Filter entsprechend in eine Liste eingetragen und zurückgegeben
         /// </summary>
         /// <param name="filter"></param>
-        /// <param name="table"></param>
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<IEnumerable<Client>> ShowClientsAsync(string filter, string id)
@@ -324,42 +276,12 @@ namespace EcosiaPrime.Gui
             {
                 return new List<Client>() { };
             }
-
-
-            /*table.Invoke(new Action(() =>
-            {
-                table.Items.Clear();
-            }));
-
-            if (clients.Any())
-            {
-                table.FillListView(clients);
-            }
-            else if (client != null)
-            {
-                table.FillListView(client);
-            }
-
-            table.Invoke(new Action(() =>
-            {
-                table.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-
-                table.Columns.OfType<ColumnHeader>().ToList().ForEach(column =>
-                {
-                    if (column.Width < 75)
-                    {
-                        column.Width = 100;
-                    }
-                }
-            }));*/
         }
 
         /// <summary>
-        /// Es wird nach Einträgen gesucht, die dem Suchkriterium entsprechen und werden in die Tabelle(ListView) eingetragen
+        /// Es wird nach Einträgen gesucht, die dem Suchkriterium entsprechen und gibt eine Liste zurück
         /// </summary>
-        /// <param name="table"></param>
         /// <param name="filter"></param>
-        /// <param name="response"></param>
         /// <param name="id"></param>
         /// <param name="firstName"></param>
         /// <param name="lastName"></param>
@@ -495,8 +417,6 @@ namespace EcosiaPrime.Gui
         /// <summary>
         /// Ist die eigentliche Suchfunktion für die obrige Methode
         /// </summary>
-        /// <param name="table"></param>
-        /// <param name="response"></param>
         /// <param name="searchForString"></param>
         /// <param name="searchStringPrimary"></param>
         /// <param name="searchStringSecondary"></param>
@@ -511,10 +431,6 @@ namespace EcosiaPrime.Gui
             {
                 case SearchFunctionConstants.SearchForID:
                     foundList = people.Where(x => x.Id.ToLower().Contains(searchStringPrimary.ToLower()));
-                    /*if (!foundList.Any())
-                    {
-                        response.InvokeResponseTextBox(new List<string>() { ResponseMessagesConstants.IDDoesntExistInDB });
-                    }*/
                     break;
 
                 case SearchFunctionConstants.SearchForFirstname:
@@ -559,15 +475,6 @@ namespace EcosiaPrime.Gui
             }
 
             return foundList;
-            /*table.Invoke(new Action(() =>
-            {
-                table.Items.Clear();
-            }));
-
-            if (foundList.Any())
-            {
-                table.FillListView(foundList);
-            }*/
         }
     }
 }
