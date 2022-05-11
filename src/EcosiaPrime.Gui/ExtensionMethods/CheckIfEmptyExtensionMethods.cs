@@ -74,13 +74,7 @@
         ///// <returns></returns>
         private static DateTime GetDateTime(this string dateTimePicker)
         {
-            //DateTime dateTime = default;
             var dateTime = DateTime.Parse(dateTimePicker);
-            //dateTimePicker.Invoke(new Action(() =>
-            //{
-            //    s = dateTimePicker.Value.Date;
-            //}));
-
             return dateTime;
         }
     }

@@ -26,6 +26,7 @@ namespace EcosiaPrime.Gui
             dropdownMenuSubscription.SelectedIndex = 0;
 
             ComboBoxOptionConstants.OptionConstants.ForEach(x => dropdownMenuOption.Items.Add(x));
+            dropdownMenuOption.SelectedIndex = 0;
         }
 
         private void dropdownMenuPayment_SelectedIndexChanged(object sender, EventArgs e)
@@ -172,17 +173,11 @@ namespace EcosiaPrime.Gui
             {
                 if (GetVisibleFieldsList(option).Any(x => x == control.Name))
                 {
-                    control.Invoke(new Action(() =>
-                    {
-                        control.Visible = true;
-                    }));
+                    control.Visible = true;
                 }
                 else
                 {
-                    control.Invoke(new Action(() =>
-                    {
-                        control.Visible = false;
-                    }));
+                    control.Visible = false;
                 }
             });
         }
@@ -223,10 +218,7 @@ namespace EcosiaPrime.Gui
             {
                 if (control is TextBox && control.Name != "responseTextField")
                 {
-                    control.Invoke(new Action(() =>
-                    {
-                        control.Text = string.Empty;
-                    }));
+                    control.Text = string.Empty;
                 }
             });
         }
