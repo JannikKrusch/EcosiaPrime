@@ -1,4 +1,6 @@
-﻿namespace EcosiaPrime.MongoDB
+﻿using MongoDB.Driver;
+
+namespace EcosiaPrime.MongoDB
 {
     public interface IMongoDBRepository
     {
@@ -7,6 +9,8 @@
         Task<bool> DeleteRecordAsync<T>(string collectionName, string id);
 
         Task<bool> InsertRecordAsync<T>(string collectionName, T record);
+
+        Task<IEnumerable<T>> LoadRecordsWithFilterAsync<T>(string collectionName, FilterDefinition<T> filter);
 
         Task<T> LoadRecordByIdAsync<T>(string collectionName, string id);
 

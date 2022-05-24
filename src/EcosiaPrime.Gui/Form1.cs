@@ -17,6 +17,9 @@ namespace EcosiaPrime.Gui
             FillComboBoxes();
         }
 
+        /// <summary>
+        /// Füllt die Comboboxen und setzt direkt den Index
+        /// </summary>
         public void FillComboBoxes()
         {
             PaymentMethodConstants.PaymentMethods.ForEach(x => dropdownMenuPayment.Items.Add(x));
@@ -34,6 +37,12 @@ namespace EcosiaPrime.Gui
             var text = dropdownMenuPayment.Text;
         }
 
+
+        /// <summary>
+        /// Bearbeitet den Knopfdruck
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Enter_Click(object sender, EventArgs e)
         {
             if (dropdownMenuOption.Text == ComboBoxOptionConstants.Create)
@@ -66,24 +75,27 @@ namespace EcosiaPrime.Gui
                         ClearAllControls();
                     }
                 }
-                else if (fields.Count() == 16)
+                else if (fields.Count() == 15)
                 {
-                    responseTextField.Text = fieldList[0];
-                    idTextfield.Text = fieldList[1];
-                    firstNameTextfield.Text = fieldList[2];
-                    lastNameTextfield.Text = fieldList[3];
-                    emailTextfield.Text = fieldList[4];
-                    passwordTextfield.Text = fieldList[5];
-                    countryTextfield.Text = fieldList[6];
-                    stateTextfield.Text = fieldList[7];
-                    postcodeTextfield.Text = fieldList[8];
-                    cityTextfield.Text = fieldList[9];
-                    streetNameTextfield.Text = fieldList[10];
-                    houseNumberTextfield.Text = fieldList[11];
-                    startDatePicker.Text = fieldList[12];
-                    endDatePicker.Text = fieldList[13];
-                    dropdownMenuPayment.Text = fieldList[14];
-                    dropdownMenuSubscription.Text = fieldList[15];
+                    idTextfield.Text = fieldList[0];
+                    firstNameTextfield.Text = fieldList[1];
+                    lastNameTextfield.Text = fieldList[2];
+                    emailTextfield.Text = fieldList[3];
+                    passwordTextfield.Text = fieldList[4];
+                    countryTextfield.Text = fieldList[5];
+                    stateTextfield.Text = fieldList[6];
+                    postcodeTextfield.Text = fieldList[7];
+                    cityTextfield.Text = fieldList[8];
+                    streetNameTextfield.Text = fieldList[9];
+                    houseNumberTextfield.Text = fieldList[10];
+                    startDatePicker.Text = fieldList[11];
+                    endDatePicker.Text = fieldList[12];
+                    dropdownMenuPayment.Text = fieldList[13];
+                    dropdownMenuSubscription.Text = fieldList[14];
+                }
+                else
+                {
+                    responseTextField.Lines = fields.ToArray();
                 }
             }
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Delete)
@@ -116,6 +128,11 @@ namespace EcosiaPrime.Gui
             }
         }
 
+        /// <summary>
+        /// Setzt die Sichtbarkeit der Elemente je nach dem, was im Hauptmenü ausgewählt worden ist
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void optionComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (dropdownMenuOption.Text)
@@ -145,7 +162,10 @@ namespace EcosiaPrime.Gui
                     break;
             }
         }
-
+        /// <summary>
+        /// Setzt die Visible Eigenschaft der GUI-Elemente
+        /// </summary>
+        /// <param name="option"></param>
         public void ChangeVisibilityOfFields(string option)
         {
             if (_controlsList == null)
@@ -182,6 +202,12 @@ namespace EcosiaPrime.Gui
             });
         }
 
+
+        /// <summary>
+        /// Gibt Liste mit Namen der Elemente zurück, die sichtbar sein dürfen
+        /// </summary>
+        /// <param name="option"></param>
+        /// <returns></returns>
         public List<string> GetVisibleFieldsList(string option)
         {
             switch (option)
@@ -212,6 +238,9 @@ namespace EcosiaPrime.Gui
             dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
+        /// <summary>
+        /// Leert jede Textbox bis auf die, die für die Nachrichten zuständig ist
+        /// </summary>
         public void ClearAllControls()
         {
             _controlsList.ToList().ForEach(control =>

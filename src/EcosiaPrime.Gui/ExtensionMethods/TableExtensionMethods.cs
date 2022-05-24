@@ -4,6 +4,11 @@ namespace EcosiaPrime.Gui.ExtensionMethods
 {
     public static class TableExtensionMethods
     {
+        /// <summary>
+        /// Gibt ein ausgefülltes String Array zurück, welches als Reihe in der Tabelle verwendet wird
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns></returns>
         private static string[] GetFilledRow(this Client client)
         {
             if (client != null && client.Id != null)
@@ -18,6 +23,11 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             return new string[] { };
         }
 
+        /// <summary>
+        /// Erstellt für jeden Eintag in der Liste eine Reihe in der Tabelle
+        /// </summary>
+        /// <param name="listView"></param>
+        /// <param name="clients"></param>
         public static void FillListView(this ListView listView, IEnumerable<Client> clients)
         {
             clients.ToList().ForEach(client => listView.Items.Add(new ListViewItem(GetFilledRow(client))));

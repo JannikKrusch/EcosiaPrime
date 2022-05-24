@@ -17,6 +17,7 @@
         public const string IDIsEmpty = "Eingabefeld für id ist leer";
 
         public const string EmailIsNotValid = "Keine gültige Email!";
+        public const string EmailIsNotUnique = "Email ist nicht einzigartig!";
 
         public const string PasswordNoNumber = "Passwort muss mindestes eine Zahl haben!";
         public const string PasswordNoUpperCase = "Passwort muss mindestes ein großen Buchstaben haben!";

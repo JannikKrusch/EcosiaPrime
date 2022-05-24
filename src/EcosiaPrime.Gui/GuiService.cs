@@ -43,6 +43,13 @@ namespace EcosiaPrime.Gui
                 password, country, state, postCode, city, street,
                 houseNumber, startDate, endDate, paymentMethod, subscriptionType);
 
+            if(!await _mongoDBService.IsEmailUniqueAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, email))
+            {
+                var temp = responseLines.ToList();
+                temp.Add(ResponseMessagesConstants.EmailIsNotUnique);
+                responseLines = temp;
+            }
+
             if (responseLines.Any())
             {
                 return responseLines;
@@ -134,7 +141,6 @@ namespace EcosiaPrime.Gui
                 fields.Add(clientDB.Address.City);
                 fields.Add(clientDB.Address.Street);
                 fields.Add(clientDB.Address.HouseNumber);
-                fields.Add(clientDB.Address.PostCode);
                 fields.Add(clientDB.Subscription.StartDate);
                 fields.Add(clientDB.Subscription.EndDate);
                 fields.Add(clientDB.Subscription.PaymentMethod);
@@ -148,6 +154,17 @@ namespace EcosiaPrime.Gui
                 firstName, lastName, email,
                 password, country, state, postCode, city, street,
                 houseNumber, startDate, endDate, paymentMethod, subscriptionType).ToList();
+
+                var clientDB = await _mongoDBService.LoadRecordByIdAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, id).ConfigureAwait(false);
+                if(clientDB.Email != email)
+                {
+                    if (!await _mongoDBService.IsEmailUniqueAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, email))
+                    {
+                        var temp = responseLines.ToList();
+                        temp.Add(ResponseMessagesConstants.EmailIsNotUnique);
+                        responseLines = temp;
+                    }
+                }                
 
                 if (responseLines.Any())
                 {

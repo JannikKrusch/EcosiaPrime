@@ -1,4 +1,5 @@
 ﻿using EcosiaPrime.Contracts.Constants;
+using System.ComponentModel.DataAnnotations;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
 
@@ -35,7 +36,20 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             var responseLines = new List<string>();
             try
             {
-                MailAddress mailAddress = new MailAddress(email);
+                //MailAddress mailAddress = new MailAddress(email);
+                //if(mailAddress.Address == email)
+                //{
+                //    return responseLines;
+                //}
+                //responseLines.Add(ResponseMessagesConstants.EmailIsNotValid);
+                //return responseLines;
+
+                var mailAddress = new EmailAddressAttribute();
+                if (mailAddress.IsValid(email))
+                {
+                    return responseLines;
+                }
+                responseLines.Add(ResponseMessagesConstants.EmailIsNotValid);
                 return responseLines;
             }
             catch (Exception ex)

@@ -1,4 +1,5 @@
 ﻿using EcosiaPrime.Contracts.Models;
+using MongoDB.Driver;
 
 namespace EcosiaPrime.MongoDB
 {
@@ -30,6 +31,12 @@ namespace EcosiaPrime.MongoDB
         {
             var record = await _mongoDBRepository.LoadRecordByIdAsync<T>(collectionName, id);
             return record;
+        }
+
+        public async Task<IEnumerable<T>> LoadRecordsWithFilterAsync<T>(string collectionName, FilterDefinition<T> filter)
+        {
+            var records = await _mongoDBRepository.LoadRecordsWithFilterAsync<T>(collectionName, filter);
+            return records;
         }
 
         public async Task<IEnumerable<T>> LoadRecordsAsync<T>(string collectionName)
@@ -126,6 +133,10 @@ namespace EcosiaPrime.MongoDB
             return sortedRecords;
         }
 
+        /*
+         * Extra Methods
+        */
+
         /// <summary>
         /// Gibt Wahrheitswert zurück, ob ID in Datenbank existiert
         /// </summary>
@@ -136,6 +147,21 @@ namespace EcosiaPrime.MongoDB
         {
             var exists = await LoadRecordByIdAsync<Client>(collectionName, id).ConfigureAwait(false);
             return exists != null;
+        }
+
+
+        /// <summary>
+        /// Gibt Wahrheitswert zurück, ob Email in Datenbank existiert
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collectionName"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public async Task<bool> IsEmailUniqueAsync<T>(string collectionName, string email)
+        {
+            var filter = Builders<T>.Filter.Eq("Email", email);
+            var records = await LoadRecordsWithFilterAsync(collectionName, filter).ConfigureAwait(false);
+            return !records.Any();
         }
     }
 }
