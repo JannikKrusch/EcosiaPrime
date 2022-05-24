@@ -73,10 +73,13 @@ namespace EcosiaPrime.Gui
                     if (fields.ToArray()[0] == ResponseMessagesConstants.UpdateClientToDBSuccessful)
                     {
                         ClearAllControls();
+                        ChangeVisibilityOfFields(ComboBoxOptionConstants.Update);
                     }
                 }
                 else if (fields.Count() == 15)
                 {
+                    ChangeVisibilityOfFields(ComboBoxOptionConstants.Create);
+
                     idTextfield.Text = fieldList[0];
                     firstNameTextfield.Text = fieldList[1];
                     lastNameTextfield.Text = fieldList[2];

@@ -1,24 +1,25 @@
 ﻿using EcosiaPrime.Contracts.Models;
-using MongoDB.Driver;
 
 namespace EcosiaPrime.MongoDB
 {
     public interface IMongoDBService
     {
-        Task<bool> DeleteRecordAsync<T>(string collectionName, string id);
+        IMongoDBRepository MongoDBRepository { get; set; }
+
         Task<bool> DoesIdExistAsync(string collectionName, string id);
-        MongoDBConfiguration GetMongoDBConfiguration();
-        Task<bool> InsertRecordAsync<T>(string collectionName, T record);
+
         Task<bool> IsEmailUniqueAsync<T>(string collectionName, string email);
-        Task<T> LoadRecordByIdAsync<T>(string collectionName, string id);
-        Task<IEnumerable<T>> LoadRecordsAsync<T>(string collectionName);
-        Task<IEnumerable<T>> LoadRecordsWithFilterAsync<T>(string collectionName, FilterDefinition<T> filter);
+
         Task<IEnumerable<Client>> SortRecordByCountyAsync(string collectionName);
+
         Task<IEnumerable<Client>> SortRecordByEmailAsync(string collectionName);
+
         Task<IEnumerable<Client>> SortRecordByFirstNameAsync(string collectionName);
+
         Task<IEnumerable<Client>> SortRecordByIdAsync(string collectionName);
+
         Task<IEnumerable<Client>> SortRecordByLastNameAsync(string collectionName);
+
         Task<IEnumerable<Client>> SortRecordBySubscriptionTypeAsync(string collectionName);
-        Task<bool> UpsertRecordAsync<T>(string collectionName, string id, T record);
     }
 }

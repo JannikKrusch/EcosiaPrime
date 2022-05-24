@@ -5,18 +5,18 @@ namespace EcosiaPrime.MongoDB
 {
     public class MongoDBService : IMongoDBService
     {
-        private readonly IMongoDBRepository _mongoDBRepository;
+        public IMongoDBRepository MongoDBRepository { get; set; }
 
         public MongoDBService(IMongoDBRepository mongoDBRepository)
         {
-            _mongoDBRepository = mongoDBRepository;
+            MongoDBRepository = mongoDBRepository;
         }
 
         /*
          * Basic Methods
         */
 
-        public MongoDBConfiguration GetMongoDBConfiguration()
+        /*public MongoDBConfiguration GetMongoDBConfiguration()
         {
             return _mongoDBRepository.GetMongoDBConfiguration();
         }
@@ -55,10 +55,10 @@ namespace EcosiaPrime.MongoDB
         {
             var successful = await _mongoDBRepository.UpsertRecordAsync<T>(collectionName, id, record);
             return successful;
-        }
+        }*/
 
         /*
-         * Sort Methods 
+         * Sort Methods
         */
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace EcosiaPrime.MongoDB
         /// <returns></returns>
         public async Task<IEnumerable<Client>> SortRecordByIdAsync(string collectionName)
         {
-            var records = await LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
+            var records = await MongoDBRepository.LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
             var sortedRecords = records.OrderBy(x => x.Id);
             return sortedRecords;
         }
@@ -80,7 +80,7 @@ namespace EcosiaPrime.MongoDB
         /// <returns></returns>
         public async Task<IEnumerable<Client>> SortRecordByFirstNameAsync(string collectionName)
         {
-            var records = await LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
+            var records = await MongoDBRepository.LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
             var sortedRecords = records.OrderBy(x => x.FirstName);
             return sortedRecords;
         }
@@ -92,7 +92,7 @@ namespace EcosiaPrime.MongoDB
         /// <returns></returns>
         public async Task<IEnumerable<Client>> SortRecordByLastNameAsync(string collectionName)
         {
-            var records = await LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
+            var records = await MongoDBRepository.LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
             var sortedRecords = records.OrderBy(x => x.LastName);
             return sortedRecords;
         }
@@ -104,7 +104,7 @@ namespace EcosiaPrime.MongoDB
         /// <returns></returns>
         public async Task<IEnumerable<Client>> SortRecordByEmailAsync(string collectionName)
         {
-            var records = await LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
+            var records = await MongoDBRepository.LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
             var sortedRecords = records.OrderBy(x => x.Email);
             return sortedRecords;
         }
@@ -116,7 +116,7 @@ namespace EcosiaPrime.MongoDB
         /// <returns></returns>
         public async Task<IEnumerable<Client>> SortRecordByCountyAsync(string collectionName)
         {
-            var records = await LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
+            var records = await MongoDBRepository.LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
             var sortedRecords = records.OrderBy(x => x.Address.Country);
             return sortedRecords;
         }
@@ -128,7 +128,7 @@ namespace EcosiaPrime.MongoDB
         /// <returns></returns>
         public async Task<IEnumerable<Client>> SortRecordBySubscriptionTypeAsync(string collectionName)
         {
-            var records = await LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
+            var records = await MongoDBRepository.LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
             var sortedRecords = records.OrderBy(x => x.Subscription.SubscriptionType);
             return sortedRecords;
         }
@@ -145,10 +145,9 @@ namespace EcosiaPrime.MongoDB
         /// <returns></returns>
         public async Task<bool> DoesIdExistAsync(string collectionName, string id)
         {
-            var exists = await LoadRecordByIdAsync<Client>(collectionName, id).ConfigureAwait(false);
+            var exists = await MongoDBRepository.LoadRecordByIdAsync<Client>(collectionName, id).ConfigureAwait(false);
             return exists != null;
         }
-
 
         /// <summary>
         /// Gibt Wahrheitswert zurück, ob Email in Datenbank existiert
@@ -160,7 +159,7 @@ namespace EcosiaPrime.MongoDB
         public async Task<bool> IsEmailUniqueAsync<T>(string collectionName, string email)
         {
             var filter = Builders<T>.Filter.Eq("Email", email);
-            var records = await LoadRecordsWithFilterAsync(collectionName, filter).ConfigureAwait(false);
+            var records = await MongoDBRepository.LoadRecordsWithFilterAsync(collectionName, filter).ConfigureAwait(false);
             return !records.Any();
         }
     }

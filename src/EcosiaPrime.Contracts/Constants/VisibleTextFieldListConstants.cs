@@ -23,14 +23,14 @@
             "responseTextField"
         };
 
-        public static readonly List<string> Update = new List<string>(Create);
-
         public static readonly List<string> Delete = new List<string>
         {
             "idTextfield",
             "dropdownMenuOption",
             "responseTextField"
         };
+
+        public static readonly List<string> Update = new List<string>(Delete);
 
         public static readonly List<string> Show = new List<string>(Delete)
         { 

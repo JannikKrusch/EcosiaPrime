@@ -8,10 +8,12 @@ namespace EcosiaPrime.Gui
     public class GuiService : IGuiService
     {
         private readonly IMongoDBService _mongoDBService;
+        private readonly IMongoDBConfiguration _mongoDBConfiguration;
 
         public GuiService(IMongoDBService mongoDBService)
         {
             _mongoDBService = mongoDBService;
+            _mongoDBConfiguration = _mongoDBService.MongoDBRepository.GetMongoDBConfiguration();
         }
 
         /// <summary>
@@ -43,7 +45,7 @@ namespace EcosiaPrime.Gui
                 password, country, state, postCode, city, street,
                 houseNumber, startDate, endDate, paymentMethod, subscriptionType);
 
-            if(!await _mongoDBService.IsEmailUniqueAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, email))
+            if (!await _mongoDBService.IsEmailUniqueAsync<Client>(_mongoDBConfiguration.CollectionName, email))
             {
                 var temp = responseLines.ToList();
                 temp.Add(ResponseMessagesConstants.EmailIsNotUnique);
@@ -55,7 +57,7 @@ namespace EcosiaPrime.Gui
                 return responseLines;
             }
 
-            if (await _mongoDBService.DoesIdExistAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, id).ConfigureAwait(false))
+            if (await _mongoDBService.DoesIdExistAsync(_mongoDBConfiguration.CollectionName, id).ConfigureAwait(false))
             {
                 return new List<string> { ResponseMessagesConstants.IDAlreadyExistsInDB };
             }
@@ -82,7 +84,7 @@ namespace EcosiaPrime.Gui
             client.Subscription.PaymentMethod = paymentMethod;
             client.Subscription.SubscriptionType = subscriptionType;
 
-            var successful = await _mongoDBService.InsertRecordAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, client).ConfigureAwait(false);
+            var successful = await _mongoDBService.MongoDBRepository.InsertRecordAsync(_mongoDBConfiguration.CollectionName, client).ConfigureAwait(false);
             if (successful)
             {
                 return new List<string> { ResponseMessagesConstants.AddClientToDBSuccessful };
@@ -120,14 +122,14 @@ namespace EcosiaPrime.Gui
             string country, string state, string postCode, string city, string street, string houseNumber,
             string startDate, string endDate, string paymentMethod, string subscriptionType)
         {
-            if (!await _mongoDBService.DoesIdExistAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, id).ConfigureAwait(false))
+            if (!await _mongoDBService.DoesIdExistAsync(_mongoDBConfiguration.CollectionName, id).ConfigureAwait(false))
             {
                 return new List<string> { ResponseMessagesConstants.IDDoesntExistInDB };
             }
 
             if (id.ArePersonInputFieldsEmptyExceptId(firstName, lastName, email, password) && country.AreAdressInputFieldsEmpty(state, postCode, city, houseNumber, street) && !startDate.ArePaymentSubscriptionInputFieldsEmpty(endDate))
             {
-                var clientDB = await _mongoDBService.LoadRecordByIdAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, id).ConfigureAwait(false);
+                var clientDB = await _mongoDBService.MongoDBRepository.LoadRecordByIdAsync<Client>(_mongoDBConfiguration.CollectionName, id).ConfigureAwait(false);
 
                 var fields = new List<string>();
                 fields.Add(clientDB.Id);
@@ -155,16 +157,16 @@ namespace EcosiaPrime.Gui
                 password, country, state, postCode, city, street,
                 houseNumber, startDate, endDate, paymentMethod, subscriptionType).ToList();
 
-                var clientDB = await _mongoDBService.LoadRecordByIdAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, id).ConfigureAwait(false);
-                if(clientDB.Email != email)
+                var clientDB = await _mongoDBService.MongoDBRepository.LoadRecordByIdAsync<Client>(_mongoDBConfiguration.CollectionName, id).ConfigureAwait(false);
+                if (clientDB.Email != email)
                 {
-                    if (!await _mongoDBService.IsEmailUniqueAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, email))
+                    if (!await _mongoDBService.IsEmailUniqueAsync<Client>(_mongoDBConfiguration.CollectionName, email))
                     {
                         var temp = responseLines.ToList();
                         temp.Add(ResponseMessagesConstants.EmailIsNotUnique);
                         responseLines = temp;
                     }
-                }                
+                }
 
                 if (responseLines.Any())
                 {
@@ -194,7 +196,7 @@ namespace EcosiaPrime.Gui
                 client.Subscription.SubscriptionType = subscriptionType;
 
                 responseLines = new List<string>();
-                var successful = await _mongoDBService.UpsertRecordAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, client.Id, client).ConfigureAwait(false);
+                var successful = await _mongoDBService.MongoDBRepository.UpsertRecordAsync(_mongoDBConfiguration.CollectionName, client.Id, client).ConfigureAwait(false);
                 if (successful)
                 {
                     responseLines.Add(ResponseMessagesConstants.UpdateClientToDBSuccessful);
@@ -216,7 +218,7 @@ namespace EcosiaPrime.Gui
         {
             var responseLines = new List<string>();
 
-            if (!await _mongoDBService.DoesIdExistAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName, id).ConfigureAwait(false))
+            if (!await _mongoDBService.DoesIdExistAsync(_mongoDBConfiguration.CollectionName, id).ConfigureAwait(false))
             {
                 responseLines.Add(ResponseMessagesConstants.IDDoesntExistInDB);
             }
@@ -227,7 +229,7 @@ namespace EcosiaPrime.Gui
             }
 
             var fields = new List<string>();
-            var successful = await _mongoDBService.DeleteRecordAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, id).ConfigureAwait(false);
+            var successful = await _mongoDBService.MongoDBRepository.DeleteRecordAsync<Client>(_mongoDBConfiguration.CollectionName, id).ConfigureAwait(false);
             if (successful)
             {
                 fields.Add(ResponseMessagesConstants.DeleteClientToDBSuccessful);
@@ -253,31 +255,31 @@ namespace EcosiaPrime.Gui
             switch (filter)
             {
                 case FilterOptionsConstants.AllByID:
-                    clients = await _mongoDBService.SortRecordByIdAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName).ConfigureAwait(false);
+                    clients = await _mongoDBService.SortRecordByIdAsync(_mongoDBConfiguration.CollectionName).ConfigureAwait(false);
                     break;
 
                 case FilterOptionsConstants.AllByFirstname:
-                    clients = await _mongoDBService.SortRecordByFirstNameAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName).ConfigureAwait(false);
+                    clients = await _mongoDBService.SortRecordByFirstNameAsync(_mongoDBConfiguration.CollectionName).ConfigureAwait(false);
                     break;
 
                 case FilterOptionsConstants.AllByLastName:
-                    clients = await _mongoDBService.SortRecordByLastNameAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName).ConfigureAwait(false);
+                    clients = await _mongoDBService.SortRecordByLastNameAsync(_mongoDBConfiguration.CollectionName).ConfigureAwait(false);
                     break;
 
                 case FilterOptionsConstants.AllByEmail:
-                    clients = await _mongoDBService.SortRecordByEmailAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName).ConfigureAwait(false);
+                    clients = await _mongoDBService.SortRecordByEmailAsync(_mongoDBConfiguration.CollectionName).ConfigureAwait(false);
                     break;
 
                 case FilterOptionsConstants.AllByCountry:
-                    clients = await _mongoDBService.SortRecordByCountyAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName).ConfigureAwait(false);
+                    clients = await _mongoDBService.SortRecordByCountyAsync(_mongoDBConfiguration.CollectionName).ConfigureAwait(false);
                     break;
 
                 case FilterOptionsConstants.AllBySubscription:
-                    clients = await _mongoDBService.SortRecordBySubscriptionTypeAsync(_mongoDBService.GetMongoDBConfiguration().CollectionName).ConfigureAwait(false);
+                    clients = await _mongoDBService.SortRecordBySubscriptionTypeAsync(_mongoDBConfiguration.CollectionName).ConfigureAwait(false);
                     break;
 
                 case FilterOptionsConstants.OneById:
-                    client = await _mongoDBService.LoadRecordByIdAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName, id).ConfigureAwait(false);
+                    client = await _mongoDBService.MongoDBRepository.LoadRecordByIdAsync<Client>(_mongoDBConfiguration.CollectionName, id).ConfigureAwait(false);
                     break;
             }
 
@@ -440,7 +442,7 @@ namespace EcosiaPrime.Gui
         /// <returns></returns>
         public async Task<IEnumerable<Client>> SearchAttributesAsync(string searchForString, string searchStringPrimary, string searchStringSecondary)
         {
-            var people = await _mongoDBService.LoadRecordsAsync<Client>(_mongoDBService.GetMongoDBConfiguration().CollectionName).ConfigureAwait(false);
+            var people = await _mongoDBService.MongoDBRepository.LoadRecordsAsync<Client>(_mongoDBConfiguration.CollectionName).ConfigureAwait(false);
 
             IEnumerable<Client> foundList = new List<Client>();
 
