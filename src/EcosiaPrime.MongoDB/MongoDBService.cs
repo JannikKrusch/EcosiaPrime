@@ -13,51 +13,6 @@ namespace EcosiaPrime.MongoDB
         }
 
         /*
-         * Basic Methods
-        */
-
-        /*public MongoDBConfiguration GetMongoDBConfiguration()
-        {
-            return _mongoDBRepository.GetMongoDBConfiguration();
-        }
-
-        public async Task<bool> InsertRecordAsync<T>(string collectionName, T record)
-        {
-            var successful = await _mongoDBRepository.InsertRecordAsync<T>(collectionName, record);
-            return successful;
-        }
-
-        public async Task<T> LoadRecordByIdAsync<T>(string collectionName, string id)
-        {
-            var record = await _mongoDBRepository.LoadRecordByIdAsync<T>(collectionName, id);
-            return record;
-        }
-
-        public async Task<IEnumerable<T>> LoadRecordsWithFilterAsync<T>(string collectionName, FilterDefinition<T> filter)
-        {
-            var records = await _mongoDBRepository.LoadRecordsWithFilterAsync<T>(collectionName, filter);
-            return records;
-        }
-
-        public async Task<IEnumerable<T>> LoadRecordsAsync<T>(string collectionName)
-        {
-            var records = await _mongoDBRepository.LoadRecordsAsync<T>(collectionName);
-            return records;
-        }
-
-        public async Task<bool> DeleteRecordAsync<T>(string collectionName, string id)
-        {
-            var successful = await _mongoDBRepository.DeleteRecordAsync<T>(collectionName, id);
-            return successful;
-        }
-
-        public async Task<bool> UpsertRecordAsync<T>(string collectionName, string id, T record)
-        {
-            var successful = await _mongoDBRepository.UpsertRecordAsync<T>(collectionName, id, record);
-            return successful;
-        }*/
-
-        /*
          * Sort Methods
         */
 
