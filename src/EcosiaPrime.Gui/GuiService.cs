@@ -45,7 +45,7 @@ namespace EcosiaPrime.Gui
                 password, country, state, postCode, city, street,
                 houseNumber, startDate, endDate, paymentMethod, subscriptionType);
 
-            if (!await _mongoDBService.IsEmailUniqueAsync<Client>(_mongoDBConfiguration.CollectionName, email))
+            if (!await _mongoDBService.IsEmailUniqueAsync<Client>(_mongoDBConfiguration.CollectionName, email).ConfigureAwait(false))
             {
                 var temp = responseLines.ToList();
                 temp.Add(ResponseMessagesConstants.EmailIsNotUnique);
