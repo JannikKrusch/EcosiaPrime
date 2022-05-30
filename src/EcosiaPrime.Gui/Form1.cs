@@ -48,9 +48,9 @@ namespace EcosiaPrime.Gui
             if (dropdownMenuOption.Text == ComboBoxOptionConstants.Create)
             {
                 var fields = await _guiService.CreateClientAsync(
-                    idTextfield.Text, firstNameTextfield.Text, lastNameTextfield.Text, emailTextfield.Text,
-                    passwordTextfield.Text, countryTextfield.Text, stateTextfield.Text, postcodeTextfield.Text, cityTextfield.Text, streetNameTextfield.Text,
-                    houseNumberTextfield.Text, startDatePicker.Text, endDatePicker.Text, dropdownMenuPayment.Text, dropdownMenuSubscription.Text);
+                    idTextfield.Text.Trim(), firstNameTextfield.Text.Trim(), lastNameTextfield.Text.Trim(), emailTextfield.Text.Trim(),
+                    passwordTextfield.Text.Trim(), countryTextfield.Text.Trim(), stateTextfield.Text.Trim(), postcodeTextfield.Text.Trim(), cityTextfield.Text.Trim(), streetNameTextfield.Text.Trim(),
+                    houseNumberTextfield.Text.Trim(), startDatePicker.Text, endDatePicker.Text, dropdownMenuPayment.Text, dropdownMenuSubscription.Text);
 
                 responseTextField.Lines = fields.ToArray();
                 if(fields.ToArray()[0] == ResponseMessagesConstants.AddClientToDBSuccessful)
@@ -61,9 +61,9 @@ namespace EcosiaPrime.Gui
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Update)
             {
                 var fields = await _guiService.UpdateClientAsync(
-                    idTextfield.Text, firstNameTextfield.Text, lastNameTextfield.Text, emailTextfield.Text,
-                    passwordTextfield.Text, countryTextfield.Text, stateTextfield.Text, postcodeTextfield.Text, cityTextfield.Text, streetNameTextfield.Text,
-                    houseNumberTextfield.Text, startDatePicker.Text, endDatePicker.Text, dropdownMenuPayment.Text, dropdownMenuSubscription.Text);
+                    idTextfield.Text.Trim(), firstNameTextfield.Text.Trim(), lastNameTextfield.Text.Trim(), emailTextfield.Text.Trim(),
+                    passwordTextfield.Text.Trim(), countryTextfield.Text.Trim(), stateTextfield.Text.Trim(), postcodeTextfield.Text.Trim(), cityTextfield.Text.Trim(), streetNameTextfield.Text.Trim(),
+                    houseNumberTextfield.Text.Trim(), startDatePicker.Text, endDatePicker.Text, dropdownMenuPayment.Text, dropdownMenuSubscription.Text);
 
                 var fieldList = fields.ToList();
 
@@ -113,7 +113,7 @@ namespace EcosiaPrime.Gui
             }
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Show)
             {
-                var clients = await _guiService.ShowClientsAsync(dropdownMenuFilter.Text, idTextfield.Text);
+                var clients = await _guiService.ShowClientsAsync(dropdownMenuFilter.Text, idTextfield.Text.Trim());
 
                 dataGrid.Items.Clear();
                 dataGrid.FillListView(clients);
@@ -121,10 +121,10 @@ namespace EcosiaPrime.Gui
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Search)
             {
                 var clients = await _guiService.SearchFunctionAsync(
-                    dropdownMenuFilter.Text,
-                    idTextfield.Text, firstNameTextfield.Text, lastNameTextfield.Text, emailTextfield.Text,
-                     passwordTextfield.Text, countryTextfield.Text, stateTextfield.Text, postcodeTextfield.Text, cityTextfield.Text, streetNameTextfield.Text,
-                     houseNumberTextfield.Text, startDatePicker.Text, endDatePicker.Text, dropdownMenuPayment.Text, dropdownMenuSubscription.Text);
+                     dropdownMenuFilter.Text,
+                     idTextfield.Text.Trim(), firstNameTextfield.Text.Trim(), lastNameTextfield.Text.Trim(), emailTextfield.Text.Trim(),
+                     passwordTextfield.Text.Trim(), countryTextfield.Text.Trim(), stateTextfield.Text.Trim(), postcodeTextfield.Text.Trim(), cityTextfield.Text.Trim(), streetNameTextfield.Text.Trim(),
+                     houseNumberTextfield.Text.Trim(), startDatePicker.Text, endDatePicker.Text, dropdownMenuPayment.Text, dropdownMenuSubscription.Text);
 
                 dataGrid.Items.Clear();
                 dataGrid.FillListView(clients);

@@ -1,6 +1,4 @@
 ﻿using EcosiaPrime.Contracts.Constants;
-using System.ComponentModel.DataAnnotations;
-using System.Net.Mail;
 using System.Text.RegularExpressions;
 
 namespace EcosiaPrime.Gui.ExtensionMethods
@@ -36,16 +34,8 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             var responseLines = new List<string>();
             try
             {
-                //MailAddress mailAddress = new MailAddress(email);
-                //if(mailAddress.Address == email)
-                //{
-                //    return responseLines;
-                //}
-                //responseLines.Add(ResponseMessagesConstants.EmailIsNotValid);
-                //return responseLines;
-
-                var mailAddress = new EmailAddressAttribute();
-                if (mailAddress.IsValid(email))
+                var emailRegex = @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z";
+                if (Regex.IsMatch(email, emailRegex, RegexOptions.IgnoreCase))
                 {
                     return responseLines;
                 }
