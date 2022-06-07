@@ -116,6 +116,8 @@ namespace EcosiaPrime.Gui
 
                 dataGrid.Items.Clear();
                 dataGrid.FillListView(clients);
+                dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             }
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Search)
             {
@@ -127,12 +129,16 @@ namespace EcosiaPrime.Gui
 
                 dataGrid.Items.Clear();
                 dataGrid.FillListView(clients);
+                dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             }
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.AdvancedSearch)
             {
                 var clients = await _guiService.AdvancedSearchFunctionAsync(advancedSearchfield.Text.Trim());
                 dataGrid.Items.Clear();
                 dataGrid.FillListView(clients);
+                dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             }
         }
 

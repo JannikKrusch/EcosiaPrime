@@ -36,6 +36,16 @@ namespace EcosiaPrime.Contracts.Constants
         public const string SeachAttributePaymentMethod = "Subscription.PaymentMethod";
         public const string SeachAttributeSubscriptionType = "Subscription.SubscriptionType";
 
+        public const string SeachOperationEquals = "=";
+        public const string SeachOperationNotEquals = "!=";
+        public const string SeachOperationLess = "<";
+        public const string SeachOperationLessThan = "<=";
+        public const string SeachOperationGreater = ">";
+        public const string SeachOperationGreaterThan = ">=";
+
+        public const string SeachLogicAnd = "&";
+        public const string SeachLogicOr = "|";
+
         public static readonly List<string> SearchFunctions = new List<string>
         {
             SearchForID,
@@ -51,48 +61,6 @@ namespace EcosiaPrime.Contracts.Constants
             SearchForPaymentOption,
             SearchForSubscriptionOption
         };
-
-        /*public static readonly List<string> SearchFilterAttributeOptions = new List<string>
-        {
-            SearchForID,
-            SearchForFirstname,
-            SearchForLastName,
-            SearchForEmail,
-            SearchForCountry,
-            SearchForState,
-            SearchForCity,
-            SearchForPostCode,
-            SearchForStreet,
-            SearchForPaymentOption,
-            SearchForSubscriptionOption
-        };
-
-        public static List<string> Test = new List<string>() {"dasdasd", "dads" };
-
-        public static readonly List<string> SearchFilterOperationOptions = new List<string>
-        {
-            "=",
-            "!=",
-            "<",
-            "<=",
-            ">",
-            ">="
-        };
-
-        public static readonly List<string> SearchFilterLogicalOptions = new List<string>
-        {
-            "&",
-            "|"
-        };
-
-        public static readonly List<string> SearchFilterValueMustBeInteger = new List<string>
-        {
-            SearchForID,
-            SearchForPostCode,
-            "Hausnummer",
-        };
-
-        public static readonly List<string> SearchFilterValueMustBeString = SearchFilterOperationOptions.Where(operation => SearchFilterValueMustBeInteger.Any(integer => integer != operation)).ToList();*/
 
         public static readonly List<string> SearchFilterValueMustBeInteger = new List<string>
         {
@@ -124,18 +92,18 @@ namespace EcosiaPrime.Contracts.Constants
 
         public static readonly List<string> SearchFilterOperationOptions = new List<string>
         {
-            "=",
-            "!=",
-            "<",
-            "<=",
-            ">",
-            ">="
+            SeachOperationEquals,
+            SeachOperationNotEquals,
+            SeachOperationLess,
+            SeachOperationLessThan,
+            SeachOperationGreater,
+            SeachOperationGreaterThan
         };
 
         public static readonly List<string> SearchFilterLogicalOptions = new List<string>
         {
-            "&",
-            "|"
+            SeachLogicAnd,
+            SeachLogicOr
         };
 
         

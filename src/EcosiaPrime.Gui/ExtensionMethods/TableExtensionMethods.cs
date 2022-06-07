@@ -15,7 +15,7 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             {
                 string[] row = {
                 client.Id, client.FirstName, client.LastName, client.Email, client.Password,
-                client.Address.Country, client.Address.State, client.Address.PostCode, client.Address.City, client.Address.Street, client.Address.HouseNumber,
+                client.Address.Country, client.Address.State, client.Address.PostCode.ToString(), client.Address.City, client.Address.Street, client.Address.HouseNumber.ToString(),
                 client.Subscription.StartDate, client.Subscription.EndDate, client.Subscription.PaymentMethod, client.Subscription.SubscriptionType
                 };
                 return row;

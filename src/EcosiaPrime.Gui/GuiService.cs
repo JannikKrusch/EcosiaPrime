@@ -3,6 +3,7 @@ using EcosiaPrime.Contracts.Models;
 using EcosiaPrime.Gui.ExtensionMethods;
 using EcosiaPrime.MongoDB;
 using MongoDB.Driver;
+using System.Globalization;
 
 namespace EcosiaPrime.Gui
 {
@@ -73,10 +74,10 @@ namespace EcosiaPrime.Gui
             client.Address = new Address();
             client.Address.Country = country;
             client.Address.State = state;
-            client.Address.PostCode = postCode;
+            client.Address.PostCode = Int32.Parse(postCode);
             client.Address.City = city;
             client.Address.Street = street;
-            client.Address.HouseNumber = houseNumber;
+            client.Address.HouseNumber = Int32.Parse(houseNumber);
 
             client.Subscription = new Subscription();
             client.Subscription.StartDate = startDate;
@@ -140,10 +141,10 @@ namespace EcosiaPrime.Gui
                 fields.Add(clientDB.Password);
                 fields.Add(clientDB.Address.Country);
                 fields.Add(clientDB.Address.State);
-                fields.Add(clientDB.Address.PostCode);
+                fields.Add(clientDB.Address.PostCode.ToString());
                 fields.Add(clientDB.Address.City);
                 fields.Add(clientDB.Address.Street);
-                fields.Add(clientDB.Address.HouseNumber);
+                fields.Add(clientDB.Address.HouseNumber.ToString());
                 fields.Add(clientDB.Subscription.StartDate);
                 fields.Add(clientDB.Subscription.EndDate);
                 fields.Add(clientDB.Subscription.PaymentMethod);
@@ -184,10 +185,10 @@ namespace EcosiaPrime.Gui
                 client.Address = new Address();
                 client.Address.Country = country;
                 client.Address.State = state;
-                client.Address.PostCode = postCode;
+                client.Address.PostCode = Int32.Parse(postCode);
                 client.Address.City = city;
                 client.Address.Street = street;
-                client.Address.HouseNumber = houseNumber;
+                client.Address.HouseNumber = Int32.Parse(houseNumber);
 
                 client.Subscription = new Subscription();
                 client.Subscription.StartDate = startDate;
@@ -614,12 +615,12 @@ namespace EcosiaPrime.Gui
                 {
                     switch (filter[1])
                     {
-                        case "=":
+                        case SearchFunctionConstants.SeachOperationEquals:
                             if (finalFilter == null)
                             {
                                 finalFilter = Builders<T>.Filter.Eq(filter[0], filter[2]);
                             }
-                            else if (lastLogicOption == "&")
+                            else if (lastLogicOption == SearchFunctionConstants.SeachLogicAnd)
                             {
                                 finalFilter &= Builders<T>.Filter.Eq(filter[0], filter[2]);
                             }
@@ -629,12 +630,12 @@ namespace EcosiaPrime.Gui
                             }
                             break;
 
-                        case "!=":
+                        case SearchFunctionConstants.SeachOperationNotEquals:
                             if (finalFilter == null)
                             {
                                 finalFilter = Builders<T>.Filter.Ne(filter[0], filter[2]);
                             }
-                            else if (lastLogicOption == "&")
+                            else if (lastLogicOption == SearchFunctionConstants.SeachLogicAnd)
                             {
                                 finalFilter &= Builders<T>.Filter.Ne(filter[0], filter[2]);
                             }
@@ -644,12 +645,12 @@ namespace EcosiaPrime.Gui
                             }
                             break;
 
-                        case "<":
+                        case SearchFunctionConstants.SeachOperationLess:
                             if (finalFilter == null)
                             {
                                 finalFilter = Builders<T>.Filter.Lt(filter[0], filter[2]);
                             }
-                            else if (lastLogicOption == "&")
+                            else if (lastLogicOption == SearchFunctionConstants.SeachLogicAnd)
                             {
                                 finalFilter &= Builders<T>.Filter.Lt(filter[0], filter[2]);
                             }
@@ -659,12 +660,12 @@ namespace EcosiaPrime.Gui
                             }
                             break;
 
-                        case "<=":
+                        case SearchFunctionConstants.SeachOperationLessThan:
                             if (finalFilter == null)
                             {
                                 finalFilter = Builders<T>.Filter.Lte(filter[0], filter[2]);
                             }
-                            else if (lastLogicOption == "&")
+                            else if (lastLogicOption == SearchFunctionConstants.SeachLogicAnd)
                             {
                                 finalFilter &= Builders<T>.Filter.Lte(filter[0], filter[2]);
                             }
@@ -674,12 +675,12 @@ namespace EcosiaPrime.Gui
                             }
                             break;
 
-                        case ">":
+                        case SearchFunctionConstants.SeachOperationGreater:
                             if (finalFilter == null)
                             {
                                 finalFilter = Builders<T>.Filter.Gt(filter[0], filter[2]);
                             }
-                            else if (lastLogicOption == "&")
+                            else if (lastLogicOption == SearchFunctionConstants.SeachLogicAnd)
                             {
                                 finalFilter &= Builders<T>.Filter.Gt(filter[0], filter[2]);
                             }
@@ -689,12 +690,12 @@ namespace EcosiaPrime.Gui
                             }
                             break;
 
-                        case ">=":
+                        case SearchFunctionConstants.SeachOperationGreaterThan:
                             if (finalFilter == null)
                             {
                                 finalFilter = Builders<T>.Filter.Gte(filter[0], filter[2]);
                             }
-                            else if (lastLogicOption == "&")
+                            else if (lastLogicOption == SearchFunctionConstants.SeachLogicAnd)
                             {
                                 finalFilter &= Builders<T>.Filter.Gte(filter[0], filter[2]);
                             }
@@ -708,107 +709,108 @@ namespace EcosiaPrime.Gui
                 }//Es gibt mehrere Filterkriterien
                 else if (filter.Count == 4)
                 {
+                    lastLogicOption = filter[3];
                     switch (filter[1])
                     {
-                        case "=":
+                        case SearchFunctionConstants.SeachOperationEquals:
                             if (finalFilter == null)
                             {
                                 finalFilter = Builders<T>.Filter.Eq(filter[0], filter[2]);
                             }
-                            else if (filter[3] == "&")
+                            else if (filter[3] == SearchFunctionConstants.SeachLogicAnd)
                             {
                                 finalFilter &= Builders<T>.Filter.Eq(filter[0], filter[2]);
-                                lastLogicOption = "&";
+                                lastLogicOption = SearchFunctionConstants.SeachLogicAnd;
                             }
                             else
                             {
                                 finalFilter |= Builders<T>.Filter.Eq(filter[0], filter[2]);
-                                lastLogicOption = "|";
+                                lastLogicOption = SearchFunctionConstants.SeachLogicOr;
                             }
                             break;
 
-                        case "!=":
+                        case SearchFunctionConstants.SeachOperationNotEquals:
                             if (finalFilter == null)
                             {
                                 finalFilter = Builders<T>.Filter.Ne(filter[0], filter[2]);
                             }
-                            else if (filter[3] == "&")
+                            else if (filter[3] == SearchFunctionConstants.SeachLogicAnd)
                             {
                                 finalFilter &= Builders<T>.Filter.Ne(filter[0], filter[2]);
-                                lastLogicOption = "&";
+                                lastLogicOption = SearchFunctionConstants.SeachLogicAnd;
                             }
                             else
                             {
                                 finalFilter |= Builders<T>.Filter.Ne(filter[0], filter[2]);
-                                lastLogicOption = "|";
+                                lastLogicOption = SearchFunctionConstants.SeachLogicOr;
                             }
                             break;
 
-                        case "<":
+                        case SearchFunctionConstants.SeachOperationLess:
                             if (finalFilter == null)
                             {
                                 finalFilter = Builders<T>.Filter.Lt(filter[0], filter[2]);
                             }
-                            else if (filter[3] == "&")
+                            else if (filter[3] == SearchFunctionConstants.SeachLogicAnd)
                             {
                                 finalFilter &= Builders<T>.Filter.Lt(filter[0], filter[2]);
-                                lastLogicOption = "&";
+                                lastLogicOption = SearchFunctionConstants.SeachLogicAnd;
                             }
                             else
                             {
                                 finalFilter |= Builders<T>.Filter.Lt(filter[0], filter[2]);
-                                lastLogicOption = "|";
+                                lastLogicOption = SearchFunctionConstants.SeachLogicOr;
                             }
                             break;
 
-                        case "<=":
+                        case SearchFunctionConstants.SeachOperationLessThan:
                             if (finalFilter == null)
                             {
                                 finalFilter = Builders<T>.Filter.Lte(filter[0], filter[2]);
                             }
-                            else if (filter[3] == "&")
+                            else if (filter[3] == SearchFunctionConstants.SeachLogicAnd)
                             {
                                 finalFilter &= Builders<T>.Filter.Lte(filter[0], filter[2]);
-                                lastLogicOption = "&";
+                                lastLogicOption = SearchFunctionConstants.SeachLogicAnd;
                             }
                             else
                             {
                                 finalFilter |= Builders<T>.Filter.Lte(filter[0], filter[2]);
-                                lastLogicOption = "|";
+                                lastLogicOption = SearchFunctionConstants.SeachLogicOr;
                             }
                             break;
 
-                        case ">":
+                        case SearchFunctionConstants.SeachOperationGreater:
                             if (finalFilter == null)
                             {
                                 finalFilter = Builders<T>.Filter.Gt(filter[0], filter[2]);
                             }
-                            else if (filter[3] == "&")
+                            else if (filter[3] == SearchFunctionConstants.SeachLogicAnd)
                             {
                                 finalFilter &= Builders<T>.Filter.Gt(filter[0], filter[2]);
-                                lastLogicOption = "&";
+                                lastLogicOption = SearchFunctionConstants.SeachLogicAnd;
                             }
                             else
                             {
                                 finalFilter |= Builders<T>.Filter.Gt(filter[0], filter[2]);
-                                lastLogicOption = "|";
+                                lastLogicOption = SearchFunctionConstants.SeachLogicOr;
                             }
                             break;
 
-                        case ">=":
+                        case SearchFunctionConstants.SeachOperationGreaterThan:
                             if (finalFilter == null)
                             {
                                 finalFilter = Builders<T>.Filter.Gte(filter[0], filter[2]);
                             }
-                            else if (filter[3] == "&")
+                            else if (filter[3] == SearchFunctionConstants.SeachLogicAnd)
                             {
                                 finalFilter &= Builders<T>.Filter.Gte(filter[0], filter[2]);
-                                lastLogicOption = "&";
+                                lastLogicOption = SearchFunctionConstants.SeachLogicAnd;
                             }
                             else
                             {
                                 finalFilter |= Builders<T>.Filter.Gte(filter[0], filter[2]);
-                                lastLogicOption = "|";
+                                lastLogicOption = SearchFunctionConstants.SeachLogicOr;
                             }
                             break;
                     }

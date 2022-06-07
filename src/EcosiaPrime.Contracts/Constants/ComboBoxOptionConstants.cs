@@ -7,7 +7,7 @@
         public const string Delete = "Löschen";
         public const string Show = "Anzeigen";
         public const string Search = "Suchen";
-        public const string AdvancedSearch = "Fortg. Suche";
+        public const string AdvancedSearch = "Fortg. Suchen";
 
         public static readonly List<string> OptionConstants = new List<string>
         {
