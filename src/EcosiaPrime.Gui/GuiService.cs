@@ -3,7 +3,6 @@ using EcosiaPrime.Contracts.Models;
 using EcosiaPrime.Gui.ExtensionMethods;
 using EcosiaPrime.MongoDB;
 using MongoDB.Driver;
-using System.Globalization;
 
 namespace EcosiaPrime.Gui
 {
@@ -499,6 +498,11 @@ namespace EcosiaPrime.Gui
             return foundList;
         }
 
+        /// <summary>
+        /// Es wird nach Einträgen gesucht, die dem Suchkriterium entsprechen und gibt eine Liste zurück
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<Client>> AdvancedSearchFunctionAsync(string searchString)
         {
             var filterList = CreateFilterListForAdvancedSearch(searchString);
@@ -511,6 +515,11 @@ namespace EcosiaPrime.Gui
             return new List<Client>();
         }
 
+        /// <summary>
+        /// Schaut, ob die Syntax eingehalten wurde, sortiert die Einzelnen Filterteile in separaten Listen, gibt List von einer Liste zurück
+        /// </summary>
+        /// <param name="filterString"></param>
+        /// <returns></returns>
         public List<List<string>> CreateFilterListForAdvancedSearch(string filterString)
         {
             var filterSyntax = new List<List<string>>();
@@ -604,13 +613,18 @@ namespace EcosiaPrime.Gui
             return filters;
         }
 
+        /// <summary>
+        /// Erstellt einen Filter für die MongoDB anhand der bereitgestellten Liste
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="filterList"></param>
+        /// <returns></returns>
         public FilterDefinition<T> CreateFilter<T>(List<List<string>> filterList)
         {
             FilterDefinition<T> finalFilter = null;
             var lastLogicOption = "";
             foreach (var filter in filterList)
             {
-                //Es gibt nur ein Filterkriterium
                 if (filter.Count == 3)
                 {
                     switch (filter[1])
@@ -706,7 +720,7 @@ namespace EcosiaPrime.Gui
 
                             break;
                     }
-                }//Es gibt mehrere Filterkriterien
+                }
                 else if (filter.Count == 4)
                 {
                     lastLogicOption = filter[3];
