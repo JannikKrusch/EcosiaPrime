@@ -37,7 +37,6 @@ namespace EcosiaPrime.Gui
             var text = dropdownMenuPayment.Text;
         }
 
-
         /// <summary>
         /// Bearbeitet den Knopfdruck
         /// </summary>
@@ -50,10 +49,10 @@ namespace EcosiaPrime.Gui
                 var fields = await _guiService.CreateClientAsync(
                     idTextfield.Text.Trim(), firstNameTextfield.Text.Trim(), lastNameTextfield.Text.Trim(), emailTextfield.Text.Trim(),
                     passwordTextfield.Text.Trim(), countryTextfield.Text.Trim(), stateTextfield.Text.Trim(), postcodeTextfield.Text.Trim(), cityTextfield.Text.Trim(), streetNameTextfield.Text.Trim(),
-                    houseNumberTextfield.Text.Trim(), startDatePicker.Text, endDatePicker.Text, dropdownMenuPayment.Text, dropdownMenuSubscription.Text);
+                    houseNumberTextfield.Text.Trim(), DateTime.Parse(startDatePicker.Text).ToString("dd.MM.yyyy"), DateTime.Parse(endDatePicker.Text).ToString("dd.MM.yyyy"), dropdownMenuPayment.Text, dropdownMenuSubscription.Text);
 
                 responseTextField.Lines = fields.ToArray();
-                if(fields.ToArray()[0] == ResponseMessagesConstants.AddClientToDBSuccessful)
+                if (fields.ToArray()[0] == ResponseMessagesConstants.AddClientToDBSuccessful)
                 {
                     ClearAllControls();
                 }
@@ -63,7 +62,7 @@ namespace EcosiaPrime.Gui
                 var fields = await _guiService.UpdateClientAsync(
                     idTextfield.Text.Trim(), firstNameTextfield.Text.Trim(), lastNameTextfield.Text.Trim(), emailTextfield.Text.Trim(),
                     passwordTextfield.Text.Trim(), countryTextfield.Text.Trim(), stateTextfield.Text.Trim(), postcodeTextfield.Text.Trim(), cityTextfield.Text.Trim(), streetNameTextfield.Text.Trim(),
-                    houseNumberTextfield.Text.Trim(), startDatePicker.Text, endDatePicker.Text, dropdownMenuPayment.Text, dropdownMenuSubscription.Text);
+                    houseNumberTextfield.Text.Trim(), DateTime.Parse(startDatePicker.Text).ToString("dd.MM.yyyy"), DateTime.Parse(endDatePicker.Text).ToString("dd.MM.yyyy"), dropdownMenuPayment.Text, dropdownMenuSubscription.Text);
 
                 var fieldList = fields.ToList();
 
@@ -129,6 +128,12 @@ namespace EcosiaPrime.Gui
                 dataGrid.Items.Clear();
                 dataGrid.FillListView(clients);
             }
+            else if (dropdownMenuOption.Text == ComboBoxOptionConstants.AdvancedSearch)
+            {
+                var clients = await _guiService.AdvancedSearchFunctionAsync(advancedSearchfield.Text.Trim());
+                dataGrid.Items.Clear();
+                dataGrid.FillListView(clients);
+            }
         }
 
         /// <summary>
@@ -161,11 +166,16 @@ namespace EcosiaPrime.Gui
                     ChangeVisibilityOfFields(ComboBoxOptionConstants.Search);
                     break;
 
+                case ComboBoxOptionConstants.AdvancedSearch:
+                    ChangeVisibilityOfFields(ComboBoxOptionConstants.AdvancedSearch);
+                    break;
+
                 default:
                     ChangeVisibilityOfFields(ComboBoxOptionConstants.Create);
                     break;
             }
         }
+
         /// <summary>
         /// Setzt die Visible Eigenschaft der GUI-Elemente
         /// </summary>
@@ -206,7 +216,6 @@ namespace EcosiaPrime.Gui
             });
         }
 
-
         /// <summary>
         /// Gibt Liste mit Namen der Elemente zurück, die sichtbar sein dürfen
         /// </summary>
@@ -230,6 +239,9 @@ namespace EcosiaPrime.Gui
 
                 case ComboBoxOptionConstants.Search:
                     return VisibleTextFieldListConstants.Search;
+
+                case ComboBoxOptionConstants.AdvancedSearch:
+                    return VisibleTextFieldListConstants.AdvancedSearch;
 
                 default:
                     return VisibleTextFieldListConstants.Create;

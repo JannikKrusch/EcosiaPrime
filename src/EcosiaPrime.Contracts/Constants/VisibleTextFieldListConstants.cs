@@ -41,5 +41,12 @@
         {
             "dropdownMenuFilter"
         };
+
+        public static readonly List<string> AdvancedSearch = new List<string>
+        {
+            "advancedSearchfield",
+            "dropdownMenuOption",
+            "responseTextField"
+        };
     }
 }

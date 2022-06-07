@@ -2,6 +2,7 @@
 using EcosiaPrime.Contracts.Models;
 using EcosiaPrime.Gui.ExtensionMethods;
 using EcosiaPrime.MongoDB;
+using MongoDB.Driver;
 
 namespace EcosiaPrime.Gui
 {
@@ -326,6 +327,7 @@ namespace EcosiaPrime.Gui
             var searchForString = "";
             var searchStringPrimary = "";
             var searchStringSecondary = "";
+
             switch (filter)
             {
                 case SearchFunctionConstants.SearchForID:
@@ -494,6 +496,325 @@ namespace EcosiaPrime.Gui
             }
 
             return foundList;
+        }
+
+        public async Task<IEnumerable<Client>> AdvancedSearchFunctionAsync(string searchString)
+        {
+            var filterList = CreateFilterListForAdvancedSearch(searchString);
+            var filter = CreateFilter<Client>(filterList);
+            if (filter != null)
+            {
+                var result = await _mongoDBService.MongoDBRepository.LoadRecordsWithFilterAsync<Client>(_mongoDBConfiguration.CollectionName, filter).ConfigureAwait(false);
+                return result;
+            }
+            return new List<Client>();
+        }
+
+        public List<List<string>> CreateFilterListForAdvancedSearch(string filterString)
+        {
+            var filterSyntax = new List<List<string>>();
+            filterSyntax.Add(SearchFunctionConstants.SearchFilterAttributeOptions);
+            filterSyntax.Add(SearchFunctionConstants.SearchFilterOperationOptions);
+            filterSyntax.Add(SearchFunctionConstants.SearchFilterLogicalOptions);
+
+            var splitFilter = filterString.Split(" ");
+
+            var index = 0;
+            var counter = 0;
+            var sectionFinished = false;
+            var attribute = "";
+            var filters = new List<List<string>>();
+            var filter = new List<string>();
+
+            for (int i = 0; i < splitFilter.Length; i++)
+            {
+                var filterItem = splitFilter[i];
+                if (attribute == "")
+                {
+                    attribute = filterItem;
+                }
+
+                if (counter == 2)
+                {
+                    if (SearchFunctionConstants.SearchFilterValueMustBeInteger.Any(item => item == attribute))
+                    {
+                        if (Int32.TryParse(filterItem, out int r))
+                        {
+                            filter.Add(filterItem);
+                            counter++;
+                            index--;
+                        }
+                        else
+                        {
+                            return new List<List<string>> { };
+                        }
+                    }
+                    else if (SearchFunctionConstants.SearchFilterValueMustBeString.Any(item => item == attribute))
+                    {
+                        if (!Int32.TryParse(filterItem, out int r) || attribute == SearchFunctionConstants.SearchFilterValueMustBeString[0])
+                        {
+                            filter.Add(filterItem);
+                            counter++;
+                            index--;
+                        }
+                        else
+                        {
+                            return new List<List<string>> { };
+                        }
+                    }
+                }
+                else if (filterSyntax[index].Any(option => option == filterItem))
+                {
+                    if (index == 0)
+                    {
+                        attribute = filterItem;
+                    }
+                    if (index == 2)
+                    {
+                        sectionFinished = true;
+                    }
+                    filter.Add(filterItem);
+                    counter++;
+                }
+
+                if (i == splitFilter.Length - 1)
+                {
+                    if (counter == 3)
+                    {
+                        filters.Add(filter);
+                        filter = new List<string>();
+                    }
+                }
+                else if (counter == 4)
+                {
+                    filters.Add(filter);
+                    filter = new List<string>();
+                    counter = 0;
+                    index = 0;
+                }
+
+                if (!sectionFinished)
+                {
+                    index++;
+                }
+                sectionFinished = false;
+            }
+
+            return filters;
+        }
+
+        public FilterDefinition<T> CreateFilter<T>(List<List<string>> filterList)
+        {
+            FilterDefinition<T> finalFilter = null;
+            var lastLogicOption = "";
+            foreach (var filter in filterList)
+            {
+                //Es gibt nur ein Filterkriterium
+                if (filter.Count == 3)
+                {
+                    switch (filter[1])
+                    {
+                        case "=":
+                            if (finalFilter == null)
+                            {
+                                finalFilter = Builders<T>.Filter.Eq(filter[0], filter[2]);
+                            }
+                            else if (lastLogicOption == "&")
+                            {
+                                finalFilter &= Builders<T>.Filter.Eq(filter[0], filter[2]);
+                            }
+                            else
+                            {
+                                finalFilter |= Builders<T>.Filter.Eq(filter[0], filter[2]);
+                            }
+                            break;
+
+                        case "!=":
+                            if (finalFilter == null)
+                            {
+                                finalFilter = Builders<T>.Filter.Ne(filter[0], filter[2]);
+                            }
+                            else if (lastLogicOption == "&")
+                            {
+                                finalFilter &= Builders<T>.Filter.Ne(filter[0], filter[2]);
+                            }
+                            else
+                            {
+                                finalFilter |= Builders<T>.Filter.Ne(filter[0], filter[2]);
+                            }
+                            break;
+
+                        case "<":
+                            if (finalFilter == null)
+                            {
+                                finalFilter = Builders<T>.Filter.Lt(filter[0], filter[2]);
+                            }
+                            else if (lastLogicOption == "&")
+                            {
+                                finalFilter &= Builders<T>.Filter.Lt(filter[0], filter[2]);
+                            }
+                            else
+                            {
+                                finalFilter |= Builders<T>.Filter.Lt(filter[0], filter[2]);
+                            }
+                            break;
+
+                        case "<=":
+                            if (finalFilter == null)
+                            {
+                                finalFilter = Builders<T>.Filter.Lte(filter[0], filter[2]);
+                            }
+                            else if (lastLogicOption == "&")
+                            {
+                                finalFilter &= Builders<T>.Filter.Lte(filter[0], filter[2]);
+                            }
+                            else
+                            {
+                                finalFilter |= Builders<T>.Filter.Lte(filter[0], filter[2]);
+                            }
+                            break;
+
+                        case ">":
+                            if (finalFilter == null)
+                            {
+                                finalFilter = Builders<T>.Filter.Gt(filter[0], filter[2]);
+                            }
+                            else if (lastLogicOption == "&")
+                            {
+                                finalFilter &= Builders<T>.Filter.Gt(filter[0], filter[2]);
+                            }
+                            else
+                            {
+                                finalFilter |= Builders<T>.Filter.Gt(filter[0], filter[2]);
+                            }
+                            break;
+
+                        case ">=":
+                            if (finalFilter == null)
+                            {
+                                finalFilter = Builders<T>.Filter.Gte(filter[0], filter[2]);
+                            }
+                            else if (lastLogicOption == "&")
+                            {
+                                finalFilter &= Builders<T>.Filter.Gte(filter[0], filter[2]);
+                            }
+                            else
+                            {
+                                finalFilter |= Builders<T>.Filter.Gte(filter[0], filter[2]);
+                            }
+
+                            break;
+                    }
+                }//Es gibt mehrere Filterkriterien
+                else if (filter.Count == 4)
+                {
+                    switch (filter[1])
+                    {
+                        case "=":
+                            if (finalFilter == null)
+                            {
+                                finalFilter = Builders<T>.Filter.Eq(filter[0], filter[2]);
+                            }
+                            else if (filter[3] == "&")
+                            {
+                                finalFilter &= Builders<T>.Filter.Eq(filter[0], filter[2]);
+                                lastLogicOption = "&";
+                            }
+                            else
+                            {
+                                finalFilter |= Builders<T>.Filter.Eq(filter[0], filter[2]);
+                                lastLogicOption = "|";
+                            }
+                            break;
+
+                        case "!=":
+                            if (finalFilter == null)
+                            {
+                                finalFilter = Builders<T>.Filter.Ne(filter[0], filter[2]);
+                            }
+                            else if (filter[3] == "&")
+                            {
+                                finalFilter &= Builders<T>.Filter.Ne(filter[0], filter[2]);
+                                lastLogicOption = "&";
+                            }
+                            else
+                            {
+                                finalFilter |= Builders<T>.Filter.Ne(filter[0], filter[2]);
+                                lastLogicOption = "|";
+                            }
+                            break;
+
+                        case "<":
+                            if (finalFilter == null)
+                            {
+                                finalFilter = Builders<T>.Filter.Lt(filter[0], filter[2]);
+                            }
+                            else if (filter[3] == "&")
+                            {
+                                finalFilter &= Builders<T>.Filter.Lt(filter[0], filter[2]);
+                                lastLogicOption = "&";
+                            }
+                            else
+                            {
+                                finalFilter |= Builders<T>.Filter.Lt(filter[0], filter[2]);
+                                lastLogicOption = "|";
+                            }
+                            break;
+
+                        case "<=":
+                            if (finalFilter == null)
+                            {
+                                finalFilter = Builders<T>.Filter.Lte(filter[0], filter[2]);
+                            }
+                            else if (filter[3] == "&")
+                            {
+                                finalFilter &= Builders<T>.Filter.Lte(filter[0], filter[2]);
+                                lastLogicOption = "&";
+                            }
+                            else
+                            {
+                                finalFilter |= Builders<T>.Filter.Lte(filter[0], filter[2]);
+                                lastLogicOption = "|";
+                            }
+                            break;
+
+                        case ">":
+                            if (finalFilter == null)
+                            {
+                                finalFilter = Builders<T>.Filter.Gt(filter[0], filter[2]);
+                            }
+                            else if (filter[3] == "&")
+                            {
+                                finalFilter &= Builders<T>.Filter.Gt(filter[0], filter[2]);
+                                lastLogicOption = "&";
+                            }
+                            else
+                            {
+                                finalFilter |= Builders<T>.Filter.Gt(filter[0], filter[2]);
+                                lastLogicOption = "|";
+                            }
+                            break;
+
+                        case ">=":
+                            if (finalFilter == null)
+                            {
+                                finalFilter = Builders<T>.Filter.Gte(filter[0], filter[2]);
+                            }
+                            else if (filter[3] == "&")
+                            {
+                                finalFilter &= Builders<T>.Filter.Gte(filter[0], filter[2]);
+                                lastLogicOption = "&";
+                            }
+                            else
+                            {
+                                finalFilter |= Builders<T>.Filter.Gte(filter[0], filter[2]);
+                                lastLogicOption = "|";
+                            }
+                            break;
+                    }
+                }
+            }
+            return finalFilter;
         }
     }
 }

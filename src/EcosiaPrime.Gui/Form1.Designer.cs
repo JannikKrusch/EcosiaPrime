@@ -69,6 +69,7 @@ namespace EcosiaPrime.Gui
             this.endDatePicker = new System.Windows.Forms.DateTimePicker();
             this.responseTextField = new System.Windows.Forms.TextBox();
             this.logo = new System.Windows.Forms.PictureBox();
+            this.advancedSearchfield = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.logo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -415,12 +416,22 @@ namespace EcosiaPrime.Gui
             this.logo.TabIndex = 27;
             this.logo.TabStop = false;
             // 
+            // advancedSearchfield
+            // 
+            this.advancedSearchfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.advancedSearchfield.Location = new System.Drawing.Point(567, 545);
+            this.advancedSearchfield.Name = "advancedSearchfield";
+            this.advancedSearchfield.PlaceholderText = "Filter";
+            this.advancedSearchfield.Size = new System.Drawing.Size(796, 61);
+            this.advancedSearchfield.TabIndex = 28;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(100)))), ((int)(((byte)(102)))));
             this.ClientSize = new System.Drawing.Size(1868, 954);
+            this.Controls.Add(this.advancedSearchfield);
             this.Controls.Add(this.logo);
             this.Controls.Add(this.responseTextField);
             this.Controls.Add(this.endDatePicker);
@@ -491,5 +502,6 @@ namespace EcosiaPrime.Gui
         private DateTimePicker endDatePicker;
         private TextBox responseTextField;
         private PictureBox logo;
+        private TextBox advancedSearchfield;
     }
 }
