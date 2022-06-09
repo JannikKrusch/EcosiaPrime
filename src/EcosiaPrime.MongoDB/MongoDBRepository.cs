@@ -69,13 +69,11 @@ namespace EcosiaPrime.MongoDB
         /// <returns></returns>
         public async Task<IEnumerable<T>> LoadRecordsWithFilterAsync<T>(string collectionName, FilterDefinition<T> filter)
         {
-            
             var collection = _mongoDatabase.GetCollection<T>(collectionName);
             var response = await collection.FindAsync(filter).ConfigureAwait(false);
             var result = await response.ToListAsync().ConfigureAwait(false);
             return result;
         }
-
 
         /// <summary>
         /// Holt alle Einträge aus der Datenbank

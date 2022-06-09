@@ -12,9 +12,7 @@ namespace EcosiaPrime.Gui.ExtensionMethods
         /// <returns></returns>
         public static DateTime ParseString(this string dateString)
         {
-            var couldParse = DateTime.TryParse(dateString, out DateTime parsedDate);
-
-            if (couldParse)
+            if (DateTime.TryParse(dateString, out DateTime parsedDate))
             {
                 return parsedDate;
             }

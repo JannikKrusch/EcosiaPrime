@@ -36,6 +36,8 @@
         public const string CityCantContainNumber = "Stadt kann keine Zahl behinhalten";
         public const string StreetCantContainNumber = "Straße kann keine Zahl behinhalten";
 
+        public const string AdvancedSearchIncorrectSyntax = "Syntax ist falsch. Bitte Eingabe überprüfen!";
+
 
     }
 }

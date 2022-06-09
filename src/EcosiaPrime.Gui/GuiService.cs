@@ -403,7 +403,7 @@ namespace EcosiaPrime.Gui
                     break;
 
                 case SearchFunctionConstants.SearchForTimeSpan:
-                    if (startDate != "" && endDate != "" && startDate.ParseString() != DateTime.Today && endDate.ParseString() != DateTime.Today)
+                    if (startDate != "" && endDate != "")
                     {
                         searchForString = SearchFunctionConstants.SearchForTimeSpan;
                         searchStringPrimary = startDate;
@@ -483,7 +483,7 @@ namespace EcosiaPrime.Gui
                     break;
 
                 case SearchFunctionConstants.SearchForTimeSpan:
-                    foundList = people.Where(x => DateTime.Parse(x.Subscription.StartDate) >= searchStringPrimary.ParseString() && DateTime.Parse(x.Subscription.EndDate) <= searchStringSecondary.ParseString());
+                    foundList = people.Where(x => x.Subscription.StartDate.ParseString() >= searchStringPrimary.ParseString() && x.Subscription.EndDate.ParseString() <= searchStringSecondary.ParseString());
                     break;
 
                 case SearchFunctionConstants.SearchForPaymentOption:
@@ -512,7 +512,7 @@ namespace EcosiaPrime.Gui
                 var result = await _mongoDBService.MongoDBRepository.LoadRecordsWithFilterAsync<Client>(_mongoDBConfiguration.CollectionName, filter).ConfigureAwait(false);
                 return result;
             }
-            return new List<Client>();
+            return null;
         }
 
         /// <summary>
@@ -585,10 +585,21 @@ namespace EcosiaPrime.Gui
                     }
                     filter.Add(filterItem);
                     counter++;
+                }//neu hinzugefügt
+                else
+                {
+                    return new List<List<string>> { };
                 }
 
                 if (i == splitFilter.Length - 1)
                 {
+                    foreach (var filterSyn in filterSyntax)
+                    {
+                        if (filterSyn.Any(option => option == filterItem))
+                        {
+                            return new List<List<string>> { };
+                        }
+                    }
                     if (counter == 3)
                     {
                         filters.Add(filter);
@@ -625,7 +636,7 @@ namespace EcosiaPrime.Gui
             var lastLogicOption = "";
             foreach (var filter in filterList)
             {
-                if (filter.Count == 3)
+                if (filter.Count == 3 || filter.Count == 4)
                 {
                     switch (filter[1])
                     {
@@ -659,7 +670,7 @@ namespace EcosiaPrime.Gui
                             }
                             break;
 
-                        case SearchFunctionConstants.SeachOperationLess:
+                        case SearchFunctionConstants.SeachOperationLessThan:
                             if (finalFilter == null)
                             {
                                 finalFilter = Builders<T>.Filter.Lt(filter[0], filter[2]);
@@ -674,7 +685,7 @@ namespace EcosiaPrime.Gui
                             }
                             break;
 
-                        case SearchFunctionConstants.SeachOperationLessThan:
+                        case SearchFunctionConstants.SeachOperationLessThanOrEquals:
                             if (finalFilter == null)
                             {
                                 finalFilter = Builders<T>.Filter.Lte(filter[0], filter[2]);
@@ -689,7 +700,7 @@ namespace EcosiaPrime.Gui
                             }
                             break;
 
-                        case SearchFunctionConstants.SeachOperationGreater:
+                        case SearchFunctionConstants.SeachOperationGreaterThan:
                             if (finalFilter == null)
                             {
                                 finalFilter = Builders<T>.Filter.Gt(filter[0], filter[2]);
@@ -704,7 +715,7 @@ namespace EcosiaPrime.Gui
                             }
                             break;
 
-                        case SearchFunctionConstants.SeachOperationGreaterThan:
+                        case SearchFunctionConstants.SeachOperationGreaterThanOrEquals:
                             if (finalFilter == null)
                             {
                                 finalFilter = Builders<T>.Filter.Gte(filter[0], filter[2]);
@@ -720,114 +731,8 @@ namespace EcosiaPrime.Gui
 
                             break;
                     }
-                }
-                else if (filter.Count == 4)
-                {
-                    lastLogicOption = filter[3];
-                    switch (filter[1])
-                    {
-                        case SearchFunctionConstants.SeachOperationEquals:
-                            if (finalFilter == null)
-                            {
-                                finalFilter = Builders<T>.Filter.Eq(filter[0], filter[2]);
-                            }
-                            else if (filter[3] == SearchFunctionConstants.SeachLogicAnd)
-                            {
-                                finalFilter &= Builders<T>.Filter.Eq(filter[0], filter[2]);
-                                lastLogicOption = SearchFunctionConstants.SeachLogicAnd;
-                            }
-                            else
-                            {
-                                finalFilter |= Builders<T>.Filter.Eq(filter[0], filter[2]);
-                                lastLogicOption = SearchFunctionConstants.SeachLogicOr;
-                            }
-                            break;
 
-                        case SearchFunctionConstants.SeachOperationNotEquals:
-                            if (finalFilter == null)
-                            {
-                                finalFilter = Builders<T>.Filter.Ne(filter[0], filter[2]);
-                            }
-                            else if (filter[3] == SearchFunctionConstants.SeachLogicAnd)
-                            {
-                                finalFilter &= Builders<T>.Filter.Ne(filter[0], filter[2]);
-                                lastLogicOption = SearchFunctionConstants.SeachLogicAnd;
-                            }
-                            else
-                            {
-                                finalFilter |= Builders<T>.Filter.Ne(filter[0], filter[2]);
-                                lastLogicOption = SearchFunctionConstants.SeachLogicOr;
-                            }
-                            break;
-
-                        case SearchFunctionConstants.SeachOperationLess:
-                            if (finalFilter == null)
-                            {
-                                finalFilter = Builders<T>.Filter.Lt(filter[0], filter[2]);
-                            }
-                            else if (filter[3] == SearchFunctionConstants.SeachLogicAnd)
-                            {
-                                finalFilter &= Builders<T>.Filter.Lt(filter[0], filter[2]);
-                                lastLogicOption = SearchFunctionConstants.SeachLogicAnd;
-                            }
-                            else
-                            {
-                                finalFilter |= Builders<T>.Filter.Lt(filter[0], filter[2]);
-                                lastLogicOption = SearchFunctionConstants.SeachLogicOr;
-                            }
-                            break;
-
-                        case SearchFunctionConstants.SeachOperationLessThan:
-                            if (finalFilter == null)
-                            {
-                                finalFilter = Builders<T>.Filter.Lte(filter[0], filter[2]);
-                            }
-                            else if (filter[3] == SearchFunctionConstants.SeachLogicAnd)
-                            {
-                                finalFilter &= Builders<T>.Filter.Lte(filter[0], filter[2]);
-                                lastLogicOption = SearchFunctionConstants.SeachLogicAnd;
-                            }
-                            else
-                            {
-                                finalFilter |= Builders<T>.Filter.Lte(filter[0], filter[2]);
-                                lastLogicOption = SearchFunctionConstants.SeachLogicOr;
-                            }
-                            break;
-
-                        case SearchFunctionConstants.SeachOperationGreater:
-                            if (finalFilter == null)
-                            {
-                                finalFilter = Builders<T>.Filter.Gt(filter[0], filter[2]);
-                            }
-                            else if (filter[3] == SearchFunctionConstants.SeachLogicAnd)
-                            {
-                                finalFilter &= Builders<T>.Filter.Gt(filter[0], filter[2]);
-                                lastLogicOption = SearchFunctionConstants.SeachLogicAnd;
-                            }
-                            else
-                            {
-                                finalFilter |= Builders<T>.Filter.Gt(filter[0], filter[2]);
-                                lastLogicOption = SearchFunctionConstants.SeachLogicOr;
-                            }
-                            break;
-
-                        case SearchFunctionConstants.SeachOperationGreaterThan:
-                            if (finalFilter == null)
-                            {
-                                finalFilter = Builders<T>.Filter.Gte(filter[0], filter[2]);
-                            }
-                            else if (filter[3] == SearchFunctionConstants.SeachLogicAnd)
-                            {
-                                finalFilter &= Builders<T>.Filter.Gte(filter[0], filter[2]);
-                                lastLogicOption = SearchFunctionConstants.SeachLogicAnd;
-                            }
-                            else
-                            {
-                                finalFilter |= Builders<T>.Filter.Gte(filter[0], filter[2]);
-                                lastLogicOption = SearchFunctionConstants.SeachLogicOr;
-                            }
-                            break;
-                    }
+                    lastLogicOption = filter.Count == 4 ? filter[3] : lastLogicOption;
                 }
             }
             return finalFilter;

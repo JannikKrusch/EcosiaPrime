@@ -31,17 +31,15 @@ namespace EcosiaPrime.Contracts.Constants
         public const string SeachAttributePostCode = "Address.PostCode";
         public const string SeachAttributeStreet = "Address.Street";
         public const string SeachAttributeHouseNumber = "Address.HouseNumber";
-        public const string SeachAttributeStartDate = "Subscription.StartDate";
-        public const string SeachAttributeEndDate = "Subscription.EndDate";
         public const string SeachAttributePaymentMethod = "Subscription.PaymentMethod";
         public const string SeachAttributeSubscriptionType = "Subscription.SubscriptionType";
 
         public const string SeachOperationEquals = "=";
         public const string SeachOperationNotEquals = "!=";
-        public const string SeachOperationLess = "<";
-        public const string SeachOperationLessThan = "<=";
-        public const string SeachOperationGreater = ">";
-        public const string SeachOperationGreaterThan = ">=";
+        public const string SeachOperationLessThan = "<";
+        public const string SeachOperationLessThanOrEquals = "<=";
+        public const string SeachOperationGreaterThan = ">";
+        public const string SeachOperationGreaterThanOrEquals = ">=";
 
         public const string SeachLogicAnd = "&";
         public const string SeachLogicOr = "|";
@@ -78,8 +76,6 @@ namespace EcosiaPrime.Contracts.Constants
             SeachAttributeState,
             SeachAttributeCity,
             SeachAttributeStreet,
-            SeachAttributeStartDate,
-            SeachAttributeEndDate,
             SeachAttributePaymentMethod,
             SeachAttributeSubscriptionType
         };
@@ -94,10 +90,10 @@ namespace EcosiaPrime.Contracts.Constants
         {
             SeachOperationEquals,
             SeachOperationNotEquals,
-            SeachOperationLess,
             SeachOperationLessThan,
-            SeachOperationGreater,
-            SeachOperationGreaterThan
+            SeachOperationLessThanOrEquals,
+            SeachOperationGreaterThan,
+            SeachOperationGreaterThanOrEquals
         };
 
         public static readonly List<string> SearchFilterLogicalOptions = new List<string>
@@ -105,7 +101,5 @@ namespace EcosiaPrime.Contracts.Constants
             SeachLogicAnd,
             SeachLogicOr
         };
-
-        
     }
 }
