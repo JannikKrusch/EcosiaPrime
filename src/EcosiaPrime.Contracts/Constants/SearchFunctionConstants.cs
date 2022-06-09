@@ -17,6 +17,7 @@ namespace EcosiaPrime.Contracts.Constants
         public const string SearchForCity = "Stadt";
         public const string SearchForPostCode = "Postleitzahl";
         public const string SearchForStreet = "Straße";
+        public const string SearchForHouseNumber = "Hausnummer";
         public const string SearchForTimeSpan = "Start- & Enddatum";
         public const string SearchForPaymentOption = "Bezahloptionen";
         public const string SearchForSubscriptionOption = "Abonnementoptionen";
@@ -55,6 +56,7 @@ namespace EcosiaPrime.Contracts.Constants
             SearchForCity,
             SearchForPostCode,
             SearchForStreet,
+            SearchForHouseNumber,
             SearchForTimeSpan,
             SearchForPaymentOption,
             SearchForSubscriptionOption

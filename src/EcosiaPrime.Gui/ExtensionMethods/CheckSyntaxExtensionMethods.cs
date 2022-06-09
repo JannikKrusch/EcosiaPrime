@@ -194,14 +194,14 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             string startDate, string endDate, string paymentMethod, string subscriptionType)
         {
             var responseLines = new List<string>();
-            if (CheckIfEmptyExtensionMethods.ArePersonInputFieldsEmpty(id, firstName, lastName, email, password))
+            if (CheckIfEmptyExtensionMethods.ArePersonInputFieldsEmptyOrSpace(id, firstName, lastName, email, password))
             {
-                responseLines.Add(ResponseMessagesConstants.PersonDataInputFieldsAreEmpty);
+                responseLines.Add(ResponseMessagesConstants.PersonDataInputFieldsAreEmptyOrSpace);
             }
 
-            if (CheckIfEmptyExtensionMethods.AreAdressInputFieldsEmpty(country, state, postCode, city, street, houseNumber))
+            if (CheckIfEmptyExtensionMethods.AreAdressInputFieldsEmptyOrSpace(country, state, postCode, city, street, houseNumber))
             {
-                responseLines.Add(ResponseMessagesConstants.AddressDataInputFieldsAreEmpty);
+                responseLines.Add(ResponseMessagesConstants.AddressDataInputFieldsAreEmptyOrSpace);
             }
 
             if (CheckIfEmptyExtensionMethods.ArePaymentSubscriptionInputFieldsEmpty(startDate, endDate))
@@ -262,14 +262,14 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             string startDate, string endDate, string paymentMethod, string subscriptionType)
         {
             var responseLines = new List<string>();
-            if (!CheckIfEmptyExtensionMethods.ArePersonInputFieldsEmptyExceptId(id, firstName, lastName, email, password))
+            if (!CheckIfEmptyExtensionMethods.ArePersonInputFieldsEmptyOrSpaceExceptId(id, firstName, lastName, email, password))
             {
-                responseLines.Add(ResponseMessagesConstants.PersonDataInputFieldsAreEmptyExceptID);
+                responseLines.Add(ResponseMessagesConstants.PersonDataInputFieldsAreEmptyOrSpaceExceptID);
             }
 
-            if (CheckIfEmptyExtensionMethods.AreAdressInputFieldsEmpty(country, state, postCode, city, street, houseNumber))
+            if (CheckIfEmptyExtensionMethods.AreAdressInputFieldsEmptyOrSpace(country, state, postCode, city, street, houseNumber))
             {
-                responseLines.Add(ResponseMessagesConstants.AddressDataInputFieldsAreEmpty);
+                responseLines.Add(ResponseMessagesConstants.AddressDataInputFieldsAreEmptyOrSpace);
             }
 
             if (CheckIfEmptyExtensionMethods.ArePaymentSubscriptionInputFieldsEmpty(startDate, endDate))

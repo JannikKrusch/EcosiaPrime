@@ -11,7 +11,7 @@
         /// <param name="email"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public static bool ArePersonInputFieldsEmpty(this string id, string firstName, string lastName, string email, string password)
+        public static bool ArePersonInputFieldsEmptyOrSpace(this string id, string firstName, string lastName, string email, string password)
         {
             return (id == "" || id.Any(Char.IsWhiteSpace) || firstName == "" || firstName.Any(Char.IsWhiteSpace) || lastName == "" || lastName.Any(Char.IsWhiteSpace) || email == "" || email.Any(Char.IsWhiteSpace) || password == "" || password.Any(Char.IsWhiteSpace));
         }
@@ -25,7 +25,7 @@
         /// <param name="email"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public static bool ArePersonInputFieldsEmptyExceptId(this string id, string firstName, string lastName, string email, string password)
+        public static bool ArePersonInputFieldsEmptyOrSpaceExceptId(this string id, string firstName, string lastName, string email, string password)
         {
             return (id != "" && (firstName == "" || firstName.Any(Char.IsWhiteSpace) || lastName == "" || lastName.Any(Char.IsWhiteSpace) || email == "" || email == "" || email.Any(Char.IsWhiteSpace) || password == "" || password.Any(Char.IsWhiteSpace)));
         }
@@ -40,7 +40,7 @@
         /// <param name="street"></param>
         /// <param name="houseNumber"></param>
         /// <returns></returns>
-        public static bool AreAdressInputFieldsEmpty(this string country, string state, string postCode, string city, string street, string houseNumber)
+        public static bool AreAdressInputFieldsEmptyOrSpace(this string country, string state, string postCode, string city, string street, string houseNumber)
         {
             return (country == "" || country.Any(Char.IsWhiteSpace) || state == "" || state.Any(Char.IsWhiteSpace) || postCode == "" || postCode.Any(Char.IsWhiteSpace) || city == "" || city.Any(Char.IsWhiteSpace) || street == "" || state.Any(Char.IsWhiteSpace) || houseNumber == "" || houseNumber.Any(Char.IsWhiteSpace));
         }

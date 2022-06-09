@@ -135,17 +135,17 @@ namespace EcosiaPrime.Gui
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.AdvancedSearch)
             {
                 var clients = await _guiService.AdvancedSearchFunctionAsync(advancedSearchfield.Text.Trim());
+                dataGrid.Items.Clear();
                 if (clients != null)
                 {
                     responseTextField.Text = String.Empty;
-                    dataGrid.Items.Clear();
+                    
                     dataGrid.FillListView(clients);
                     dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
                     dataGrid.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                 }
                 else
                 {
-                    dataGrid.Items.Clear();
                     responseTextField.Text = ResponseMessagesConstants.AdvancedSearchIncorrectSyntax;
                 }
             }
