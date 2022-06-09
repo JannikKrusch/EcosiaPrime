@@ -585,7 +585,7 @@ namespace EcosiaPrime.Gui
                     }
                     filter.Add(filterItem);
                     counter++;
-                }//neu hinzugefügt
+                }
                 else
                 {
                     return new List<List<string>> { };
@@ -728,7 +728,6 @@ namespace EcosiaPrime.Gui
                             {
                                 finalFilter |= Builders<T>.Filter.Gte(filter[0], filter[2]);
                             }
-
                             break;
                     }
 
