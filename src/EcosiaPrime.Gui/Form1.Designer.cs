@@ -1,4 +1,7 @@
-﻿namespace EcosiaPrime.Gui
+﻿using EcosiaPrime.Contracts.Constants;
+using System;
+
+namespace EcosiaPrime.Gui
 {
     partial class Form1
     {
@@ -28,8 +31,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.idTextfield = new System.Windows.Forms.TextBox();
             this.firstNameTextfield = new System.Windows.Forms.TextBox();
             this.lastNameTextfield = new System.Windows.Forms.TextBox();
@@ -40,15 +42,12 @@
             this.postcodeTextfield = new System.Windows.Forms.TextBox();
             this.cityTextfield = new System.Windows.Forms.TextBox();
             this.streetNameTextfield = new System.Windows.Forms.TextBox();
-            this.streetNumberTextfield = new System.Windows.Forms.TextBox();
-            this.startDateTextfield = new System.Windows.Forms.TextBox();
-            this.endDateTextfield = new System.Windows.Forms.TextBox();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.houseNumberTextfield = new System.Windows.Forms.TextBox();
             this.paymentMethodPanel = new System.Windows.Forms.Label();
             this.dropdownMenuPayment = new System.Windows.Forms.ComboBox();
             this.dropdownMenuSubscription = new System.Windows.Forms.ComboBox();
             this.Enter = new System.Windows.Forms.Button();
-            this.optionComboBox = new System.Windows.Forms.ComboBox();
+            this.dropdownMenuOption = new System.Windows.Forms.ComboBox();
             this.dataGrid = new System.Windows.Forms.ListView();
             this.columnID = new System.Windows.Forms.ColumnHeader();
             this.columnFirstName = new System.Windows.Forms.ColumnHeader();
@@ -60,41 +59,29 @@
             this.columnPostcode = new System.Windows.Forms.ColumnHeader();
             this.columnCity = new System.Windows.Forms.ColumnHeader();
             this.columnStreetName = new System.Windows.Forms.ColumnHeader();
-            this.columnStreetNumber = new System.Windows.Forms.ColumnHeader();
+            this.columnHouseNumber = new System.Windows.Forms.ColumnHeader();
             this.columnStartDate = new System.Windows.Forms.ColumnHeader();
             this.columnEndDate = new System.Windows.Forms.ColumnHeader();
             this.columnPayment = new System.Windows.Forms.ColumnHeader();
             this.columnSubscription = new System.Windows.Forms.ColumnHeader();
-            this.filterComboBox = new System.Windows.Forms.ComboBox();
-            this.responseLabel = new System.Windows.Forms.Label();
-            this.flowLayoutPanel1.SuspendLayout();
+            this.dropdownMenuFilter = new System.Windows.Forms.ComboBox();
+            this.startDatePicker = new System.Windows.Forms.DateTimePicker();
+            this.endDatePicker = new System.Windows.Forms.DateTimePicker();
+            this.responseTextField = new System.Windows.Forms.TextBox();
+            this.logo = new System.Windows.Forms.PictureBox();
+            this.advancedSearchfield = new System.Windows.Forms.TextBox();
+            this.searchForStartDateBox = new System.Windows.Forms.CheckBox();
+            this.searchForPaymentMethodBox = new System.Windows.Forms.CheckBox();
+            this.searchForSubscriptionTypeBox = new System.Windows.Forms.CheckBox();
+            this.searchForEndDateBox = new System.Windows.Forms.CheckBox();
+            ((System.ComponentModel.ISupportInitialize)(this.logo)).BeginInit();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(310, -25);
-            this.label1.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 20);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "label1";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(820, 9);
-            this.label3.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(352, 81);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "EcosiaPrime";
             // 
             // idTextfield
             // 
+            this.idTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.idTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.idTextfield.Location = new System.Drawing.Point(85, 154);
+            this.idTextfield.Location = new System.Drawing.Point(85, 167);
             this.idTextfield.Margin = new System.Windows.Forms.Padding(1);
             this.idTextfield.Name = "idTextfield";
             this.idTextfield.PlaceholderText = "ID";
@@ -103,19 +90,20 @@
             // 
             // firstNameTextfield
             // 
+            this.firstNameTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.firstNameTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.firstNameTextfield.Location = new System.Drawing.Point(85, 217);
+            this.firstNameTextfield.Location = new System.Drawing.Point(85, 230);
             this.firstNameTextfield.Margin = new System.Windows.Forms.Padding(1);
             this.firstNameTextfield.Name = "firstNameTextfield";
             this.firstNameTextfield.PlaceholderText = "Vorname";
             this.firstNameTextfield.Size = new System.Drawing.Size(308, 61);
             this.firstNameTextfield.TabIndex = 4;
-            this.firstNameTextfield.TextChanged += new System.EventHandler(this.firstNameTextfield_TextChanged);
             // 
             // lastNameTextfield
             // 
+            this.lastNameTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.lastNameTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lastNameTextfield.Location = new System.Drawing.Point(85, 280);
+            this.lastNameTextfield.Location = new System.Drawing.Point(85, 293);
             this.lastNameTextfield.Margin = new System.Windows.Forms.Padding(1);
             this.lastNameTextfield.Name = "lastNameTextfield";
             this.lastNameTextfield.PlaceholderText = "Nachname";
@@ -124,41 +112,42 @@
             // 
             // emailTextfield
             // 
+            this.emailTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.emailTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.emailTextfield.Location = new System.Drawing.Point(85, 344);
+            this.emailTextfield.Location = new System.Drawing.Point(85, 356);
             this.emailTextfield.Margin = new System.Windows.Forms.Padding(1);
             this.emailTextfield.Name = "emailTextfield";
             this.emailTextfield.PlaceholderText = "Email";
             this.emailTextfield.Size = new System.Drawing.Size(308, 61);
             this.emailTextfield.TabIndex = 6;
-            this.emailTextfield.TextChanged += new System.EventHandler(this.emailTextfield_TextChanged);
             // 
             // passwordTextfield
             // 
+            this.passwordTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.passwordTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.passwordTextfield.Location = new System.Drawing.Point(85, 407);
+            this.passwordTextfield.Location = new System.Drawing.Point(85, 419);
             this.passwordTextfield.Margin = new System.Windows.Forms.Padding(1);
             this.passwordTextfield.Name = "passwordTextfield";
             this.passwordTextfield.PlaceholderText = "Passwort";
             this.passwordTextfield.Size = new System.Drawing.Size(308, 61);
             this.passwordTextfield.TabIndex = 7;
-            this.passwordTextfield.TextChanged += new System.EventHandler(this.passwordTextfield_TextChanged);
             // 
             // countryTextfield
             // 
+            this.countryTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.countryTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.countryTextfield.Location = new System.Drawing.Point(838, 154);
+            this.countryTextfield.Location = new System.Drawing.Point(811, 167);
             this.countryTextfield.Margin = new System.Windows.Forms.Padding(1);
             this.countryTextfield.Name = "countryTextfield";
-            this.countryTextfield.PlaceholderText = "Staat";
+            this.countryTextfield.PlaceholderText = "Land";
             this.countryTextfield.Size = new System.Drawing.Size(308, 61);
             this.countryTextfield.TabIndex = 8;
-            this.countryTextfield.TextChanged += new System.EventHandler(this.countryTextfield_TextChanged);
             // 
             // stateTextfield
             // 
+            this.stateTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.stateTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.stateTextfield.Location = new System.Drawing.Point(838, 217);
+            this.stateTextfield.Location = new System.Drawing.Point(811, 230);
             this.stateTextfield.Margin = new System.Windows.Forms.Padding(1);
             this.stateTextfield.Name = "stateTextfield";
             this.stateTextfield.PlaceholderText = "Bundesland";
@@ -167,8 +156,9 @@
             // 
             // postcodeTextfield
             // 
+            this.postcodeTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.postcodeTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.postcodeTextfield.Location = new System.Drawing.Point(838, 280);
+            this.postcodeTextfield.Location = new System.Drawing.Point(811, 293);
             this.postcodeTextfield.Margin = new System.Windows.Forms.Padding(1);
             this.postcodeTextfield.Name = "postcodeTextfield";
             this.postcodeTextfield.PlaceholderText = "Postleitzahl";
@@ -177,64 +167,36 @@
             // 
             // cityTextfield
             // 
+            this.cityTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.cityTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cityTextfield.Location = new System.Drawing.Point(838, 344);
+            this.cityTextfield.Location = new System.Drawing.Point(811, 356);
             this.cityTextfield.Margin = new System.Windows.Forms.Padding(1);
             this.cityTextfield.Name = "cityTextfield";
             this.cityTextfield.PlaceholderText = "Stadt";
             this.cityTextfield.Size = new System.Drawing.Size(308, 61);
             this.cityTextfield.TabIndex = 11;
-            this.cityTextfield.TextChanged += new System.EventHandler(this.cityTextfield_TextChanged);
             // 
             // streetNameTextfield
             // 
+            this.streetNameTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.streetNameTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.streetNameTextfield.Location = new System.Drawing.Point(838, 407);
+            this.streetNameTextfield.Location = new System.Drawing.Point(811, 419);
             this.streetNameTextfield.Margin = new System.Windows.Forms.Padding(1);
             this.streetNameTextfield.Name = "streetNameTextfield";
             this.streetNameTextfield.PlaceholderText = "Straße";
             this.streetNameTextfield.Size = new System.Drawing.Size(308, 61);
             this.streetNameTextfield.TabIndex = 12;
             // 
-            // streetNumberTextfield
+            // houseNumberTextfield
             // 
-            this.streetNumberTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.streetNumberTextfield.Location = new System.Drawing.Point(838, 471);
-            this.streetNumberTextfield.Margin = new System.Windows.Forms.Padding(1);
-            this.streetNumberTextfield.Name = "streetNumberTextfield";
-            this.streetNumberTextfield.PlaceholderText = "Straßennummer";
-            this.streetNumberTextfield.Size = new System.Drawing.Size(308, 61);
-            this.streetNumberTextfield.TabIndex = 13;
-            // 
-            // startDateTextfield
-            // 
-            this.startDateTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.startDateTextfield.Location = new System.Drawing.Point(1510, 154);
-            this.startDateTextfield.Margin = new System.Windows.Forms.Padding(1);
-            this.startDateTextfield.Name = "startDateTextfield";
-            this.startDateTextfield.PlaceholderText = "Anfangsdatum";
-            this.startDateTextfield.Size = new System.Drawing.Size(308, 61);
-            this.startDateTextfield.TabIndex = 14;
-            // 
-            // endDateTextfield
-            // 
-            this.endDateTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.endDateTextfield.Location = new System.Drawing.Point(1510, 217);
-            this.endDateTextfield.Margin = new System.Windows.Forms.Padding(1);
-            this.endDateTextfield.Name = "endDateTextfield";
-            this.endDateTextfield.PlaceholderText = "Enddatum";
-            this.endDateTextfield.Size = new System.Drawing.Size(308, 61);
-            this.endDateTextfield.TabIndex = 15;
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Controls.Add(this.paymentMethodPanel);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(1369, 271);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(1);
-            this.flowLayoutPanel1.MaximumSize = new System.Drawing.Size(279, 52);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(279, 0);
-            this.flowLayoutPanel1.TabIndex = 16;
+            this.houseNumberTextfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.houseNumberTextfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.houseNumberTextfield.Location = new System.Drawing.Point(811, 482);
+            this.houseNumberTextfield.Margin = new System.Windows.Forms.Padding(1);
+            this.houseNumberTextfield.Name = "houseNumberTextfield";
+            this.houseNumberTextfield.PlaceholderText = "Hausnummer";
+            this.houseNumberTextfield.Size = new System.Drawing.Size(308, 61);
+            this.houseNumberTextfield.TabIndex = 13;
             // 
             // paymentMethodPanel
             // 
@@ -249,16 +211,12 @@
             // 
             // dropdownMenuPayment
             // 
+            this.dropdownMenuPayment.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.dropdownMenuPayment.DisplayMember = "PayPal";
+            this.dropdownMenuPayment.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dropdownMenuPayment.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.dropdownMenuPayment.FormattingEnabled = true;
-            this.dropdownMenuPayment.Items.AddRange(new object[] {
-            "PayPal",
-            "Creditcard",
-            "EC",
-            "Giftcode",
-            "Directdebit"});
-            this.dropdownMenuPayment.Location = new System.Drawing.Point(1510, 280);
+            this.dropdownMenuPayment.Location = new System.Drawing.Point(1510, 293);
             this.dropdownMenuPayment.Margin = new System.Windows.Forms.Padding(1);
             this.dropdownMenuPayment.Name = "dropdownMenuPayment";
             this.dropdownMenuPayment.Size = new System.Drawing.Size(308, 62);
@@ -267,13 +225,11 @@
             // 
             // dropdownMenuSubscription
             // 
+            this.dropdownMenuSubscription.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.dropdownMenuSubscription.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dropdownMenuSubscription.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.dropdownMenuSubscription.FormattingEnabled = true;
-            this.dropdownMenuSubscription.Items.AddRange(new object[] {
-            "Basic",
-            "Standard",
-            "Premium"});
-            this.dropdownMenuSubscription.Location = new System.Drawing.Point(1510, 344);
+            this.dropdownMenuSubscription.Location = new System.Drawing.Point(1510, 356);
             this.dropdownMenuSubscription.Margin = new System.Windows.Forms.Padding(1);
             this.dropdownMenuSubscription.Name = "dropdownMenuSubscription";
             this.dropdownMenuSubscription.Size = new System.Drawing.Size(308, 62);
@@ -281,6 +237,7 @@
             // 
             // Enter
             // 
+            this.Enter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.Enter.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Enter.Location = new System.Drawing.Point(1578, 545);
             this.Enter.Margin = new System.Windows.Forms.Padding(1);
@@ -288,24 +245,21 @@
             this.Enter.Size = new System.Drawing.Size(169, 62);
             this.Enter.TabIndex = 19;
             this.Enter.Text = "Enter";
-            this.Enter.UseVisualStyleBackColor = true;
+            this.Enter.UseVisualStyleBackColor = false;
             this.Enter.Click += new System.EventHandler(this.Enter_Click);
             // 
-            // optionComboBox
+            // dropdownMenuOption
             // 
-            this.optionComboBox.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.optionComboBox.FormattingEnabled = true;
-            this.optionComboBox.Items.AddRange(new object[] {
-            "Erstellen",
-            "Löschen",
-            "Bearbeiten",
-            "Anzeigen"});
-            this.optionComboBox.Location = new System.Drawing.Point(85, 545);
-            this.optionComboBox.Margin = new System.Windows.Forms.Padding(1);
-            this.optionComboBox.Name = "optionComboBox";
-            this.optionComboBox.Size = new System.Drawing.Size(308, 62);
-            this.optionComboBox.TabIndex = 20;
-            this.optionComboBox.SelectedIndexChanged += new System.EventHandler(this.optionComboBox_SelectedIndexChanged);
+            this.dropdownMenuOption.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.dropdownMenuOption.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.dropdownMenuOption.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.dropdownMenuOption.FormattingEnabled = true;
+            this.dropdownMenuOption.Location = new System.Drawing.Point(85, 545);
+            this.dropdownMenuOption.Margin = new System.Windows.Forms.Padding(1);
+            this.dropdownMenuOption.Name = "dropdownMenuOption";
+            this.dropdownMenuOption.Size = new System.Drawing.Size(308, 62);
+            this.dropdownMenuOption.TabIndex = 20;
+            this.dropdownMenuOption.SelectedIndexChanged += new System.EventHandler(this.optionComboBox_SelectedIndexChanged);
             // 
             // dataGrid
             // 
@@ -320,7 +274,7 @@
             this.columnPostcode,
             this.columnCity,
             this.columnStreetName,
-            this.columnStreetNumber,
+            this.columnHouseNumber,
             this.columnStartDate,
             this.columnEndDate,
             this.columnPayment,
@@ -387,10 +341,10 @@
             this.columnStreetName.Text = "Straße";
             this.columnStreetName.Width = 150;
             // 
-            // columnStreetNumber
+            // columnHouseNumber
             // 
-            this.columnStreetNumber.Text = "Straßennummer";
-            this.columnStreetNumber.Width = 150;
+            this.columnHouseNumber.Text = "Straßennummer";
+            this.columnHouseNumber.Width = 150;
             // 
             // columnStartDate
             // 
@@ -412,54 +366,127 @@
             this.columnSubscription.Text = "Abonnement";
             this.columnSubscription.Width = 150;
             // 
-            // filterComboBox
+            // dropdownMenuFilter
             // 
-            this.filterComboBox.AutoCompleteCustomSource.AddRange(new string[] {
-            "Alle",
-            "Eine Person"});
-            this.filterComboBox.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.filterComboBox.FormattingEnabled = true;
-            this.filterComboBox.Items.AddRange(new object[] {
-            "Alle (Sortiert nach ID)",
-            "Alle (Sortiert nach Vorname)",
-            "Alle (sortiert nach Nachname)",
-            "Alle (sortiert nach Email)",
-            "Alle (sortiert nach Land)",
-            "Alle (sortiert nach Abonnement)",
-            "Eine Person (durch ID)"});
-            this.filterComboBox.Location = new System.Drawing.Point(700, 545);
-            this.filterComboBox.Margin = new System.Windows.Forms.Padding(1);
-            this.filterComboBox.Name = "filterComboBox";
-            this.filterComboBox.Size = new System.Drawing.Size(567, 62);
-            this.filterComboBox.TabIndex = 22;
-            this.filterComboBox.SelectedIndexChanged += new System.EventHandler(this.filterComboBox_SelectedIndexChanged);
+            this.dropdownMenuFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.dropdownMenuFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.dropdownMenuFilter.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.dropdownMenuFilter.FormattingEnabled = true;
+            this.dropdownMenuFilter.Location = new System.Drawing.Point(700, 545);
+            this.dropdownMenuFilter.Margin = new System.Windows.Forms.Padding(1);
+            this.dropdownMenuFilter.Name = "dropdownMenuFilter";
+            this.dropdownMenuFilter.Size = new System.Drawing.Size(567, 62);
+            this.dropdownMenuFilter.TabIndex = 22;
             // 
-            // responseLabel
+            // startDatePicker
             // 
-            this.responseLabel.AutoSize = true;
-            this.responseLabel.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.responseLabel.Location = new System.Drawing.Point(964, 867);
-            this.responseLabel.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.responseLabel.Name = "responseLabel";
-            this.responseLabel.Size = new System.Drawing.Size(0, 54);
-            this.responseLabel.TabIndex = 23;
+            this.startDatePicker.CalendarFont = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.startDatePicker.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.startDatePicker.Location = new System.Drawing.Point(1510, 167);
+            this.startDatePicker.MinimumSize = new System.Drawing.Size(0, 61);
+            this.startDatePicker.Name = "startDatePicker";
+            this.startDatePicker.Size = new System.Drawing.Size(308, 61);
+            this.startDatePicker.TabIndex = 24;
+            // 
+            // endDatePicker
+            // 
+            this.endDatePicker.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.endDatePicker.Location = new System.Drawing.Point(1510, 230);
+            this.endDatePicker.MinimumSize = new System.Drawing.Size(0, 61);
+            this.endDatePicker.Name = "endDatePicker";
+            this.endDatePicker.Size = new System.Drawing.Size(308, 61);
+            this.endDatePicker.TabIndex = 25;
+            // 
+            // responseTextField
+            // 
+            this.responseTextField.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.responseTextField.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.responseTextField.Location = new System.Drawing.Point(567, 830);
+            this.responseTextField.Multiline = true;
+            this.responseTextField.Name = "responseTextField";
+            this.responseTextField.PlaceholderText = "Response";
+            this.responseTextField.ReadOnly = true;
+            this.responseTextField.Size = new System.Drawing.Size(796, 54);
+            this.responseTextField.TabIndex = 26;
+            this.responseTextField.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // logo
+            // 
+            this.logo.Image = ((System.Drawing.Image)(resources.GetObject("logo.Image")));
+            this.logo.Location = new System.Drawing.Point(811, 12);
+            this.logo.Name = "logo";
+            this.logo.Size = new System.Drawing.Size(308, 138);
+            this.logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.logo.TabIndex = 27;
+            this.logo.TabStop = false;
+            // 
+            // advancedSearchfield
+            // 
+            this.advancedSearchfield.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.advancedSearchfield.Location = new System.Drawing.Point(567, 545);
+            this.advancedSearchfield.Name = "advancedSearchfield";
+            this.advancedSearchfield.PlaceholderText = "Filter";
+            this.advancedSearchfield.Size = new System.Drawing.Size(796, 61);
+            this.advancedSearchfield.TabIndex = 28;
+            // 
+            // searchForStartDateBox
+            // 
+            this.searchForStartDateBox.AutoSize = true;
+            this.searchForStartDateBox.Location = new System.Drawing.Point(1486, 194);
+            this.searchForStartDateBox.Name = "searchForStartDateBox";
+            this.searchForStartDateBox.Size = new System.Drawing.Size(18, 17);
+            this.searchForStartDateBox.TabIndex = 29;
+            this.searchForStartDateBox.UseVisualStyleBackColor = true;
+            // 
+            // searchForPaymentMethodBox
+            // 
+            this.searchForPaymentMethodBox.AutoSize = true;
+            this.searchForPaymentMethodBox.Location = new System.Drawing.Point(1486, 317);
+            this.searchForPaymentMethodBox.Name = "searchForPaymentMethodBox";
+            this.searchForPaymentMethodBox.Size = new System.Drawing.Size(18, 17);
+            this.searchForPaymentMethodBox.TabIndex = 30;
+            this.searchForPaymentMethodBox.UseVisualStyleBackColor = true;
+            // 
+            // searchForSubscriptionTypeBox
+            // 
+            this.searchForSubscriptionTypeBox.AutoSize = true;
+            this.searchForSubscriptionTypeBox.Location = new System.Drawing.Point(1486, 377);
+            this.searchForSubscriptionTypeBox.Name = "searchForSubscriptionTypeBox";
+            this.searchForSubscriptionTypeBox.Size = new System.Drawing.Size(18, 17);
+            this.searchForSubscriptionTypeBox.TabIndex = 31;
+            this.searchForSubscriptionTypeBox.UseVisualStyleBackColor = true;
+            // 
+            // searchForEndDateBox
+            // 
+            this.searchForEndDateBox.AutoSize = true;
+            this.searchForEndDateBox.Location = new System.Drawing.Point(1486, 257);
+            this.searchForEndDateBox.Name = "searchForEndDateBox";
+            this.searchForEndDateBox.Size = new System.Drawing.Size(18, 17);
+            this.searchForEndDateBox.TabIndex = 32;
+            this.searchForEndDateBox.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1868, 954);
-            this.Controls.Add(this.responseLabel);
-            this.Controls.Add(this.filterComboBox);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(100)))), ((int)(((byte)(102)))));
+            this.ClientSize = new System.Drawing.Size(1673, 954);
+            this.Controls.Add(this.searchForEndDateBox);
+            this.Controls.Add(this.searchForSubscriptionTypeBox);
+            this.Controls.Add(this.searchForPaymentMethodBox);
+            this.Controls.Add(this.searchForStartDateBox);
+            this.Controls.Add(this.advancedSearchfield);
+            this.Controls.Add(this.logo);
+            this.Controls.Add(this.responseTextField);
+            this.Controls.Add(this.endDatePicker);
+            this.Controls.Add(this.startDatePicker);
+            this.Controls.Add(this.dropdownMenuFilter);
             this.Controls.Add(this.dataGrid);
-            this.Controls.Add(this.optionComboBox);
+            this.Controls.Add(this.dropdownMenuOption);
             this.Controls.Add(this.Enter);
             this.Controls.Add(this.dropdownMenuSubscription);
             this.Controls.Add(this.dropdownMenuPayment);
-            this.Controls.Add(this.flowLayoutPanel1);
-            this.Controls.Add(this.endDateTextfield);
-            this.Controls.Add(this.startDateTextfield);
-            this.Controls.Add(this.streetNumberTextfield);
+            this.Controls.Add(this.houseNumberTextfield);
             this.Controls.Add(this.streetNameTextfield);
             this.Controls.Add(this.cityTextfield);
             this.Controls.Add(this.postcodeTextfield);
@@ -470,25 +497,18 @@
             this.Controls.Add(this.lastNameTextfield);
             this.Controls.Add(this.firstNameTextfield);
             this.Controls.Add(this.idTextfield);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label1);
             this.Margin = new System.Windows.Forms.Padding(1);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = " ";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.logo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private Label label1;
-        private Label label3;
         private TextBox idTextfield;
         private TextBox firstNameTextfield;
         private TextBox lastNameTextfield;
@@ -499,15 +519,12 @@
         private TextBox postcodeTextfield;
         private TextBox cityTextfield;
         private TextBox streetNameTextfield;
-        private TextBox streetNumberTextfield;
-        private TextBox startDateTextfield;
-        private TextBox endDateTextfield;
-        private FlowLayoutPanel flowLayoutPanel1;
+        private TextBox houseNumberTextfield;
         private Label paymentMethodPanel;
         private ComboBox dropdownMenuPayment;
         private ComboBox dropdownMenuSubscription;
         private Button Enter;
-        private ComboBox optionComboBox;
+        private ComboBox dropdownMenuOption;
         private ListView dataGrid;
         private ColumnHeader columnID;
         private ColumnHeader columnFirstName;
@@ -519,12 +536,20 @@
         private ColumnHeader columnPostcode;
         private ColumnHeader columnCity;
         private ColumnHeader columnStreetName;
-        private ColumnHeader columnStreetNumber;
+        private ColumnHeader columnHouseNumber;
         private ColumnHeader columnStartDate;
         private ColumnHeader columnEndDate;
         private ColumnHeader columnPayment;
         private ColumnHeader columnSubscription;
-        private ComboBox filterComboBox;
-        private Label responseLabel;
+        private ComboBox dropdownMenuFilter;
+        private DateTimePicker startDatePicker;
+        private DateTimePicker endDatePicker;
+        private TextBox responseTextField;
+        private PictureBox logo;
+        private TextBox advancedSearchfield;
+        private CheckBox searchForStartDateBox;
+        private CheckBox searchForPaymentMethodBox;
+        private CheckBox searchForSubscriptionTypeBox;
+        private CheckBox searchForEndDateBox;
     }
 }

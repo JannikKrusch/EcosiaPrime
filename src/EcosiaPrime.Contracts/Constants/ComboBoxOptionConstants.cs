@@ -2,10 +2,21 @@
 {
     public static class ComboBoxOptionConstants
     {
-        public const string Bearbeiten = "Bearbeiten";
-        public const string Erstellen = "Erstellen";
-        public const string Löschen = "Löschen";
-        public const string Clear = "Clear";
-        public const string Anzeigen = "Anzeigen";
+        public const string Create = "Erstellen";
+        public const string Update = "Bearbeiten";
+        public const string Delete = "Löschen";
+        public const string Show = "Anzeigen";
+        public const string Search = "Suchen";
+        public const string AdvancedSearch = "Fortg. Suchen";
+
+        public static readonly List<string> OptionConstants = new List<string>
+        {
+            Create,
+            Update,
+            Delete,
+            Show,
+            Search,
+            AdvancedSearch
+        };
     }
 }

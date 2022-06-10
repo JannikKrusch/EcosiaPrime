@@ -2,7 +2,7 @@
 {
     public static class VisibleTextFieldListConstants
     {
-        public static readonly List<string> Erstellen = new List<string>
+        public static readonly List<string> Create = new List<string>
         {
             "idTextfield",
             "firstNameTextfield",
@@ -14,26 +14,42 @@
             "postcodeTextfield",
             "cityTextfield",
             "streetNameTextfield",
-            "streetNumberTextfield",
-            "startDateTextfield",
-            "endDateTextfield",
+            "houseNumberTextfield",
+            "startDatePicker",
+            "endDatePicker",
             "dropdownMenuPayment",
-            "dropdownMenuSubscription"
+            "dropdownMenuSubscription",
+            "dropdownMenuOption",
+            "responseTextField"
         };
 
-        public static readonly List<string> Löschen = new List<string>
+        public static readonly List<string> Delete = new List<string>
         {
-            "idTextfield"
+            "idTextfield",
+            "dropdownMenuOption",
+            "responseTextField"
         };
 
-        public static readonly List<string> Bearbeiten = new List<string>
-        {
-            "idTextfield"
+        public static readonly List<string> Update = new List<string>(Delete);
+
+        public static readonly List<string> Show = new List<string>(Delete)
+        { 
+            "dropdownMenuFilter",
         };
 
-        public static readonly List<string> Anzeigen = new List<string>
+        public static readonly List<string> Search = new List<string>(Create)
         {
-            "filterComboBox"
+            "searchForStartDateBox",
+            "searchForEndDateBox",
+            "searchForPaymentMethodBox",
+            "searchForSubscriptionTypeBox"
+        };
+
+        public static readonly List<string> AdvancedSearch = new List<string>
+        {
+            "advancedSearchfield",
+            "dropdownMenuOption",
+            "responseTextField"
         };
     }
 }

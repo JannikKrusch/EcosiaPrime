@@ -1,12 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EcosiaPrime.Contracts.Models;
 
 namespace EcosiaPrime.MongoDB
 {
     public interface IMongoDBService
     {
+        IMongoDBRepository MongoDBRepository { get; set; }
+
+        Task<bool> DoesIdExistAsync(string collectionName, string id);
+
+        Task<bool> IsEmailUniqueAsync<T>(string collectionName, string email);
+
+        Task<IEnumerable<Client>> SortRecordByCountyAsync(string collectionName);
+
+        Task<IEnumerable<Client>> SortRecordByEmailAsync(string collectionName);
+
+        Task<IEnumerable<Client>> SortRecordByFirstNameAsync(string collectionName);
+
+        Task<IEnumerable<Client>> SortRecordByIdAsync(string collectionName);
+
+        Task<IEnumerable<Client>> SortRecordByLastNameAsync(string collectionName);
+
+        Task<IEnumerable<Client>> SortRecordBySubscriptionTypeAsync(string collectionName);
     }
 }
