@@ -10,7 +10,7 @@ namespace EcosiaPrime.Gui
 
         public Form1(IGuiService guiService)
         {
-            _controlsList = Controls.OfType<Control>().Where(x => x is TextBox || x is ComboBox && x.Name != "optionComboBox" || x is DateTimePicker);
+            _controlsList = Controls.OfType<Control>().Where(x => x is TextBox || x is CheckBox || x is ComboBox && x.Name != "optionComboBox" || x is DateTimePicker);
             _guiService = guiService;
 
             InitializeComponent();
@@ -49,7 +49,7 @@ namespace EcosiaPrime.Gui
                 var fields = await _guiService.CreateClientAsync(
                     idTextfield.Text.Trim(), firstNameTextfield.Text.Trim(), lastNameTextfield.Text.Trim(), emailTextfield.Text.Trim(),
                     passwordTextfield.Text.Trim(), countryTextfield.Text.Trim(), stateTextfield.Text.Trim(), postcodeTextfield.Text.Trim(), cityTextfield.Text.Trim(), streetNameTextfield.Text.Trim(),
-                    houseNumberTextfield.Text.Trim(), DateTime.Parse(startDatePicker.Text).ToString("dd.MM.yyyy"), DateTime.Parse(endDatePicker.Text).ToString("dd.MM.yyyy"), dropdownMenuPayment.Text, dropdownMenuSubscription.Text);
+                    houseNumberTextfield.Text.Trim(), startDatePicker.Text.ParseString().ToString("dd.MM.yyyy"), endDatePicker.Text.ParseString().ToString("dd.MM.yyyy"), dropdownMenuPayment.Text, dropdownMenuSubscription.Text);
 
                 responseTextField.Lines = fields.ToArray();
                 if (fields.ToArray()[0] == ResponseMessagesConstants.AddClientToDBSuccessful)
@@ -62,7 +62,7 @@ namespace EcosiaPrime.Gui
                 var fields = await _guiService.UpdateClientAsync(
                     idTextfield.Text.Trim(), firstNameTextfield.Text.Trim(), lastNameTextfield.Text.Trim(), emailTextfield.Text.Trim(),
                     passwordTextfield.Text.Trim(), countryTextfield.Text.Trim(), stateTextfield.Text.Trim(), postcodeTextfield.Text.Trim(), cityTextfield.Text.Trim(), streetNameTextfield.Text.Trim(),
-                    houseNumberTextfield.Text.Trim(), DateTime.Parse(startDatePicker.Text).ToString("dd.MM.yyyy"), DateTime.Parse(endDatePicker.Text).ToString("dd.MM.yyyy"), dropdownMenuPayment.Text, dropdownMenuSubscription.Text);
+                    houseNumberTextfield.Text.Trim(), startDatePicker.Text.ParseString().ToString("dd.MM.yyyy"), endDatePicker.Text.ParseString().ToString("dd.MM.yyyy"), dropdownMenuPayment.Text, dropdownMenuSubscription.Text);
 
                 var fieldList = fields.ToList();
 
@@ -122,7 +122,7 @@ namespace EcosiaPrime.Gui
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Search)
             {
                 var clients = await _guiService.SearchFunctionAsync(
-                     dropdownMenuFilter.Text,
+                     dropdownMenuFilter.Text, searchForStartDateBox.Checked, searchForEndDateBox.Checked, searchForPaymentMethodBox.Checked, searchForSubscriptionTypeBox.Checked,
                      idTextfield.Text.Trim(), firstNameTextfield.Text.Trim(), lastNameTextfield.Text.Trim(), emailTextfield.Text.Trim(),
                      passwordTextfield.Text.Trim(), countryTextfield.Text.Trim(), stateTextfield.Text.Trim(), postcodeTextfield.Text.Trim(), cityTextfield.Text.Trim(), streetNameTextfield.Text.Trim(),
                      houseNumberTextfield.Text.Trim(), startDatePicker.Text, endDatePicker.Text, dropdownMenuPayment.Text, dropdownMenuSubscription.Text);
@@ -192,7 +192,7 @@ namespace EcosiaPrime.Gui
         }
 
         /// <summary>
-        /// Setzt die Visible Eigenschaft der GUI-Elemente
+        /// Setzt die Sichtbarkeitseigenschaft der GUI-Elemente
         /// </summary>
         /// <param name="option"></param>
         public void ChangeVisibilityOfFields(string option)
@@ -216,6 +216,7 @@ namespace EcosiaPrime.Gui
                     SearchFunctionConstants.SearchFunctions.ForEach(x => dropdownMenuFilter.Items.Add(x));
                     dropdownMenuFilter.SelectedIndex = 0;
                 }
+
             }
 
             _controlsList.ToList().ForEach(control =>
@@ -223,6 +224,11 @@ namespace EcosiaPrime.Gui
                 if (GetVisibleFieldsList(option).Any(x => x == control.Name))
                 {
                     control.Visible = true;
+                    if(control is CheckBox)
+                    {
+                        var temp = control as CheckBox;
+                        temp.Checked = false;
+                    }
                 }
                 else
                 {
@@ -292,6 +298,11 @@ namespace EcosiaPrime.Gui
                     control.Text = string.Empty;
                 }
             });
+        }
+
+        private void searchForDatesBox_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -18,7 +18,7 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             }
             else
             {
-                return DateTime.Parse("31.12.9999");
+                return DateTime.Now.Date;//DateTime.Parse("31.12.9999");
             }
         }
 
@@ -88,7 +88,7 @@ namespace EcosiaPrime.Gui.ExtensionMethods
         }
 
         /// <summary>
-        /// Gibt RepsonseListe zurück, schaut, ob PLZ und Hausnummer in eine Zahl umgewandelt werden können und ob PLZ eine 5 stellige Zahl ist
+        /// Gibt RepsonseListe zurück, schaut, ob PLZ und Hausnummer in eine Zahl umgewandelt werden können und ob PLZ eine 5 stellige Zahl über 0 ist und Hausnummer über 0 ist
         /// </summary>
         /// <param name="postCode"></param>
         /// <param name="houseNumber"></param>
@@ -97,15 +97,13 @@ namespace EcosiaPrime.Gui.ExtensionMethods
         {
             var responseLines = new List<string>();
 
-            var couldParse = Int32.TryParse(houseNumber, out int convertedHouseNumber);
-            if (!couldParse)
+            if (!Int32.TryParse(houseNumber, out int convertedHouseNumber) || convertedHouseNumber <= 0)
             {
-                responseLines.Add(ResponseMessagesConstants.HouseNumberMustBeAnInteger);
+                responseLines.Add(ResponseMessagesConstants.HouseNumberMustBeAnIntegerAndGreaterThanZero);
             }
-            couldParse = Int32.TryParse(postCode, out int convertedPostCode);
-            if (!couldParse)
+            if (!Int32.TryParse(postCode, out int convertedPostCode) || convertedPostCode <= 0)
             {
-                responseLines.Add(ResponseMessagesConstants.PostCodeMustBeAnInteger);
+                responseLines.Add(ResponseMessagesConstants.PostCodeMustBeAnIntegerGreaterThanZero);
             }
             else
             {

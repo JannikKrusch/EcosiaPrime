@@ -70,6 +70,10 @@ namespace EcosiaPrime.Gui
             this.responseTextField = new System.Windows.Forms.TextBox();
             this.logo = new System.Windows.Forms.PictureBox();
             this.advancedSearchfield = new System.Windows.Forms.TextBox();
+            this.searchForStartDateBox = new System.Windows.Forms.CheckBox();
+            this.searchForPaymentMethodBox = new System.Windows.Forms.CheckBox();
+            this.searchForSubscriptionTypeBox = new System.Windows.Forms.CheckBox();
+            this.searchForEndDateBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.logo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -425,12 +429,52 @@ namespace EcosiaPrime.Gui
             this.advancedSearchfield.Size = new System.Drawing.Size(796, 61);
             this.advancedSearchfield.TabIndex = 28;
             // 
+            // searchForStartDateBox
+            // 
+            this.searchForStartDateBox.AutoSize = true;
+            this.searchForStartDateBox.Location = new System.Drawing.Point(1486, 194);
+            this.searchForStartDateBox.Name = "searchForStartDateBox";
+            this.searchForStartDateBox.Size = new System.Drawing.Size(18, 17);
+            this.searchForStartDateBox.TabIndex = 29;
+            this.searchForStartDateBox.UseVisualStyleBackColor = true;
+            // 
+            // searchForPaymentMethodBox
+            // 
+            this.searchForPaymentMethodBox.AutoSize = true;
+            this.searchForPaymentMethodBox.Location = new System.Drawing.Point(1486, 317);
+            this.searchForPaymentMethodBox.Name = "searchForPaymentMethodBox";
+            this.searchForPaymentMethodBox.Size = new System.Drawing.Size(18, 17);
+            this.searchForPaymentMethodBox.TabIndex = 30;
+            this.searchForPaymentMethodBox.UseVisualStyleBackColor = true;
+            // 
+            // searchForSubscriptionTypeBox
+            // 
+            this.searchForSubscriptionTypeBox.AutoSize = true;
+            this.searchForSubscriptionTypeBox.Location = new System.Drawing.Point(1486, 377);
+            this.searchForSubscriptionTypeBox.Name = "searchForSubscriptionTypeBox";
+            this.searchForSubscriptionTypeBox.Size = new System.Drawing.Size(18, 17);
+            this.searchForSubscriptionTypeBox.TabIndex = 31;
+            this.searchForSubscriptionTypeBox.UseVisualStyleBackColor = true;
+            // 
+            // searchForEndDateBox
+            // 
+            this.searchForEndDateBox.AutoSize = true;
+            this.searchForEndDateBox.Location = new System.Drawing.Point(1486, 257);
+            this.searchForEndDateBox.Name = "searchForEndDateBox";
+            this.searchForEndDateBox.Size = new System.Drawing.Size(18, 17);
+            this.searchForEndDateBox.TabIndex = 32;
+            this.searchForEndDateBox.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(100)))), ((int)(((byte)(102)))));
-            this.ClientSize = new System.Drawing.Size(1868, 954);
+            this.ClientSize = new System.Drawing.Size(1673, 954);
+            this.Controls.Add(this.searchForEndDateBox);
+            this.Controls.Add(this.searchForSubscriptionTypeBox);
+            this.Controls.Add(this.searchForPaymentMethodBox);
+            this.Controls.Add(this.searchForStartDateBox);
             this.Controls.Add(this.advancedSearchfield);
             this.Controls.Add(this.logo);
             this.Controls.Add(this.responseTextField);
@@ -503,5 +547,9 @@ namespace EcosiaPrime.Gui
         private TextBox responseTextField;
         private PictureBox logo;
         private TextBox advancedSearchfield;
+        private CheckBox searchForStartDateBox;
+        private CheckBox searchForPaymentMethodBox;
+        private CheckBox searchForSubscriptionTypeBox;
+        private CheckBox searchForEndDateBox;
     }
 }

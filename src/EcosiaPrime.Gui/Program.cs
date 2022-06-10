@@ -9,7 +9,7 @@ namespace EcosiaPrime.Gui
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        private static async Task Main()
+        private static void Main()
         {
             var configBuilder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())

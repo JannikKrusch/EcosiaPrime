@@ -39,7 +39,10 @@
 
         public static readonly List<string> Search = new List<string>(Create)
         {
-            "dropdownMenuFilter"
+            "searchForStartDateBox",
+            "searchForEndDateBox",
+            "searchForPaymentMethodBox",
+            "searchForSubscriptionTypeBox"
         };
 
         public static readonly List<string> AdvancedSearch = new List<string>

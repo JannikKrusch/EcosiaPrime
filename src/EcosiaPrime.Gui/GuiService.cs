@@ -319,18 +319,94 @@ namespace EcosiaPrime.Gui
         /// <param name="subscriptionType"></param>
         /// <returns></returns>
         public async Task<IEnumerable<Client>> SearchFunctionAsync(
-            string filter,
+            string filter, bool searchStartDate, bool searchEndDate, bool searchPaymentMethod, bool searchSubscriptionType,
             string id, string firstName, string lastName, string email, string password,
             string country, string state, string postCode, string city, string street, string houseNumber,
             string startDate, string endDate, string paymentMethod, string subscriptionType)
         {
             var people = await _mongoDBService.MongoDBRepository.LoadRecordsAsync<Client>(_mongoDBConfiguration.CollectionName).ConfigureAwait(false);
-            IEnumerable<Client> foundList = new List<Client>();
+            List<Client> foundList = new List<Client>(people);
 
-            var searchStringPrimary = "";
-            var searchStringSecondary = "";
+            //var searchStringPrimary = "";
+            //var searchStringSecondary = "";
 
-            switch (filter)
+            if (!string.IsNullOrEmpty(id))
+            {
+                foundList = foundList.Where(x => x.Id.ToLower().Contains(id.ToLower())).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(firstName))
+            {
+                foundList = foundList.Where(x => x.FirstName.ToLower().Contains(firstName.ToLower())).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(lastName))
+            {
+                foundList = foundList.Where(x => x.LastName.ToLower().Contains(lastName.ToLower())).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(email))
+            {
+                foundList = foundList.Where(x => x.Email.ToLower().Contains(email.ToLower())).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(country))
+            {
+                foundList = foundList.Where(x => x.Address.Country.ToLower().Contains(country.ToLower())).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(state))
+            {
+                foundList = foundList.Where(x => x.Address.State.ToLower().Contains(state.ToLower())).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(postCode))
+            {
+                foundList = foundList.Where(x => x.Address.PostCode.ToString().Contains(postCode.ToLower())).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(city))
+            {
+                foundList = foundList.Where(x => x.Address.City.ToLower().Contains(city.ToLower())).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(street))
+            {
+                foundList = foundList.Where(x => x.Address.Street.ToLower().Contains(street.ToLower())).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(houseNumber))
+            {
+                foundList = foundList.Where(x => x.Address.HouseNumber.ToString().Contains(houseNumber.ToLower())).ToList();
+            }
+
+            if (searchStartDate && !searchEndDate)
+            {
+                foundList = foundList.Where(x => x.Subscription.StartDate.ParseString() >= startDate.ParseString()).ToList();
+            }
+            else if(!searchStartDate && searchEndDate)
+            {
+                foundList = foundList.Where(x => x.Subscription.EndDate.ParseString() <= endDate.ParseString()).ToList();
+            }
+            else if(searchStartDate && searchEndDate)
+            {
+                foundList = foundList.Where(x => x.Subscription.StartDate.ParseString() >= startDate.ParseString() && x.Subscription.EndDate.ParseString() <= endDate.ParseString()).ToList();
+            }
+
+            if (searchPaymentMethod)
+            {
+                foundList = foundList.Where(x => x.Subscription.PaymentMethod.Contains(paymentMethod)).ToList();
+            }
+
+            if (searchSubscriptionType)
+            {
+                foundList = foundList.Where(x => x.Subscription.SubscriptionType.Contains(subscriptionType)).ToList();
+            }
+
+            //removed duplicates
+            //foundList = foundList.DistinctBy(x => x.Id).ToList();
+
+            /*switch (filter)
             {
                 case SearchFunctionConstants.SearchForID:
                     if (id != "")
@@ -436,7 +512,7 @@ namespace EcosiaPrime.Gui
                         foundList = people.Where(x => x.Subscription.SubscriptionType.Contains(searchStringPrimary));
                     }
                     break;
-            }
+            }*/
 
             return foundList;
         }
