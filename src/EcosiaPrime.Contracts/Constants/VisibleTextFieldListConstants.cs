@@ -33,7 +33,7 @@
         public static readonly List<string> Update = new List<string>(Delete);
 
         public static readonly List<string> Show = new List<string>(Delete)
-        { 
+        {
             "dropdownMenuFilter",
         };
 

@@ -88,7 +88,7 @@ namespace EcosiaPrime.Gui.ExtensionMethods
         }
 
         /// <summary>
-        /// Gibt RepsonseListe zurück, schaut, ob PLZ und Hausnummer in eine Zahl umgewandelt werden können und ob PLZ eine 5 stellige Zahl über 0 ist und Hausnummer über 0 ist
+        /// Gibt RepsonseListe zurück, schaut, ob PLZ und Hausnummer in eine Zahl umgewandelt werden können und ob PLZ eine 5 stellige Zahl über 10000 ist und Hausnummer über 0 ist
         /// </summary>
         /// <param name="postCode"></param>
         /// <param name="houseNumber"></param>
@@ -101,9 +101,9 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             {
                 responseLines.Add(ResponseMessagesConstants.HouseNumberMustBeAnIntegerAndGreaterThanZero);
             }
-            if (!Int32.TryParse(postCode, out int convertedPostCode) || convertedPostCode <= 0)
+            if (!Int32.TryParse(postCode, out int convertedPostCode) || convertedPostCode <= 9999)
             {
-                responseLines.Add(ResponseMessagesConstants.PostCodeMustBeAnIntegerGreaterThanZero);
+                responseLines.Add(ResponseMessagesConstants.PostCodeMustBeAnIntegerGreaterThanOrEqualsTenThousand);
             }
             else
             {
