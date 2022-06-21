@@ -56,7 +56,6 @@ namespace EcosiaPrime.Gui.ExtensionMethods
         {
             var responseLines = new List<string>();
 
-            //https://stackoverflow.com/questions/34715501/validating-password-using-regex-c-sharp
             var hasNumber = new Regex(@"[0-9]+");
             var hasUpperChar = new Regex(@"[A-Z]+");
             var hasLowerChar = new Regex(@"[a-z]+");
