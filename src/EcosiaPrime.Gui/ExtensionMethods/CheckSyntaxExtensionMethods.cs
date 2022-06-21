@@ -18,7 +18,7 @@ namespace EcosiaPrime.Gui.ExtensionMethods
             }
             else
             {
-                return DateTime.Now.Date;//DateTime.Parse("31.12.9999");
+                return DateTime.Now.Date;
             }
         }
 
