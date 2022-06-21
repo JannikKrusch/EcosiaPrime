@@ -33,7 +33,7 @@ namespace EcosiaPrime.Gui
         }
 
         /// <summary>
-        /// Bearbeitet den Knopfdruck
+        /// Vearbeitet den Enter Knopfdruck
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
