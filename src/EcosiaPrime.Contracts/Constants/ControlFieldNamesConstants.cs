@@ -16,23 +16,5 @@
         public const string StreetNameTextField = "streetNameTextfield";
         public const string HouseNumberTextField = "houseNumberTextfield";
         public const string AdvancedSearchField = "advancedSearchfield";
-
-        public static readonly List<string> OptionConstants = new List<string>
-        {
-            OptionComboBox,
-            ResponseTextField,
-            IDTextField,
-            FirstNameTextField,
-            LastNameTextField,
-            EmailTextField,
-            PasswordTextField,
-            CountryTextField,
-            StateTextField,
-            PostCodeTextField,
-            CityTextField,
-            StreetNameTextField,
-            HouseNumberTextField,
-            AdvancedSearchField
-        };
     }
 }
