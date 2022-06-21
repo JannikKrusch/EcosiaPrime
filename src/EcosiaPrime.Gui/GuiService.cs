@@ -272,7 +272,7 @@ namespace EcosiaPrime.Gui
                     break;
 
                 case FilterOptionsConstants.AllByCountry:
-                    clients = await _mongoDBService.SortRecordByCountyAsync(_mongoDBConfiguration.CollectionName).ConfigureAwait(false);
+                    clients = await _mongoDBService.SortRecordByCountryAsync(_mongoDBConfiguration.CollectionName).ConfigureAwait(false);
                     break;
 
                 case FilterOptionsConstants.AllBySubscription:

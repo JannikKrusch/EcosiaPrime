@@ -69,7 +69,7 @@ namespace EcosiaPrime.MongoDB
         /// </summary>
         /// <param name="collectionName"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<Client>> SortRecordByCountyAsync(string collectionName)
+        public async Task<IEnumerable<Client>> SortRecordByCountryAsync(string collectionName)
         {
             var records = await MongoDBRepository.LoadRecordsAsync<Client>(collectionName).ConfigureAwait(false);
             var sortedRecords = records.OrderBy(x => x.Address.Country);

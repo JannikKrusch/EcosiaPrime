@@ -10,7 +10,7 @@ namespace EcosiaPrime.MongoDB
 
         Task<bool> IsEmailUniqueAsync<T>(string collectionName, string email);
 
-        Task<IEnumerable<Client>> SortRecordByCountyAsync(string collectionName);
+        Task<IEnumerable<Client>> SortRecordByCountryAsync(string collectionName);
 
         Task<IEnumerable<Client>> SortRecordByEmailAsync(string collectionName);
 
