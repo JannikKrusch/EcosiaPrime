@@ -327,9 +327,6 @@ namespace EcosiaPrime.Gui
             var people = await _mongoDBService.MongoDBRepository.LoadRecordsAsync<Client>(_mongoDBConfiguration.CollectionName).ConfigureAwait(false);
             List<Client> foundList = new List<Client>(people);
 
-            //var searchStringPrimary = "";
-            //var searchStringSecondary = "";
-
             if (!string.IsNullOrEmpty(id))
             {
                 foundList = foundList.Where(x => x.Id.ToLower().Contains(id.ToLower())).ToList();
@@ -384,11 +381,11 @@ namespace EcosiaPrime.Gui
             {
                 foundList = foundList.Where(x => x.Subscription.StartDate.ParseString() >= startDate.ParseString()).ToList();
             }
-            else if(!searchStartDate && searchEndDate)
+            else if (!searchStartDate && searchEndDate)
             {
                 foundList = foundList.Where(x => x.Subscription.EndDate.ParseString() <= endDate.ParseString()).ToList();
             }
-            else if(searchStartDate && searchEndDate)
+            else if (searchStartDate && searchEndDate)
             {
                 foundList = foundList.Where(x => x.Subscription.StartDate.ParseString() >= startDate.ParseString() && x.Subscription.EndDate.ParseString() <= endDate.ParseString()).ToList();
             }
@@ -402,117 +399,6 @@ namespace EcosiaPrime.Gui
             {
                 foundList = foundList.Where(x => x.Subscription.SubscriptionType.Contains(subscriptionType)).ToList();
             }
-
-            //removed duplicates
-            //foundList = foundList.DistinctBy(x => x.Id).ToList();
-
-            /*switch (filter)
-            {
-                case SearchFunctionConstants.SearchForID:
-                    if (id != "")
-                    {
-                        searchStringPrimary = id;
-                        foundList = people.Where(x => x.Id.ToLower().Contains(searchStringPrimary.ToLower()));
-                    }
-                    break;
-
-                case SearchFunctionConstants.SearchForFirstname:
-                    if (firstName != "")
-                    {
-                        searchStringPrimary = firstName;
-                        foundList = people.Where(x => x.FirstName.ToLower().Contains(searchStringPrimary.ToLower()));
-                    }
-                    break;
-
-                case SearchFunctionConstants.SearchForLastName:
-                    if (lastName != "")
-                    {
-                        searchStringPrimary = lastName;
-                        foundList = people.Where(x => x.LastName.ToLower().Contains(searchStringPrimary.ToLower()));
-                    }
-                    break;
-
-                case SearchFunctionConstants.SearchForEmail:
-                    if (email != "")
-                    {
-                        searchStringPrimary = email;
-                        foundList = people.Where(x => x.Email.ToLower().Contains(searchStringPrimary.ToLower()));
-                    }
-                    break;
-
-                case SearchFunctionConstants.SearchForCountry:
-                    if (country != "")
-                    {
-                        searchStringPrimary = country;
-                        foundList = people.Where(x => x.Address.Country.ToLower().Contains(searchStringPrimary.ToLower()));
-                    }
-                    break;
-
-                case SearchFunctionConstants.SearchForState:
-                    if (state != "")
-                    {
-                        searchStringPrimary = state;
-                        foundList = people.Where(x => x.Address.State.ToLower().Contains(searchStringPrimary.ToLower()));
-                    }
-                    break;
-
-                case SearchFunctionConstants.SearchForPostCode:
-                    if (postCode != "")
-                    {
-                        searchStringPrimary = postCode;
-                        foundList = people.Where(x => x.Address.PostCode.ToString().Contains(searchStringPrimary.ToLower()));
-                    }
-                    break;
-
-                case SearchFunctionConstants.SearchForCity:
-                    if (city != "")
-                    {
-                        searchStringPrimary = city;
-                        foundList = people.Where(x => x.Address.City.ToLower().Contains(searchStringPrimary.ToLower()));
-                    }
-                    break;
-
-                case SearchFunctionConstants.SearchForStreet:
-                    if (street != "")
-                    {
-                        searchStringPrimary = street;
-                        foundList = people.Where(x => x.Address.Street.ToLower().Contains(searchStringPrimary.ToLower()));
-                    }
-                    break;
-
-                case SearchFunctionConstants.SearchForHouseNumber:
-                    if (houseNumber != "")
-                    {
-                        searchStringPrimary = houseNumber;
-                        foundList = people.Where(x => x.Address.HouseNumber.ToString().Contains(searchStringPrimary.ToLower()));
-                    }
-                    break;
-
-                case SearchFunctionConstants.SearchForTimeSpan:
-                    if (startDate != "" && endDate != "")
-                    {
-                        searchStringPrimary = startDate;
-                        searchStringSecondary = endDate;
-                        foundList = people.Where(x => x.Subscription.StartDate.ParseString() >= searchStringPrimary.ParseString() && x.Subscription.EndDate.ParseString() <= searchStringSecondary.ParseString());
-                    }
-                    break;
-
-                case SearchFunctionConstants.SearchForPaymentOption:
-                    if (paymentMethod != "")
-                    {
-                        searchStringPrimary = paymentMethod;
-                        foundList = people.Where(x => x.Subscription.PaymentMethod.Contains(searchStringPrimary));
-                    }
-                    break;
-
-                case SearchFunctionConstants.SearchForSubscriptionOption:
-                    if (paymentMethod != "")
-                    {
-                        searchStringPrimary = subscriptionType;
-                        foundList = people.Where(x => x.Subscription.SubscriptionType.Contains(searchStringPrimary));
-                    }
-                    break;
-            }*/
 
             return foundList;
         }

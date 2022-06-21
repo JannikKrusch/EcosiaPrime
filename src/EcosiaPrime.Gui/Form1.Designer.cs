@@ -221,7 +221,7 @@ namespace EcosiaPrime.Gui
             this.dropdownMenuPayment.Name = "dropdownMenuPayment";
             this.dropdownMenuPayment.Size = new System.Drawing.Size(308, 62);
             this.dropdownMenuPayment.TabIndex = 17;
-            this.dropdownMenuPayment.SelectedIndexChanged += new System.EventHandler(this.dropdownMenuPayment_SelectedIndexChanged);
+            
             // 
             // dropdownMenuSubscription
             // 

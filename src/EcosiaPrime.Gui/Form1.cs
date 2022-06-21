@@ -32,11 +32,6 @@ namespace EcosiaPrime.Gui
             dropdownMenuOption.SelectedIndex = 0;
         }
 
-        private void dropdownMenuPayment_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var text = dropdownMenuPayment.Text;
-        }
-
         /// <summary>
         /// Bearbeitet den Knopfdruck
         /// </summary>
@@ -298,11 +293,6 @@ namespace EcosiaPrime.Gui
                     control.Text = string.Empty;
                 }
             });
-        }
-
-        private void searchForDatesBox_CheckedChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -26,7 +26,7 @@
         public const string PasswordNoSymbols = "Passwort muss mindestens ein Sonderzeichen haben!";
 
         public const string HouseNumberMustBeAnIntegerAndGreaterThanZero = "Hausnummer muss eine Zahl und größer als 0 sein";
-        public const string PostCodeMustBeAnIntegerGreaterThanZero = "Postleitzahl muss eine Zahl und größer als 0 sein";
+        public const string PostCodeMustBeAnIntegerGreaterThanOrEqualsTenThousand = "Postleitzahl muss eine Zahl und größer oder gleich 10000 sein";
         public const string PostCodeMustHaveCertainLength = "Postleitzahl muss 5 Stellen haben";
 
         public const string FirstnameCantContainNumber = "Vorname kann keine Zahl behinhalten";

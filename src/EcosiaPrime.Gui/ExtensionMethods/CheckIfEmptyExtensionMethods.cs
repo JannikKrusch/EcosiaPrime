@@ -67,11 +67,11 @@
             return startDate.GetDateTime() > endDate.GetDateTime();
         }
 
-        ///// <summary>
-        ///// Gibt Datetime von DatetimePicker zurück
-        ///// </summary>
-        ///// <param name="dateTimePicker"></param>
-        ///// <returns></returns>
+        /// <summary>
+        /// Gibt Datetime von DatetimePicker zurück
+        /// </summary>
+        /// <param name="dateTimePicker"></param>
+        /// <returns></returns>
         private static DateTime GetDateTime(this string dateTimePicker)
         {
             var dateTime = DateTime.Parse(dateTimePicker);
