@@ -153,7 +153,7 @@ namespace EcosiaPrime.Gui
         /// <param name="e"></param>
         private void optionComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ClearAllControlsIncludingRespnseField();
+            ClearAllControlsIncludingResponseField();
             switch (dropdownMenuOption.Text)
             {
                 case ComboBoxOptionConstants.Create:
@@ -284,7 +284,7 @@ namespace EcosiaPrime.Gui
             });
         }
 
-        public void ClearAllControlsIncludingRespnseField()
+        public void ClearAllControlsIncludingResponseField()
         {
             _controlsList.ToList().ForEach(control =>
             {
