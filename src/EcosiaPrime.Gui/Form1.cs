@@ -10,7 +10,7 @@ namespace EcosiaPrime.Gui
 
         public Form1(IGuiService guiService)
         {
-            _controlsList = Controls.OfType<Control>().Where(x => x is TextBox || x is CheckBox || x is ComboBox && x.Name != "optionComboBox" || x is DateTimePicker);
+            _controlsList = Controls.OfType<Control>().Where(x => x is TextBox || x is CheckBox || x is ComboBox && x.Name != ControlFieldNamesConstants.OptionComboBox || x is DateTimePicker);
             _guiService = guiService;
 
             InitializeComponent();
@@ -49,7 +49,7 @@ namespace EcosiaPrime.Gui
                 responseTextField.Lines = fields.ToArray();
                 if (fields.ToArray()[0] == ResponseMessagesConstants.AddClientToDBSuccessful)
                 {
-                    ClearAllControls();
+                    ClearAllTextFieldsButResponseTextField();
                 }
             }
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Update)
@@ -66,7 +66,7 @@ namespace EcosiaPrime.Gui
                     responseTextField.Lines = fields.ToArray();
                     if (fields.ToArray()[0] == ResponseMessagesConstants.UpdateClientToDBSuccessful)
                     {
-                        ClearAllControls();
+                        ClearAllTextFieldsButResponseTextField();
                         ChangeVisibilityOfFields(ComboBoxOptionConstants.Update);
                     }
                 }
@@ -102,7 +102,7 @@ namespace EcosiaPrime.Gui
                 responseTextField.Lines = fields.ToArray();
                 if (fields.ToArray()[0] == ResponseMessagesConstants.DeleteClientToDBSuccessful)
                 {
-                    ClearAllControls();
+                    ClearAllTextFieldsButResponseTextField();
                 }
             }
             else if (dropdownMenuOption.Text == ComboBoxOptionConstants.Show)
@@ -153,7 +153,7 @@ namespace EcosiaPrime.Gui
         /// <param name="e"></param>
         private void optionComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ClearAllControlsIncludingResponseField();
+            ClearAllTextFieldsIncludingResponseTextField();
             switch (dropdownMenuOption.Text)
             {
                 case ComboBoxOptionConstants.Create:
@@ -273,18 +273,20 @@ namespace EcosiaPrime.Gui
         /// <summary>
         /// Leert jede Textbox bis auf die, die für die Nachrichten zuständig ist
         /// </summary>
-        public void ClearAllControls()
+        public void ClearAllTextFieldsButResponseTextField()
         {
             _controlsList.ToList().ForEach(control =>
             {
-                if (control is TextBox && control.Name != "responseTextField")
+                if (control is TextBox && control.Name != ControlFieldNamesConstants.ResponseTextField)
                 {
                     control.Text = string.Empty;
                 }
             });
         }
-
-        public void ClearAllControlsIncludingResponseField()
+        /// <summary>
+        /// Leert alle Textfelder
+        /// </summary>
+        public void ClearAllTextFieldsIncludingResponseTextField()
         {
             _controlsList.ToList().ForEach(control =>
             {
